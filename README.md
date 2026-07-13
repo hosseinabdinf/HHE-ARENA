@@ -1,7 +1,7 @@
 # HHE-ARENA
 
 <p align="center">
-  <img src="logo.png" alt="HHE-ARENA logo" width="400">
+  <img src="logo.png" alt="HHE-ARENA logo" height="400">
 </p>
 
 HHE-ARENA is a multi-language collection of Hybrid Homomorphic Encryption implementations plus shared tools for reproducible measurement, manifest-driven execution, schema validation, and paper-ready reports.
