@@ -1,0 +1,11 @@
+target/
+.idea/
+.vscode/
+.cache/
+
+**/*.rmeta
+**/Cargo.lock
+**/*.bin
+
+/core
+core

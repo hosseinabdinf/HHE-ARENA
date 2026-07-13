@@ -1,0 +1,15 @@
+.git
+.agents
+.codex
+agent
+frameworks
+**/__pycache__
+**/*.pyc
+**/target
+**/build
+**/.venv
+docs
+logo.png
+README.md
+repo_readme_references_section.md
+security_level_normalization.md

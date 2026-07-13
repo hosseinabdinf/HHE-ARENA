@@ -1,0 +1,16 @@
+#![allow(clippy::too_long_first_doc_paragraph)]
+
+mod static_deque;
+
+mod kreyvium;
+pub use kreyvium::{KreyviumStream, KreyviumStreamByte, KreyviumStreamShortint};
+
+mod trivium;
+pub use trivium::{TriviumStream, TriviumStreamByte, TriviumStreamShortint};
+
+mod trans_ciphering;
+
+mod utils;
+pub use utils::{benchmark, print_header, print_message, print_status};
+
+pub use trans_ciphering::TransCiphering;

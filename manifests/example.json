@@ -1,0 +1,19 @@
+{
+  "$schema": "../schemas/benchmark-manifest.schema.json",
+  "version": 1,
+  "preflight": "/opt/hhe/bin/hhe-preflight",
+  "benchmarks": [
+    {
+      "id": "hera-go-ckks-encrypt",
+      "cipher": "hera",
+      "language": "go",
+      "operation": "encrypt",
+      "backend": "ckks",
+      "security_profile": "HHE-128",
+      "executable": "/opt/hhe/frameworks/hera-go",
+      "args": ["--operation", "{operation}", "--iterations", "{iterations}"],
+      "workdir": "/work",
+      "env": { "RUST_BACKTRACE": "1" }
+    }
+  ]
+}

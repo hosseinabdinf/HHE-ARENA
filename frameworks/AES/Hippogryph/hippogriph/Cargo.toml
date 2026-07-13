@@ -1,0 +1,9 @@
+[package]
+name = "hippogriph"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+hhe-benchmark = { path = "../../../../benchmarking-utilities/rust" }
+rayon = "1.10.0"
+tfhe = {path="../tfhe-rs/tfhe", features= ["odd"]}

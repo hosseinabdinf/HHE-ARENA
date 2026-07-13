@@ -1,0 +1,5 @@
+{
+  "version": 1,
+  "preflight": "/opt/hhe/bin/hhe-preflight",
+  "benchmarks": []
+}

@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://hhe-arena.local/schemas/benchmark-manifest.schema.json",
+  "title": "HHE-ARENA benchmark dispatch manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "benchmarks"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "version": { "const": 1 },
+    "preflight": { "type": "string", "minLength": 1 },
+    "benchmarks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "cipher", "language", "operation", "backend", "executable"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "cipher": { "type": "string", "minLength": 1 },
+          "language": { "enum": ["c", "cpp", "go", "python", "rust"] },
+          "operation": { "type": "string", "minLength": 1 },
+          "backend": { "type": "string", "minLength": 1 },
+          "security_profile": { "type": "string" },
+          "executable": { "type": "string", "minLength": 1 },
+          "args": { "type": "array", "items": { "type": "string" } },
+          "workdir": { "type": "string" },
+          "env": { "type": "object", "additionalProperties": { "type": "string" } },
+          "disabled": { "type": "boolean", "default": false }
+        }
+      }
+    }
+  }
+}
