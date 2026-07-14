@@ -19,6 +19,7 @@ struct KatOperationState {
 
 struct KatContext {
   bool running = false;
+  bool skipping = false;
   HHEPhase phase = HHE_PHASE_WARMUP;
   size_t index = 0;
   unsigned long long next_session_id = 0;
@@ -35,6 +36,7 @@ inline bool finish_sessions() noexcept {
   KatContext& context = kat_context();
   bool ok = true;
   context.active = nullptr;
+  context.skipping = false;
   for (auto& entry : context.operations) {
     if (HHEBenchmarkFinish(&entry.second->session) != 0) ok = false;
   }
@@ -45,7 +47,15 @@ inline bool finish_sessions() noexcept {
 inline void operation_begin(const char* operation, const char* file, int line) {
   KatContext& context = kat_context();
   if (!context.running) throw std::logic_error("KAT operation outside run_kat");
-  if (context.active != nullptr) throw std::logic_error("nested KAT operation");
+  if (context.active != nullptr || context.skipping)
+    throw std::logic_error("nested KAT operation");
+
+  const char* requested = std::getenv("HHE_BENCH_OPERATION");
+  if (requested != nullptr && requested[0] != '\0' &&
+      std::string(requested) != operation) {
+    context.skipping = true;
+    return;
+  }
 
   const std::string key = std::string(file) + ":" + std::to_string(line);
   auto found = context.operations.find(key);
@@ -74,6 +84,10 @@ inline void operation_begin(const char* operation, const char* file, int line) {
 
 inline void operation_end() {
   KatContext& context = kat_context();
+  if (context.skipping) {
+    context.skipping = false;
+    return;
+  }
   if (context.active == nullptr)
     throw std::logic_error("KAT operation end without begin");
   KatOperationState* active = context.active;

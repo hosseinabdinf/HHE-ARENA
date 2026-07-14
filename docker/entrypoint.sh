@@ -16,6 +16,8 @@ case "${1:-}" in
     python -c 'import cffi, jsonschema, psutil; print("hhe-python-probe python dependencies=ok")'
     ;;
   --help|-h|"")
+    cat /opt/hhe/ARENA.txt
+    printf '\n'
     cat <<'EOF'
 HHE-ARENA tooling image
 

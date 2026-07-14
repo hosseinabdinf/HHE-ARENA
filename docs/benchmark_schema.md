@@ -39,6 +39,17 @@ Go heap bytes are `runtime.MemStats.Alloc`; RSS and peak RSS retain the Linux me
 
 Python uses integer `perf_counter_ns` for exact time. Its heap metric is current `tracemalloc`-tracked Python allocation and excludes untraced native allocations; VMS is not heap. RSS and peak RSS retain the process meanings above. A cffi wrapper supplies explicit serialized amd64 counter reads; its measured call boundary is reported without subtraction. GC and tracing state are restored.
 
+## Host identity
+
+`host.hostname` is the stable benchmark-host identifier used when reports
+separate complete host identities. Every harness prefers
+`HHE_BENCH_HOSTNAME`; otherwise it falls back to the runtime hostname when
+available. Catalog-mode CLI runs set this consistently across framework
+containers from `--host-id`, whose default is the invoking system hostname.
+Users should provide an explicit unique ID on cloned or generically named
+hosts. The remaining host fields describe the actual execution environment
+inside the container; they are not overwritten with host-OS guesses.
+
 ## Nullability and environment
 
 Unknown or unavailable observations use null; false means a check was performed and failed. Policy is `strict` or `warn`. Strict failures prevent measured iterations. Warnings provide stable explanations.

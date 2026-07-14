@@ -6,7 +6,7 @@
 #define MAX_DIGITS 8
 #define ALIGNMENT 64
 
-alignas(ALIGNMENT) uint64_t bbuffer[BLOCK_SIZE];
+alignas(ALIGNMENT) static uint64_t bbuffer[BLOCK_SIZE];
 
 // Absolutely cursed, do not use for anything serious
 template <class T>

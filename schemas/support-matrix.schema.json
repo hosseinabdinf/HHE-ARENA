@@ -1,0 +1,150 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://hhe-arena.local/schemas/support-matrix.schema.json",
+  "title": "HHE-ARENA supported implementation matrix",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "matrix_version", "benchmark_schema_version", "status", "scope", "implementations"],
+  "allOf": [
+    {
+      "if": { "properties": { "matrix_version": { "const": 2 } } },
+      "then": { "required": ["selector_contract", "benchmark_variants"] }
+    }
+  ],
+  "properties": {
+    "$schema": { "type": "string" },
+    "matrix_version": { "enum": [1, 2] },
+    "benchmark_schema_version": { "const": "1.0.0" },
+    "status": { "enum": ["draft", "frozen"] },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["purpose", "excluded"],
+      "properties": {
+        "purpose": { "type": "string", "minLength": 1 },
+        "excluded": { "type": "array", "items": { "type": "string", "minLength": 1 } }
+      }
+    },
+    "selector_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["wildcard", "selection_order", "families", "paths"],
+      "properties": {
+        "wildcard": { "const": "all" },
+        "selection_order": {
+          "const": ["family", "path", "cipher", "variant", "framework", "backend", "language"]
+        },
+        "families": {
+          "type": "array",
+          "items": { "enum": ["aes", "he_friendly", "pure_he"] },
+          "minItems": 3,
+          "maxItems": 3,
+          "uniqueItems": true
+        },
+        "paths": {
+          "type": "array",
+          "items": { "enum": ["ske", "hhe", "he"] },
+          "minItems": 3,
+          "maxItems": 3,
+          "uniqueItems": true
+        }
+      }
+    },
+    "benchmark_variants": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/benchmark_variant" }
+    },
+    "implementations": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/implementation" } }
+  },
+  "$defs": {
+    "selector_target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "backends", "operations", "source_entrypoint", "status"],
+      "properties": {
+        "path": { "enum": ["ske", "hhe", "he"] },
+        "backends": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "operations": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        },
+		"implementation_id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._-]*$" },
+        "source_entrypoint": { "type": "string", "minLength": 1 },
+        "status": { "enum": ["ready", "deferred", "blocked"] }
+      }
+    },
+    "benchmark_variant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "family", "cipher", "variant", "framework", "language", "implementation_id", "parameters", "targets", "source_evidence"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._-]*$" },
+        "family": { "enum": ["aes", "he_friendly", "pure_he"] },
+        "cipher": { "type": "string", "minLength": 1 },
+        "variant": { "type": "string", "minLength": 1 },
+        "framework": { "type": "string", "minLength": 1 },
+        "language": { "enum": ["c", "cpp", "go", "python", "rust"] },
+        "implementation_id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._-]*$" },
+        "parameters": { "type": "object" },
+        "targets": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/selector_target" }
+        },
+        "source_evidence": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "notes": { "type": "string" }
+      }
+    },
+    "operation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "kind", "safe_smoke"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "kind": { "enum": ["symmetric", "he_setup", "hhe", "he"] },
+        "safe_smoke": { "type": "boolean" }
+      }
+    },
+    "implementation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "priority", "framework", "cipher", "language", "backend", "security_profile", "source_entrypoint", "build_target", "container_executable", "operations", "resource_class", "selection_status", "docker_status", "manifest_status", "known_blockers"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._-]*$" },
+        "priority": { "type": "integer", "minimum": 1 },
+        "framework": { "type": "string", "minLength": 1 },
+        "cipher": { "type": "string", "minLength": 1 },
+        "language": { "enum": ["c", "cpp", "go", "python", "rust"] },
+        "backend": { "type": "string", "minLength": 1 },
+        "security_profile": { "type": ["string", "null"] },
+        "source_entrypoint": { "type": "string", "minLength": 1 },
+        "build_target": { "type": "string", "minLength": 1 },
+        "container_executable": { "type": "string", "pattern": "^/opt/hhe/frameworks/" },
+        "arguments": { "type": "array", "items": { "type": "string" } },
+        "operations": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/operation" } },
+        "resource_class": { "enum": ["light", "medium", "heavy", "extreme"] },
+        "readiness_class": {
+          "enum": ["safe_lightweight", "he_hhe_heavy", "dependency_blocked", "mixed"]
+        },
+        "selection_status": { "enum": ["selected", "deferred", "unsupported"] },
+        "docker_status": { "enum": ["not_started", "in_progress", "ready", "blocked"] },
+        "manifest_status": { "enum": ["not_started", "draft", "ready", "blocked"] },
+        "known_blockers": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "notes": { "type": "string" }
+      }
+    }
+  }
+}

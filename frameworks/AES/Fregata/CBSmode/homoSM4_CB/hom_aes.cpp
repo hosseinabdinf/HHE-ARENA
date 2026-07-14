@@ -309,6 +309,7 @@ int main() {
     MakeSBoxTable(Table,
                   sk->key.get<privksP::targetP>());  // 利用level1的trlwe key
   });
+  if (HHEBenchmarkOperationSelected("Make SBox Table")) return 0;
 
   unsigned char plain[16] = {0x32, 0x43, 0xf6, 0xa8, 0x88, 0x5a, 0x30, 0x8d,
                              0x31, 0x31, 0x98, 0xa2, 0xe0, 0x37, 0x07, 0x34};
@@ -332,10 +333,11 @@ int main() {
 
   // Compute the key expansion
   unsigned char RoundKey[240];
-  long nRoundKeys;
+  long nRoundKeys = 0;
 
   BENCHMARK("AES Key Expansion",
             { nRoundKeys = AESKeyExpansion(RoundKey, aeskey, 128); });
+  if (HHEBenchmarkOperationSelected("AES Key Expansion")) return 0;
 
   printer.PrintMessages("#Rounds: ", nRoundKeys);
 
@@ -378,6 +380,7 @@ int main() {
       // cout <<endl;
     }
   });
+  if (HHEBenchmarkOperationSelected("Encrypt Plaintext")) return 0;
 
   // std::chrono::system_clock::time_point start, end;
   // double cb_totaltime = 0, lut_totaltime = 0, Idks_totaltime = 0;
@@ -531,6 +534,7 @@ int main() {
 
     CipherAddRoundKey(cipher, rk, 10);
   });
+  if (HHEBenchmarkOperationSelected("AES Transciphering")) return 0;
 
   PrintHeader(" Test last round ");
 

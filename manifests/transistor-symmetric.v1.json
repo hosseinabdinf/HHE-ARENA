@@ -1,0 +1,16 @@
+{
+  "$schema": "../schemas/benchmark-manifest.schema.json",
+  "version": 1,
+  "preflight": "/opt/hhe/bin/hhe-preflight",
+  "benchmarks": [
+    {
+      "id": "transistor-symmetric-python",
+      "cipher": "Transistor",
+      "language": "python",
+      "operation": "Sym.Enc()",
+      "backend": "native",
+      "executable": "/opt/hhe/frameworks/transistor-symmetric/run",
+      "workdir": "/work"
+    }
+  ]
+}

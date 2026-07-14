@@ -1,0 +1,56 @@
+{
+  "$schema": "../schemas/benchmark-manifest.schema.json",
+  "version": 1,
+  "preflight": "/opt/hhe/bin/hhe-preflight",
+  "benchmarks": [
+    {
+      "id": "fregata-cbs-aes-key-expansion",
+      "cipher": "AES-128 CBS",
+      "language": "cpp",
+      "operation": "AES Key Expansion",
+      "backend": "native",
+      "executable": "/opt/hhe/frameworks/fregata-cbs/sym_aes",
+      "workdir": "/work"
+    },
+    {
+      "id": "fregata-cbs-aes-symmetric-encryption",
+      "cipher": "AES-128 CBS",
+      "language": "cpp",
+      "operation": "AES Sym Encryption",
+      "backend": "native",
+      "executable": "/opt/hhe/frameworks/fregata-cbs/sym_aes",
+      "workdir": "/work"
+    },
+    {
+      "id": "fregata-cbs-aes-sbox-table",
+      "cipher": "AES-128 CBS",
+      "language": "cpp",
+      "operation": "Make SBox Table",
+      "backend": "TFHE++",
+      "executable": "/opt/hhe/frameworks/fregata-cbs/hom_aes",
+      "workdir": "/work"
+    },
+    {
+      "id": "fregata-cbs-aes-encrypt-plaintext",
+      "cipher": "AES-128 CBS",
+      "language": "cpp",
+      "operation": "Encrypt Plaintext",
+      "backend": "TFHE++",
+      "executable": "/opt/hhe/frameworks/fregata-cbs/hom_aes",
+      "workdir": "/work"
+    },
+    {
+      "id": "fregata-cbs-aes-transciphering",
+      "cipher": "AES-128 CBS",
+      "language": "cpp",
+      "operation": "AES Transciphering",
+      "backend": "TFHE++",
+      "executable": "/opt/hhe/frameworks/fregata-cbs/hom_aes",
+      "workdir": "/work",
+      "env": {
+        "HHE_BENCH_ITERATIONS": "1",
+        "HHE_BENCH_WARMUPS": "0"
+      }
+    }
+  ]
+}

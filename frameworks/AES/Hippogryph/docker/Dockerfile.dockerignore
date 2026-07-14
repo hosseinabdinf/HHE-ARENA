@@ -1,0 +1,3 @@
+**/target
+**/.git
+frameworks/AES/Hippogryph/tfhe-rs/target

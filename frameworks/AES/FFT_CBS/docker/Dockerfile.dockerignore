@@ -1,0 +1,16 @@
+.git
+.agents
+.codex
+agent
+results
+**/__pycache__
+**/*.pyc
+**/target
+**/build
+**/.venv
+frameworks/AES/FFT_CBS/fft_error_analysis
+frameworks/AES/FFT_CBS/*_backup*
+frameworks/AES/FFT_CBS/benches/*_backup*
+frameworks/AES/FFT_CBS/src/butils/benchmark_utils_backup.rs
+frameworks/AES/FFT_CBS/README.md
+frameworks/AES/FFT_CBS/LICENSE

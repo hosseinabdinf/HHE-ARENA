@@ -1,0 +1,100 @@
+{
+  "$schema": "../schemas/support-matrix.schema.json",
+  "matrix_version": 1,
+  "benchmark_schema_version": "1.0.0",
+  "status": "frozen",
+  "scope": {
+    "purpose": "First representative Docker and production-manifest slice: one project-owned benchmark entry point for each maintained harness language.",
+    "excluded": [
+      "AES/FbT, by explicit project decision",
+      "dependency-owned and primitive-only microbenchmarks",
+      "HE/HHE operations until bounded execution is explicitly authorized",
+      "frameworks outside this first slice; they remain migration-complete candidates for later matrix versions"
+    ]
+  },
+  "implementations": [
+    {
+      "id": "openssl-aes128-cbc-c",
+      "priority": 1,
+      "framework": "AES/OpenSSL",
+      "cipher": "AES-128-CBC",
+      "language": "c",
+      "backend": "openssl",
+      "security_profile": "AES-128",
+      "source_entrypoint": "frameworks/AES/Openssl/src/aes_encrypt.c",
+      "build_target": "cmake --build <build-dir> --target aes_encrypt",
+      "container_executable": "/opt/hhe/frameworks/openssl-aes/aes_encrypt",
+      "arguments": [],
+      "operations": [{ "name": "AES-128-CBC Encryption", "kind": "symmetric", "safe_smoke": true }],
+      "resource_class": "light",
+      "selection_status": "selected",
+      "docker_status": "ready",
+      "manifest_status": "ready",
+      "known_blockers": [],
+      "notes": "Single-operation executable and the lowest-risk first image for proving the framework-image contract."
+    },
+    {
+      "id": "hheland-rubato128l-go",
+      "priority": 2,
+      "framework": "HHELand",
+      "cipher": "Rubato-128-L",
+      "language": "go",
+      "backend": "native",
+      "security_profile": null,
+      "source_entrypoint": "frameworks/HHELand/sym/rubato/rubato_test.go",
+      "build_target": "go test -c -o hheland-rubato.test ./sym/rubato",
+      "container_executable": "/opt/hhe/frameworks/hheland-rubato/hheland-rubato.test",
+      "arguments": ["-test.run=^TestNbRubato$", "-test.v"],
+      "operations": [{ "name": "SKE.Enc()", "kind": "symmetric", "safe_smoke": true }],
+      "resource_class": "light",
+      "selection_status": "selected",
+      "docker_status": "ready",
+      "manifest_status": "ready",
+      "known_blockers": [],
+      "notes": "Built with pinned Go 1.24.13 and module dependencies. The selected Rubato-128-L path is symmetric only; HHE.Decomp is not in matrix version 1."
+    },
+    {
+      "id": "elisabeth-clear-rust",
+      "priority": 3,
+      "framework": "Elisabeth",
+      "cipher": "Elisabeth",
+      "language": "rust",
+      "backend": "native",
+      "security_profile": null,
+      "source_entrypoint": "frameworks/elisabeth/tests/clear.rs",
+      "build_target": "cargo build --locked --release --bin hhe-arena-clear",
+      "container_executable": "/opt/hhe/frameworks/elisabeth/elisabeth-clear",
+      "arguments": ["--nibbles", "1"],
+      "operations": [
+        { "name": "SKE.Enc()", "kind": "symmetric", "safe_smoke": true },
+        { "name": "SKE.Dec()", "kind": "symmetric", "safe_smoke": true }
+      ],
+      "resource_class": "light",
+      "selection_status": "selected",
+      "docker_status": "ready",
+      "manifest_status": "ready",
+      "known_blockers": [],
+      "notes": "The stable clear binary selects exactly one operation through HHE_BENCH_OPERATION. Pinned FFTW runtime libraries are packaged; HHE.Decomp remains excluded."
+    },
+    {
+      "id": "transistor-symmetric-python",
+      "priority": 4,
+      "framework": "Transistor",
+      "cipher": "Transistor",
+      "language": "python",
+      "backend": "native",
+      "security_profile": null,
+      "source_entrypoint": "frameworks/Transistor/symmetric/main.py",
+      "build_target": "precompile serialized_counter with pinned Python/GCC/CFFI, then install the Python sources and fixed launcher",
+      "container_executable": "/opt/hhe/frameworks/transistor-symmetric/run",
+      "arguments": [],
+      "operations": [{ "name": "Sym.Enc()", "kind": "symmetric", "safe_smoke": true }],
+      "resource_class": "light",
+      "selection_status": "selected",
+      "docker_status": "ready",
+      "manifest_status": "ready",
+      "known_blockers": [],
+      "notes": "The serialized counter is precompiled and verified without a compiler in the runtime. A standard-Python GF(17) fallback removes the undeclared Sage runtime dependency and is covered by a first-clock known-answer image check. Homomorphic Rust Transistor remains outside matrix version 1."
+    }
+  ]
+}

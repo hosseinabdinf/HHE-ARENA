@@ -1,8 +1,43 @@
-#!/usr/bin/sage
+#!/usr/bin/env python3
 #-*- Python -*-
 # Time-stamp: <2025-02-07 17:27:19>
 
-from sage.all import *
+import sys
+
+try:
+    from sage.all import GF, Matrix
+except ModuleNotFoundError:
+    class _FieldElement(int):
+        def __new__(cls, value, modulus):
+            result = int.__new__(cls, int(value) % modulus)
+            result.modulus = modulus
+            return result
+
+        def _new(self, value):
+            return _FieldElement(value, self.modulus)
+
+        def __add__(self, other):
+            return self._new(int(self) + int(other))
+
+        __radd__ = __add__
+
+        def __mul__(self, other):
+            return self._new(int(self) * int(other))
+
+        __rmul__ = __mul__
+
+    class _PrimeField:
+        def __init__(self, modulus):
+            self.modulus = modulus
+
+        def __call__(self, value):
+            return _FieldElement(value, self.modulus)
+
+    def GF(modulus):
+        return _PrimeField(modulus)
+
+    def Matrix(field, rows):
+        return [[field(value) for value in row] for row in rows]
 from hashlib import shake_128
 
 #  for benchmarking
@@ -49,8 +84,10 @@ class LFSR:
 
     def clock(self):
         output = self.cells[-1]
-        feedback =  sum(self.cells[i] * self.taps[i]
-                     for i in range(0, len(self.cells)))
+        feedback = sum(
+            (self.cells[i] * self.taps[i] for i in range(0, len(self.cells))),
+            self.field(0),
+        )
         self.cells =  [feedback] + self.cells[:-1]
         return output
 
@@ -146,8 +183,10 @@ class Transistor:
         for j in range(0, self.a):
             column_vector = [self.fsm[i][j] for i in range(0, self.a)]
             for i in range(0, self.a):
-                self.fsm[i][j] = sum(column_vector[k]*self.MC[i][k]
-                                     for k in range(0, self.a))
+                self.fsm[i][j] = sum(
+                    (column_vector[k] * self.MC[i][k] for k in range(0, self.a)),
+                    self.field(0),
+                )
         
     def whiten(self, fsm_outputs):
         # adding whitening LFSR output

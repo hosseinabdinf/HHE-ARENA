@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://hhe-arena.local/schemas/image-catalog.schema.json",
+  "title": "HHE-ARENA framework image catalog",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "matrix_version", "tooling", "images"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "version": { "const": 1 },
+    "matrix_version": { "type": "integer", "minimum": 1 },
+    "tooling": { "$ref": "#/$defs/build" },
+    "images": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "framework", "cipher", "language", "backend", "operations", "local_tag", "build"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "framework": { "type": "string", "minLength": 1 },
+          "cipher": { "type": "string", "minLength": 1 },
+          "language": { "enum": ["c", "cpp", "go", "python", "rust"] },
+          "backend": { "type": "string", "minLength": 1 },
+          "operations": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+		  "matrix_targets": {
+			"type": "array",
+			"minItems": 1,
+			"items": { "$ref": "#/$defs/matrix_target" }
+		  },
+          "local_tag": { "type": "string", "minLength": 1 },
+          "pull_ref": { "type": ["string", "null"], "minLength": 1 },
+          "manifest": { "type": "string", "minLength": 1 },
+          "build": { "$ref": "#/$defs/build" }
+        }
+      }
+    }
+  },
+  "$defs": {
+	"matrix_target": {
+	  "type": "object",
+	  "additionalProperties": false,
+	  "required": ["variant_id", "cipher", "backend", "operations"],
+	  "properties": {
+		"variant_id": { "type": "string", "minLength": 1 },
+		"cipher": { "type": "string", "minLength": 1 },
+		"backend": { "type": "string", "minLength": 1 },
+		"operations": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 }, "uniqueItems": true }
+	  }
+	},
+    "build": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tag", "dockerfile", "context"],
+      "properties": {
+        "tag": { "type": "string", "minLength": 1 },
+        "dockerfile": { "type": "string", "minLength": 1 },
+        "context": { "type": "string", "minLength": 1 },
+        "args": { "type": "object", "additionalProperties": { "type": "string" } }
+      }
+    }
+  }
+}

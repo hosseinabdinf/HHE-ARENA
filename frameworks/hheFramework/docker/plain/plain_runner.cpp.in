@@ -1,0 +1,15 @@
+#include "@HHE_FRAMEWORK_SOURCE@/ciphers/@cipher@/plain/testvectors.h"
+
+int main() {
+  bool result = true;
+  for (auto& test : KNOWN_ANSWER_TESTS) {
+    try {
+      result = hhe_benchmark::run_kat([&test]() { return test.run_test(); }) &&
+               result;
+    } catch (const std::exception& error) {
+      std::cerr << "HHE Framework plain KAT failed: " << error.what() << '\n';
+      result = false;
+    }
+  }
+  return result ? 0 : 1;
+}

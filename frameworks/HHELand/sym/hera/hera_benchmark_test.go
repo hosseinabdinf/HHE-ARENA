@@ -2,7 +2,9 @@ package hera
 
 import (
 	"HHELand"
+	"HHELand/utils"
 	"fmt"
+	"sync"
 	"testing"
 )
 
@@ -17,32 +19,29 @@ func benchmarkHera(tc *TestContext, b *testing.B) {
 	if testing.Short() {
 		b.Skip("skipping benchmark in short mode.")
 	}
-
 	var heraCipher Hera
 	var encryptor Encryptor
-	var newCiphertext HHELand.Ciphertext
-
-	b.Run("HERA/NewHera", func(b *testing.B) {
-		for i := 0; i < b.N; i++ {
-			heraCipher = NewHera(tc.Key, tc.Params)
-		}
+	var ciphertext HHELand.Ciphertext
+	runArenaBenchmark(b, "HERA/NewHera", func() {
+		heraCipher = NewHera(tc.Key, tc.Params)
 	})
-
-	b.Run("HERA/NewEncryptor", func(b *testing.B) {
-		for i := 0; i < b.N; i++ {
-			encryptor = heraCipher.NewEncryptor()
-		}
+	runArenaBenchmark(b, "HERA/NewEncryptor", func() {
+		encryptor = heraCipher.NewEncryptor()
 	})
-
-	b.Run("HERA/Encrypt", func(b *testing.B) {
-		for i := 0; i < b.N; i++ {
-			newCiphertext = encryptor.Encrypt(tc.Plaintext)
-		}
+	runArenaBenchmark(b, "HERA/Encrypt", func() {
+		ciphertext = encryptor.Encrypt(tc.Plaintext)
 	})
+	runArenaBenchmark(b, "HERA/Decrypt", func() {
+		encryptor.Decrypt(ciphertext)
+	})
+}
 
-	b.Run("HERA/Decrypt", func(b *testing.B) {
-		for i := 0; i < b.N; i++ {
-			encryptor.Decrypt(newCiphertext)
-		}
+// runArenaBenchmark lets go test retain its benchmark discovery interface while
+// the shared harness owns warm-up, iteration, timing, memory, and JSONL output.
+func runArenaBenchmark(b *testing.B, operation string, target func()) {
+	var once sync.Once
+	b.Run(operation, func(b *testing.B) {
+		once.Do(func() { utils.BenchmarkIter(operation, 100, target) })
+		b.ReportMetric(0, "ns/op")
 	})
 }

@@ -9,7 +9,7 @@
 #define MAX_DIGITS 8
 #define ALIGNMENT 64
 
-alignas(ALIGNMENT) UINTNAT bbuffer[BLOCK_SIZE];
+alignas(ALIGNMENT) static UINTNAT bbuffer[BLOCK_SIZE];
 
 RKSKDigitPrecompFast::RKSKDigitPrecompFast(std::shared_ptr<RingGSWCryptoParams> params, uint64_t L_bits, uint32_t max_ct) :
         m_params(std::move(params)), m_max_ct(max_ct), m_L(1ull << L_bits), m_L_bits(L_bits)

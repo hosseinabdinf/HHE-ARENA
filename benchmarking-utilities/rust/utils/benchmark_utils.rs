@@ -436,7 +436,7 @@ fn make_record<'a>(
             allocator: "system_glibc",
         },
         host: Host {
-            hostname: std::env::var("HOSTNAME").ok(),
+            hostname: benchmark_hostname(),
             os: std::env::consts::OS,
             arch: std::env::consts::ARCH,
             cpu_model: cpu_model(),
@@ -452,6 +452,14 @@ fn make_record<'a>(
         status: "ok",
         error: None,
     }
+}
+fn benchmark_hostname() -> Option<String> {
+    ["HHE_BENCH_HOSTNAME", "HOSTNAME"].iter().find_map(|name| {
+        std::env::var(name)
+            .ok()
+            .map(|value| value.trim().to_owned())
+            .filter(|value| !value.is_empty())
+    })
 }
 fn cpu_flag(flag: &str) -> Option<bool> {
     let text = fs::read_to_string("/proc/cpuinfo").ok()?;

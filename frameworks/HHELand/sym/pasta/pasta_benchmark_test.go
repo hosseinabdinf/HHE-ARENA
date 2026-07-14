@@ -2,7 +2,9 @@ package pasta
 
 import (
 	"HHELand"
+	"HHELand/utils"
 	"fmt"
+	"sync"
 	"testing"
 )
 
@@ -23,33 +25,19 @@ func benchmarkPasta(tc *TestContext, b *testing.B) {
 	if testing.Short() {
 		b.Skip("skipping benchmark in short mode.")
 	}
-
-	var pastaCipher Pasta
+	var cipher Pasta
 	var encryptor Encryptor
-	var newCiphertext HHELand.Ciphertext
+	var ciphertext HHELand.Ciphertext
+	runArenaBenchmark(b, "Pasta/NewPasta", func() { cipher = NewPasta(tc.Key, tc.Params) })
+	runArenaBenchmark(b, "Pasta/NewEncryptor", func() { encryptor = cipher.NewEncryptor() })
+	runArenaBenchmark(b, "Pasta/Encrypt", func() { ciphertext = encryptor.Encrypt(tc.Plaintext) })
+	runArenaBenchmark(b, "Pasta/Decrypt", func() { encryptor.Decrypt(ciphertext) })
+}
 
-	b.Run("Pasta/NewPasta", func(b *testing.B) {
-		for i := 0; i < b.N; i++ {
-			pastaCipher = NewPasta(tc.Key, tc.Params)
-		}
+func runArenaBenchmark(b *testing.B, operation string, target func()) {
+	var once sync.Once
+	b.Run(operation, func(b *testing.B) {
+		once.Do(func() { utils.BenchmarkIter(operation, 100, target) })
+		b.ReportMetric(0, "ns/op")
 	})
-
-	b.Run("Pasta/NewEncryptor", func(b *testing.B) {
-		for i := 0; i < b.N; i++ {
-			encryptor = pastaCipher.NewEncryptor()
-		}
-	})
-
-	b.Run("Pasta/Encrypt", func(b *testing.B) {
-		for i := 0; i < b.N; i++ {
-			newCiphertext = encryptor.Encrypt(tc.Plaintext)
-		}
-	})
-
-	b.Run("Pasta/Decrypt", func(b *testing.B) {
-		for i := 0; i < b.N; i++ {
-			encryptor.Decrypt(newCiphertext)
-		}
-	})
-
 }

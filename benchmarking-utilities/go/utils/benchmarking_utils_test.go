@@ -21,6 +21,13 @@ func TestMemoryDifferenceRetainsAbsoluteRuMaxRSS(t *testing.T) {
 		t.Fatalf("unexpected peak memory: %+v", memory)
 	}
 }
+func TestBenchmarkHostnameOverride(t *testing.T) {
+	t.Setenv("HHE_BENCH_HOSTNAME", "physical-host-01")
+	hostname := benchmarkHostname()
+	if hostname == nil || *hostname != "physical-host-01" {
+		t.Fatalf("hostname=%v", hostname)
+	}
+}
 func TestGCSettingRestored(t *testing.T) {
 	restore := configureGC(GCDisabled)
 	restore()

@@ -1,0 +1,9 @@
+{
+  "$schema": "../schemas/benchmark-manifest.schema.json",
+  "version": 1,
+  "preflight": "/opt/hhe/bin/hhe-preflight",
+  "benchmarks": [
+    { "id": "p-encoding-aes-encryption", "cipher": "AES-128 P-encoding", "language": "rust", "operation": "TFHE Encryption of the plaintext", "backend": "odd-modulus TFHE", "executable": "/opt/hhe/frameworks/p-encoding/run-aes", "workdir": "/work", "env": { "HHE_BENCH_ITERATIONS": "1", "HHE_BENCH_WARMUPS": "0", "HHE_BENCH_OPERATION": "TFHE Encryption of the plaintext" } },
+    { "id": "p-encoding-aes-transciphering", "cipher": "AES-128 P-encoding", "language": "rust", "operation": "Transciphering", "backend": "odd-modulus TFHE", "executable": "/opt/hhe/frameworks/p-encoding/run-aes", "workdir": "/work", "env": { "HHE_BENCH_ITERATIONS": "1", "HHE_BENCH_WARMUPS": "0", "HHE_BENCH_OPERATION": "Transciphering" } }
+  ]
+}

@@ -10,6 +10,10 @@ HHE-ARENA is a multi-language collection of Hybrid Homomorphic Encryption implem
 
 New users should follow **[Getting started from scratch](docs/getting-started.md)**. It covers cloning the repository, prerequisites, Docker and native setup, the hhe CLI, manifests, safe functional checks, benchmark collection, reports, troubleshooting, and the HHELand Rubato example.
 
+For the architecture, safety policy, reproducibility assumptions, and current project scope, see the **[Project guide](docs/project-guide.md)**.
+
+Platform-specific requirements are in the [platform documentation index](docs/README.md), with separate guides for [Windows/WSL2](docs/README.windows.md), [Docker](docs/README.docker.md), and [Linux bare metal](docs/README.linux.md).
+
 Contributors adding an implementation should follow **[Adding a new scheme or framework](docs/adding-a-scheme.md)**.
 
 Quick tooling smoke check:

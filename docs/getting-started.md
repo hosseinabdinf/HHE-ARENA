@@ -77,7 +77,8 @@ A benchmark is not discovered automatically. A manifest entry maps a stable job 
 
 1. selects a concrete manifest entry;
 2. optionally runs preflight once;
-3. exports the common HHE_BENCH_* environment variables;
+3. exports the common HHE_BENCH_* environment variables, including the stable
+   `HHE_BENCH_HOSTNAME` identity;
 4. starts the prebuilt executable;
 5. preserves its raw JSONL output.
 
@@ -146,13 +147,17 @@ Record the CPU model, logical CPU, SMT sibling, kernel, governor, Turbo/boost st
 
 One exact job:
 
-    hhe bench --manifest manifest.json --cipher rubato --language go --operation "SKE.Enc()" --backend native --iterations 10 --warmup 2 --core 2 --gc enabled --policy strict --preflight --output results/rubato.jsonl
+    hhe bench --manifest manifest.json --cipher rubato --language go --operation "SKE.Enc()" --backend native --iterations 10 --warmup 2 --core 2 --gc enabled --policy strict --host-id lab-node-01 --preflight --output results/rubato.jsonl
 
 A manifest-driven sweep:
 
-    hhe bench-all --manifest manifest.json --cipher rubato --iterations 10 --core 2 --policy strict --preflight --output results/raw
+    hhe bench-all --manifest manifest.json --cipher rubato --iterations 10 --core 2 --policy strict --host-id lab-node-01 --preflight --output results/raw
 
 bench requires exactly one match. bench-all sorts by stable job ID and creates one JSONL file per job. Do not combine unlike GC modes, hosts, security profiles, or backends in later comparisons.
+
+`--host-id` defaults to the invoking system hostname. Set it explicitly to a
+stable unique label when running through Docker or when machines use generic
+or cloned hostnames; every language harness records the same value.
 
 ## 10. Validate and generate reports
 

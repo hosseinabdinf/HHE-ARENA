@@ -1,0 +1,904 @@
+{
+    "$schema":  "../schemas/image-catalog.schema.json",
+    "version":  1,
+    "matrix_version":  2,
+    "tooling":  {
+                    "tag":  "hhe-arena:tooling",
+                    "dockerfile":  "Dockerfile",
+                    "context":  "."
+                },
+    "images":  [
+                   {
+                       "id":  "openssl-aes128-cbc-c",
+                       "framework":  "AES/OpenSSL",
+                       "cipher":  "AES-128-CBC",
+                       "language":  "c",
+                       "backend":  "openssl",
+                       "operations":  [
+                                          "AES-128-CBC Encryption"
+                                      ],
+                       "local_tag":  "hhe-arena:openssl-aes-matrix1",
+                       "pull_ref":  null,
+                       "manifest":  "manifests/openssl-aes.v1.json",
+                       "build":  {
+                                     "tag":  "hhe-arena:openssl-aes-matrix1",
+                                     "dockerfile":  "frameworks/AES/Openssl/docker/Dockerfile",
+                                     "context":  ".",
+                                     "args":  {
+                                                  "TOOLING_IMAGE":  "hhe-arena:tooling",
+                                                  "TOOLING_DIGEST":  "development",
+                                                  "IMAGE_VERSION":  "0.1.0-matrix.1"
+                                              }
+                                 }
+                   },
+                   {
+                       "id":  "tinyaes-aes128-cbc-c",
+                       "framework":  "AES/TinyAES",
+                       "cipher":  "AES-128-CBC",
+                       "language":  "c",
+                       "backend":  "tiny-aes-c",
+                       "operations":  [
+                                          "AES-128-CBC Encryption"
+                                      ],
+                       "local_tag":  "hhe-arena:tinyaes-matrix2",
+                       "pull_ref":  null,
+                       "manifest":  "manifests/tinyaes-aes.v2.json",
+                       "build":  {
+                                     "tag":  "hhe-arena:tinyaes-matrix2",
+                                     "dockerfile":  "frameworks/AES/Tinyaes/docker/Dockerfile",
+                                     "context":  ".",
+                                     "args":  {
+                                                  "TOOLING_IMAGE":  "hhe-arena:tooling",
+                                                  "TOOLING_DIGEST":  "development",
+                                                  "IMAGE_VERSION":  "0.1.0-matrix.2"
+                                              }
+                                 }
+                   },
+                   {
+                       "id":  "full-lut-aes-tfhe-cpp",
+                       "framework":  "AES/Full-LUT",
+                       "cipher":  "AES-128 full-LUT",
+                       "language":  "cpp",
+                       "backend":  "TFHE",
+                       "operations":  [
+                                          "Symmetric Key Expansion",
+                                          "TFHE-Sym-Encryption",
+                                          "Transciphering"
+                                      ],
+                       "matrix_targets":  [
+                                              {
+                                                  "variant_id":  "aes128-full-lut",
+                                                  "cipher":  "AES-128 full-LUT",
+                                                  "backend":  "native",
+                                                  "operations":  [
+                                                                     "Symmetric Key Expansion"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "aes128-full-lut",
+                                                  "cipher":  "AES-128 full-LUT",
+                                                  "backend":  "TFHE",
+                                                  "operations":  [
+                                                                     "TFHE-Sym-Encryption",
+                                                                     "Transciphering"
+                                                                 ]
+                                              }
+                                          ],
+                       "local_tag":  "hhe-arena:full-lut-aes-matrix2",
+                       "pull_ref":  null,
+                       "manifest":  "manifests/full-lut-aes.v2.json",
+                       "build":  {
+                                     "tag":  "hhe-arena:full-lut-aes-matrix2",
+                                     "dockerfile":  "frameworks/AES/Full-LUT/docker/Dockerfile",
+                                     "context":  ".",
+                                     "args":  {
+                                                  "TOOLING_IMAGE":  "hhe-arena:tooling",
+                                                  "TOOLING_DIGEST":  "development",
+                                                  "IMAGE_VERSION":  "0.1.0-matrix.2"
+                                              }
+                                 }
+                   },
+                   {
+                       "id":  "fregata-cbs-aes-tfhepp-cpp",
+                       "framework":  "AES/Fregata CBS",
+                       "cipher":  "AES-128 CBS",
+                       "language":  "cpp",
+                       "backend":  "TFHE++",
+                       "operations":  [
+                                          "AES Key Expansion",
+                                          "AES Sym Encryption",
+                                          "Make SBox Table",
+                                          "Encrypt Plaintext",
+                                          "AES Transciphering"
+                                      ],
+                       "matrix_targets":  [
+                                              {
+                                                  "variant_id":  "aes128-fregata-cbs",
+                                                  "cipher":  "AES-128 CBS",
+                                                  "backend":  "native",
+                                                  "operations":  [
+                                                                     "AES Key Expansion",
+                                                                     "AES Sym Encryption"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "aes128-fregata-cbs",
+                                                  "cipher":  "AES-128 CBS",
+                                                  "backend":  "TFHE++",
+                                                  "operations":  [
+                                                                     "Make SBox Table",
+                                                                     "Encrypt Plaintext",
+                                                                     "AES Transciphering"
+                                                                 ]
+                                              }
+                                          ],
+                       "local_tag":  "hhe-arena:fregata-cbs-aes-matrix2",
+                       "pull_ref":  null,
+                       "manifest":  "manifests/fregata-cbs-aes.v2.json",
+                       "build":  {
+                                     "tag":  "hhe-arena:fregata-cbs-aes-matrix2",
+                                     "dockerfile":  "frameworks/AES/Fregata/CBSmode/docker/Dockerfile",
+                                     "context":  ".",
+                                     "args":  {
+                                                  "TOOLING_IMAGE":  "hhe-arena:tooling",
+                                                  "TOOLING_DIGEST":  "development",
+                                                  "IMAGE_VERSION":  "0.1.0-matrix.2"
+                                              }
+                                 }
+                   },
+                   {
+                       "id":  "fregata-gbs-aes-tfhepp-cpp",
+                       "framework":  "AES/Fregata GBS",
+                       "cipher":  "AES-128 GBS",
+                       "language":  "cpp",
+                       "backend":  "TFHE++",
+                       "operations":  [
+                                          "GBS AES pipeline"
+                                      ],
+                       "matrix_targets":  [
+                                              {
+                                                  "variant_id":  "aes128-fregata-gbs",
+                                                  "cipher":  "AES-128 GBS",
+                                                  "backend":  "TFHE++",
+                                                  "operations":  [
+                                                                     "GBS AES pipeline"
+                                                                 ]
+                                              }
+                                          ],
+                       "local_tag":  "hhe-arena:fregata-gbs-aes-matrix2",
+                       "pull_ref":  null,
+                       "manifest":  "manifests/fregata-gbs-aes.v2.json",
+                       "build":  {
+                                     "tag":  "hhe-arena:fregata-gbs-aes-matrix2",
+                                     "dockerfile":  "frameworks/AES/Fregata/GBSmode/docker/Dockerfile",
+                                     "context":  ".",
+                                     "args":  {
+                                                  "TOOLING_IMAGE":  "hhe-arena:tooling",
+                                                  "TOOLING_DIGEST":  "development",
+                                                  "IMAGE_VERSION":  "0.1.0-matrix.2"
+                                              }
+                                 }
+                   },
+                   {
+                       "id":  "fft-cbs-aes-rust",
+                       "framework":  "AES/FFT-CBS",
+                       "cipher":  "AES, AES half-CBS, CBS, HP-LHE",
+                       "language":  "rust",
+                       "backend":  "TFHE-rs",
+                       "operations":  [
+                                          "AES SYM.Enc()",
+                                          "HHE.Decomp()",
+                                          "AES evaluation",
+                                          "AES half-CBS evaluation",
+                                          "improved_wopbs",
+                                          "high_prec_improved_wopbs"
+                                      ],
+                       "matrix_targets":  [
+                                              {
+                                                  "variant_id":  "aes128-fft-cbs-tight",
+                                                  "cipher":  "AES-128 AES_TIGHT",
+                                                  "backend":  "TFHE-rs",
+                                                  "operations":  [
+                                                                     "AES SYM.Enc()",
+                                                                     "HHE.Decomp()",
+                                                                     "AES evaluation"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "aes128-fft-half-cbs",
+                                                  "cipher":  "AES-128 AES_HALF_CBS",
+                                                  "backend":  "TFHE-rs",
+                                                  "operations":  [
+                                                                     "AES SYM.Enc()",
+                                                                     "HHE.Decomp()",
+                                                                     "AES half-CBS evaluation"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "fft-cbs-cmux1",
+                                                  "cipher":  "CBS CMUX1/2/3",
+                                                  "backend":  "TFHE-rs",
+                                                  "operations":  [
+                                                                     "improved_wopbs"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "fft-hplhe-improved-2-2-e1",
+                                                  "cipher":  "HP-LHE",
+                                                  "backend":  "TFHE-rs",
+                                                  "operations":  [
+                                                                     "high_prec_improved_wopbs"
+                                                                 ]
+                                              }
+                                          ],
+                       "local_tag":  "hhe-arena:fft-cbs-aes-matrix2",
+                       "pull_ref":  null,
+                       "manifest":  "manifests/fft-cbs-aes.v2.json",
+                       "build":  {
+                                     "tag":  "hhe-arena:fft-cbs-aes-matrix2",
+                                     "dockerfile":  "frameworks/AES/FFT_CBS/docker/Dockerfile",
+                                     "context":  ".",
+                                     "args":  {
+                                                  "TOOLING_IMAGE":  "hhe-arena:tooling",
+                                                  "TOOLING_DIGEST":  "development",
+                                                  "IMAGE_VERSION":  "0.1.0-matrix.2"
+                                              }
+                                 }
+                   },
+                   {
+                       "id":  "hheland-rubato128l-go",
+                       "framework":  "HHELand",
+                       "cipher":  "Rubato-128-L",
+                       "language":  "go",
+                       "backend":  "native",
+                       "operations":  [
+                                          "SKE.Enc()"
+                                      ],
+                       "local_tag":  "hhe-arena:hheland-rubato-matrix1",
+                       "pull_ref":  null,
+                       "manifest":  "manifests/hheland-rubato.v1.json",
+                       "build":  {
+                                     "tag":  "hhe-arena:hheland-rubato-matrix1",
+                                     "dockerfile":  "frameworks/HHELand/docker/rubato/Dockerfile",
+                                     "context":  ".",
+                                     "args":  {
+                                                  "TOOLING_IMAGE":  "hhe-arena:tooling",
+                                                  "TOOLING_DIGEST":  "development",
+                                                  "IMAGE_VERSION":  "0.1.0-matrix.1"
+                                              }
+                                 }
+                   },
+                   {
+                       "id":  "hheland-symmetric-go",
+                       "framework":  "HHELand",
+                       "cipher":  "Hera and Pasta",
+                       "language":  "go",
+                       "backend":  "native",
+                       "operations":  [
+                                          "SKE.Enc()"
+                                      ],
+                       "matrix_targets":  [
+                                              {
+                                                  "variant_id":  "hheland-rubato-128s",
+                                                  "cipher":  "Rubato-128S",
+                                                  "backend":  "native",
+                                                  "operations":  [
+                                                                     "SKE.Enc()"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hheland-rubato-128m",
+                                                  "cipher":  "Rubato-128M",
+                                                  "backend":  "native",
+                                                  "operations":  [
+                                                                     "SKE.Enc()"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hheland-hera-80f",
+                                                  "cipher":  "Hera-80f",
+                                                  "backend":  "native",
+                                                  "operations":  [
+                                                                     "SKE.Enc()"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hheland-hera-80s",
+                                                  "cipher":  "Hera-80s",
+                                                  "backend":  "native",
+                                                  "operations":  [
+                                                                     "SKE.Enc()"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hheland-hera-80af",
+                                                  "cipher":  "Hera-80af",
+                                                  "backend":  "native",
+                                                  "operations":  [
+                                                                     "SKE.Enc()"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hheland-hera-80as",
+                                                  "cipher":  "Hera-80as",
+                                                  "backend":  "native",
+                                                  "operations":  [
+                                                                     "SKE.Enc()"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hheland-hera-128f",
+                                                  "cipher":  "Hera-128f",
+                                                  "backend":  "native",
+                                                  "operations":  [
+                                                                     "SKE.Enc()"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hheland-hera-128s",
+                                                  "cipher":  "Hera-128s",
+                                                  "backend":  "native",
+                                                  "operations":  [
+                                                                     "SKE.Enc()"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hheland-hera-128af",
+                                                  "cipher":  "Hera-128af",
+                                                  "backend":  "native",
+                                                  "operations":  [
+                                                                     "SKE.Enc()"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hheland-hera-128as",
+                                                  "cipher":  "Hera-128as",
+                                                  "backend":  "native",
+                                                  "operations":  [
+                                                                     "SKE.Enc()"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hheland-pasta3-p65537",
+                                                  "cipher":  "Pasta3-p65537",
+                                                  "backend":  "native",
+                                                  "operations":  [
+                                                                     "SKE.Enc()"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hheland-pasta3-p8088322049",
+                                                  "cipher":  "Pasta3-p8088322049",
+                                                  "backend":  "native",
+                                                  "operations":  [
+                                                                     "SKE.Enc()"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hheland-pasta3-p1096486890805657601",
+                                                  "cipher":  "Pasta3-p1096486890805657601",
+                                                  "backend":  "native",
+                                                  "operations":  [
+                                                                     "SKE.Enc()"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hheland-pasta4-p65537",
+                                                  "cipher":  "Pasta4-p65537",
+                                                  "backend":  "native",
+                                                  "operations":  [
+                                                                     "SKE.Enc()"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hheland-pasta4-p8088322049",
+                                                  "cipher":  "Pasta4-p8088322049",
+                                                  "backend":  "native",
+                                                  "operations":  [
+                                                                     "SKE.Enc()"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hheland-pasta4-p1096486890805657601",
+                                                  "cipher":  "Pasta4-p1096486890805657601",
+                                                  "backend":  "native",
+                                                  "operations":  [
+                                                                     "SKE.Enc()"
+                                                                 ]
+                                              }
+                                          ],
+                       "local_tag":  "hhe-arena:hheland-symmetric-matrix2",
+                       "pull_ref":  null,
+                       "manifest":  "manifests/hheland-symmetric.v2.json",
+                       "build":  {
+                                     "tag":  "hhe-arena:hheland-symmetric-matrix2",
+                                     "dockerfile":  "frameworks/HHELand/docker/symmetric/Dockerfile",
+                                     "context":  ".",
+                                     "args":  {
+                                                  "TOOLING_IMAGE":  "hhe-arena:tooling",
+                                                  "TOOLING_DIGEST":  "development",
+                                                  "IMAGE_VERSION":  "0.1.0-matrix.2"
+                                              }
+                                 }
+                   },
+                   {
+                       "id":  "fasta-symmetric-c",
+                       "framework":  "Fasta/Rasta",
+                       "cipher":  "Fasta",
+                       "language":  "c",
+                       "backend":  "native",
+                       "operations":  [
+                                          "ske_encrypt",
+                                          "ske_decrypt"
+                                      ],
+                       "local_tag":  "hhe-arena:fasta-symmetric-matrix2",
+                       "pull_ref":  null,
+                       "manifest":  "manifests/fasta-symmetric.v2.json",
+                       "build":  {
+                                     "tag":  "hhe-arena:fasta-symmetric-matrix2",
+                                     "dockerfile":  "frameworks/fasta/docker/symmetric/Dockerfile",
+                                     "context":  ".",
+                                     "args":  {
+                                                  "TOOLING_IMAGE":  "hhe-arena:tooling",
+                                                  "TOOLING_DIGEST":  "development",
+                                                  "IMAGE_VERSION":  "0.1.0-matrix.2"
+                                              }
+                                 }
+                   },
+                   {
+                       "id":  "hhe-framework-plain-cpp",
+                       "framework":  "HHE Framework",
+                       "cipher":  "23 plain cipher variants",
+                       "language":  "cpp",
+                       "backend":  "plain",
+                       "operations":  [
+                                          "ske_encrypt",
+                                          "ske_decrypt",
+                                          "plain_evaluate"
+                                      ],
+                       "matrix_targets":  [
+                                              {
+                                                  "variant_id":  "hhef-agrasta",
+                                                  "cipher":  "HHEF-agrasta",
+                                                  "backend":  "plain",
+                                                  "operations":  [
+                                                                     "ske_encrypt",
+                                                                     "ske_decrypt",
+                                                                     "plain_evaluate"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-agrasta-packed",
+                                                  "cipher":  "HHEF-agrasta_packed",
+                                                  "backend":  "plain",
+                                                  "operations":  [
+                                                                     "ske_encrypt",
+                                                                     "ske_decrypt",
+                                                                     "plain_evaluate"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-rasta-5",
+                                                  "cipher":  "HHEF-rasta_5",
+                                                  "backend":  "plain",
+                                                  "operations":  [
+                                                                     "ske_encrypt",
+                                                                     "ske_decrypt",
+                                                                     "plain_evaluate"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-rasta-5-packed",
+                                                  "cipher":  "HHEF-rasta_5_packed",
+                                                  "backend":  "plain",
+                                                  "operations":  [
+                                                                     "ske_encrypt",
+                                                                     "ske_decrypt",
+                                                                     "plain_evaluate"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-rasta-6",
+                                                  "cipher":  "HHEF-rasta_6",
+                                                  "backend":  "plain",
+                                                  "operations":  [
+                                                                     "ske_encrypt",
+                                                                     "ske_decrypt",
+                                                                     "plain_evaluate"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-rasta-6-packed",
+                                                  "cipher":  "HHEF-rasta_6_packed",
+                                                  "backend":  "plain",
+                                                  "operations":  [
+                                                                     "ske_encrypt",
+                                                                     "ske_decrypt",
+                                                                     "plain_evaluate"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-dasta-5",
+                                                  "cipher":  "HHEF-dasta_5",
+                                                  "backend":  "plain",
+                                                  "operations":  [
+                                                                     "ske_encrypt",
+                                                                     "ske_decrypt",
+                                                                     "plain_evaluate"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-dasta-5-packed",
+                                                  "cipher":  "HHEF-dasta_5_packed",
+                                                  "backend":  "plain",
+                                                  "operations":  [
+                                                                     "ske_encrypt",
+                                                                     "ske_decrypt",
+                                                                     "plain_evaluate"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-dasta-6",
+                                                  "cipher":  "HHEF-dasta_6",
+                                                  "backend":  "plain",
+                                                  "operations":  [
+                                                                     "ske_encrypt",
+                                                                     "ske_decrypt",
+                                                                     "plain_evaluate"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-dasta-6-packed",
+                                                  "cipher":  "HHEF-dasta_6_packed",
+                                                  "backend":  "plain",
+                                                  "operations":  [
+                                                                     "ske_encrypt",
+                                                                     "ske_decrypt",
+                                                                     "plain_evaluate"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-lowmc",
+                                                  "cipher":  "HHEF-lowmc",
+                                                  "backend":  "plain",
+                                                  "operations":  [
+                                                                     "ske_encrypt",
+                                                                     "ske_decrypt",
+                                                                     "plain_evaluate"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-filip-1216",
+                                                  "cipher":  "HHEF-filip_1216",
+                                                  "backend":  "plain",
+                                                  "operations":  [
+                                                                     "ske_encrypt",
+                                                                     "ske_decrypt",
+                                                                     "plain_evaluate"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-filip-1280",
+                                                  "cipher":  "HHEF-filip_1280",
+                                                  "backend":  "plain",
+                                                  "operations":  [
+                                                                     "ske_encrypt",
+                                                                     "ske_decrypt",
+                                                                     "plain_evaluate"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-kreyvium",
+                                                  "cipher":  "HHEF-kreyvium",
+                                                  "backend":  "plain",
+                                                  "operations":  [
+                                                                     "ske_encrypt",
+                                                                     "ske_decrypt",
+                                                                     "plain_evaluate"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-kreyvium-12",
+                                                  "cipher":  "HHEF-kreyvium_12",
+                                                  "backend":  "plain",
+                                                  "operations":  [
+                                                                     "ske_encrypt",
+                                                                     "ske_decrypt",
+                                                                     "plain_evaluate"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-kreyvium-13",
+                                                  "cipher":  "HHEF-kreyvium_13",
+                                                  "backend":  "plain",
+                                                  "operations":  [
+                                                                     "ske_encrypt",
+                                                                     "ske_decrypt",
+                                                                     "plain_evaluate"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-pasta-3",
+                                                  "cipher":  "HHEF-pasta_3",
+                                                  "backend":  "plain",
+                                                  "operations":  [
+                                                                     "ske_encrypt",
+                                                                     "ske_decrypt",
+                                                                     "plain_evaluate"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-pasta-4",
+                                                  "cipher":  "HHEF-pasta_4",
+                                                  "backend":  "plain",
+                                                  "operations":  [
+                                                                     "ske_encrypt",
+                                                                     "ske_decrypt",
+                                                                     "plain_evaluate"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-pasta2-3",
+                                                  "cipher":  "HHEF-pasta2_3",
+                                                  "backend":  "plain",
+                                                  "operations":  [
+                                                                     "ske_encrypt",
+                                                                     "ske_decrypt",
+                                                                     "plain_evaluate"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-pasta2-4",
+                                                  "cipher":  "HHEF-pasta2_4",
+                                                  "backend":  "plain",
+                                                  "operations":  [
+                                                                     "ske_encrypt",
+                                                                     "ske_decrypt",
+                                                                     "plain_evaluate"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-masta-4",
+                                                  "cipher":  "HHEF-masta_4",
+                                                  "backend":  "plain",
+                                                  "operations":  [
+                                                                     "ske_encrypt",
+                                                                     "ske_decrypt",
+                                                                     "plain_evaluate"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-masta-5",
+                                                  "cipher":  "HHEF-masta_5",
+                                                  "backend":  "plain",
+                                                  "operations":  [
+                                                                     "ske_encrypt",
+                                                                     "ske_decrypt",
+                                                                     "plain_evaluate"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-hera-5",
+                                                  "cipher":  "HHEF-hera_5",
+                                                  "backend":  "plain",
+                                                  "operations":  [
+                                                                     "ske_encrypt",
+                                                                     "ske_decrypt",
+                                                                     "plain_evaluate"
+                                                                 ]
+                                              }
+                                          ],
+                       "local_tag":  "hhe-arena:hhe-framework-plain-matrix2",
+                       "pull_ref":  null,
+                       "manifest":  "manifests/hhe-framework-plain.v2.json",
+                       "build":  {
+                                     "tag":  "hhe-arena:hhe-framework-plain-matrix2",
+                                     "dockerfile":  "frameworks/hheFramework/docker/plain/Dockerfile",
+                                     "context":  ".",
+                                     "args":  {
+                                                  "TOOLING_IMAGE":  "hhe-arena:tooling",
+                                                  "TOOLING_DIGEST":  "development",
+                                                  "IMAGE_VERSION":  "0.1.0-matrix.2"
+                                              }
+                                 }
+                   },
+                   {
+                       "id":  "elisabeth-clear-rust",
+                       "framework":  "Elisabeth",
+                       "cipher":  "Elisabeth",
+                       "language":  "rust",
+                       "backend":  "native",
+                       "operations":  [
+                                          "SKE.Enc()",
+                                          "SKE.Dec()"
+                                      ],
+                       "local_tag":  "hhe-arena:elisabeth-clear-matrix1",
+                       "pull_ref":  null,
+                       "manifest":  "manifests/elisabeth-clear.v1.json",
+                       "build":  {
+                                     "tag":  "hhe-arena:elisabeth-clear-matrix1",
+                                     "dockerfile":  "frameworks/elisabeth/docker/Dockerfile",
+                                     "context":  ".",
+                                     "args":  {
+                                                  "TOOLING_IMAGE":  "hhe-arena:tooling",
+                                                  "TOOLING_DIGEST":  "development",
+                                                  "IMAGE_VERSION":  "0.1.0-matrix.1"
+                                              }
+                                 }
+                   },
+                   {
+                       "id":  "transistor-symmetric-python",
+                       "framework":  "Transistor",
+                       "cipher":  "Transistor",
+                       "language":  "python",
+                       "backend":  "native",
+                       "operations":  [
+                                          "Sym.Enc()"
+                                      ],
+                       "local_tag":  "hhe-arena:transistor-symmetric-matrix1",
+                       "pull_ref":  null,
+                       "manifest":  "manifests/transistor-symmetric.v1.json",
+                       "build":  {
+                                     "tag":  "hhe-arena:transistor-symmetric-matrix1",
+                                     "dockerfile":  "frameworks/Transistor/symmetric/docker/Dockerfile",
+                                     "context":  ".",
+                                     "args":  {
+                                                  "TOOLING_IMAGE":  "hhe-arena:tooling",
+                                                  "TOOLING_DIGEST":  "development",
+                                                  "IMAGE_VERSION":  "0.1.0-matrix.1"
+                                              }
+                                 }
+                   },
+                   {
+                       "id":  "margrethe-ske-python",
+                       "framework":  "Margrethe",
+                       "cipher":  "Margrethe",
+                       "language":  "python",
+                       "backend":  "native",
+                       "operations":  [
+                                          "Margrethe SKE"
+                                      ],
+                       "local_tag":  "hhe-arena:margrethe-symmetric-matrix2",
+                       "pull_ref":  null,
+                       "manifest":  "manifests/margrethe-symmetric.v2.json",
+                       "build":  {
+                                     "tag":  "hhe-arena:margrethe-symmetric-matrix2",
+                                     "dockerfile":  "frameworks/margrethe/docker/symmetric/Dockerfile",
+                                     "context":  ".",
+                                     "args":  {
+                                                  "TOOLING_IMAGE":  "hhe-arena:tooling",
+                                                  "TOOLING_DIGEST":  "development",
+                                                  "IMAGE_VERSION":  "0.1.0-matrix.2"
+                                              }
+                                 }
+                   },
+                   {
+                       "id":  "yux-symmetric-cpp",
+                       "framework":  "YuX",
+                       "cipher":  "Yu2x and Yupx-p",
+                       "language":  "cpp",
+                       "backend":  "native",
+                       "operations":  [
+                                          "Symmetric Key Expansion",
+                                          "Symmetric Encryption",
+                                          "Symmetric Decryption"
+                                      ],
+                       "matrix_targets":  [
+                                              {
+                                                  "variant_id":  "yux-yu2x-8-ske",
+                                                  "cipher":  "YuX-Yu2x-8",
+                                                  "backend":  "native",
+                                                  "operations":  [
+                                                                     "Symmetric Key Expansion",
+                                                                     "Symmetric Encryption",
+                                                                     "Symmetric Decryption"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "yux-yu2x-16-ske",
+                                                  "cipher":  "YuX-Yu2x-16",
+                                                  "backend":  "native",
+                                                  "operations":  [
+                                                                     "Symmetric Key Expansion",
+                                                                     "Symmetric Encryption",
+                                                                     "Symmetric Decryption"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "yux-yupx-p-ske",
+                                                  "cipher":  "YuX-Yupx-p",
+                                                  "backend":  "native",
+                                                  "operations":  [
+                                                                     "Symmetric Key Expansion",
+                                                                     "Symmetric Encryption",
+                                                                     "Symmetric Decryption"
+                                                                 ]
+                                              }
+                                          ],
+                       "local_tag":  "hhe-arena:yux-symmetric-matrix2",
+                       "pull_ref":  null,
+                       "manifest":  "manifests/yux-symmetric.v2.json",
+                       "build":  {
+                                     "tag":  "hhe-arena:yux-symmetric-matrix2",
+                                     "dockerfile":  "frameworks/yux/docker/symmetric/Dockerfile",
+                                     "context":  ".",
+                                     "args":  {
+                                                  "TOOLING_IMAGE":  "hhe-arena:tooling",
+                                                  "TOOLING_DIGEST":  "development",
+                                                  "IMAGE_VERSION":  "0.1.0-matrix.2"
+                                              }
+                                 }
+                   },
+                   {
+                       "id":  "transistor-homomorphic-rust",
+                       "framework":  "Transistor",
+                       "cipher":  "Transistor",
+                       "language":  "rust",
+                       "backend":  "odd-modulus-tfhe",
+                       "operations":  [
+                                          "HHE.Decomp()"
+                                      ],
+                       "local_tag":  "hhe-arena:transistor-homomorphic-matrix2",
+                       "pull_ref":  null,
+                       "manifest":  "manifests/transistor-homomorphic.v2.json",
+                       "build":  {
+                                     "tag":  "hhe-arena:transistor-homomorphic-matrix2",
+                                     "dockerfile":  "frameworks/Transistor/homomorphic_implementation/homomorphic_transistor/docker/Dockerfile",
+                                     "context":  ".",
+                                     "args":  {
+                                                  "TOOLING_IMAGE":  "hhe-arena:tooling",
+                                                  "TOOLING_DIGEST":  "development",
+                                                  "IMAGE_VERSION":  "0.1.0-matrix.2"
+                                              }
+                                 }
+                   },
+                   {
+                       "id":  "hippogryph-aes-rust",
+                       "framework":  "AES/Hippogryph",
+                       "cipher":  "AES-128 Hippogryph",
+                       "language":  "rust",
+                       "backend":  "odd-modulus TFHE",
+                       "operations":  [
+                                          "TFHE Encryption of the plaintext",
+                                          "Transciphering"
+                                      ],
+                       "local_tag":  "hhe-arena:hippogryph-aes-matrix2",
+                       "pull_ref":  null,
+                       "manifest":  "manifests/hippogryph-aes.v2.json",
+                       "build":  {
+                                     "tag":  "hhe-arena:hippogryph-aes-matrix2",
+                                     "dockerfile":  "frameworks/AES/Hippogryph/docker/Dockerfile",
+                                     "context":  ".",
+                                     "args":  {
+                                                  "TOOLING_IMAGE":  "hhe-arena:tooling",
+                                                  "TOOLING_DIGEST":  "development",
+                                                  "IMAGE_VERSION":  "0.1.0-matrix.2"
+                                              }
+                                 }
+                   },
+                   {
+                       "id":  "p-encoding-aes-rust",
+                       "framework":  "AES/P-encoding",
+                       "cipher":  "AES-128 P-encoding",
+                       "language":  "rust",
+                       "backend":  "odd-modulus TFHE",
+                       "operations":  [
+                                          "TFHE Encryption of the plaintext",
+                                          "Transciphering"
+                                      ],
+                       "local_tag":  "hhe-arena:p-encoding-aes-matrix2",
+                       "pull_ref":  null,
+                       "manifest":  "manifests/p-encoding-aes.v2.json",
+                       "build":  {
+                                     "tag":  "hhe-arena:p-encoding-aes-matrix2",
+                                     "dockerfile":  "frameworks/AES/P_encoding/docker/Dockerfile",
+                                     "context":  ".",
+                                     "args":  {
+                                                  "TOOLING_IMAGE":  "hhe-arena:tooling",
+                                                  "TOOLING_DIGEST":  "development",
+                                                  "IMAGE_VERSION":  "0.1.0-matrix.2"
+                                              }
+                                 }
+                   }
+               ]
+}

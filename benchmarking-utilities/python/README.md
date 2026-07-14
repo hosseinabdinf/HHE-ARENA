@@ -8,7 +8,8 @@ This package ports frozen benchmark schema `1.0.0`.
 strict/warn environment checks, proportional warm-ups, explicit GC modes,
 per-iteration JSONL, signed byte deltas, and median/min/max summaries. The
 legacy `benchmark(name, iterations, callable)` wrapper reads the shared
-`HHE_BENCH_*` environment variables.
+`HHE_BENCH_*` environment variables, including `HHE_BENCH_HOSTNAME` as the
+stable host-identity override.
 
 Exact `time_ns` comes from integer `time.perf_counter_ns()`. Process/RSS
 sampling, `resource.getrusage`, Python heap sampling, JSON encoding, logging,

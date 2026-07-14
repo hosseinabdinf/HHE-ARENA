@@ -1,0 +1,21 @@
+{
+  "$schema": "../schemas/benchmark-manifest.schema.json",
+  "version": 1,
+  "preflight": "/opt/hhe/bin/hhe-preflight",
+  "benchmarks": [
+    {
+      "id": "btr-aes-ckks-hedecrypt",
+      "cipher": "AES-128 BtR",
+      "language": "go",
+      "operation": "HHE.Decomp()",
+      "backend": "Lattigo CKKS",
+      "executable": "/opt/hhe/frameworks/btr/btr-aes",
+      "workdir": "/work",
+      "env": {
+        "HHE_BENCH_CIPHER": "AES-128 BtR",
+        "HHE_BENCH_ITERATIONS": "1",
+        "HHE_BENCH_WARMUPS": "0"
+      }
+    }
+  ]
+}

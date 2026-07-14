@@ -1,0 +1,15 @@
+{
+  "$schema": "../schemas/benchmark-manifest.schema.json",
+  "version": 1,
+  "preflight": "/opt/hhe/bin/hhe-preflight",
+  "benchmarks": [
+    { "id": "fft-cbs-aes-symmetric", "cipher": "AES-128 AES_TIGHT", "language": "rust", "operation": "AES SYM.Enc()", "backend": "TFHE-rs", "executable": "/opt/hhe/frameworks/fft-cbs/bench_aes", "workdir": "/work", "env": { "HHE_BENCH_ITERATIONS": "1", "HHE_BENCH_WARMUPS": "0" } },
+    { "id": "fft-cbs-aes-transciphering", "cipher": "AES-128 AES_TIGHT", "language": "rust", "operation": "HHE.Decomp()", "backend": "TFHE-rs", "executable": "/opt/hhe/frameworks/fft-cbs/bench_aes", "workdir": "/work", "env": { "HHE_BENCH_ITERATIONS": "1", "HHE_BENCH_WARMUPS": "0" } },
+    { "id": "fft-cbs-aes-evaluation", "cipher": "AES-128 AES_TIGHT", "language": "rust", "operation": "AES evaluation", "backend": "TFHE-rs", "executable": "/opt/hhe/frameworks/fft-cbs/bench_aes", "workdir": "/work", "env": { "HHE_BENCH_ITERATIONS": "1", "HHE_BENCH_WARMUPS": "0" } },
+    { "id": "fft-half-cbs-aes-symmetric", "cipher": "AES-128 AES_HALF_CBS", "language": "rust", "operation": "AES SYM.Enc()", "backend": "TFHE-rs", "executable": "/opt/hhe/frameworks/fft-cbs/bench_aes_half_cbs", "workdir": "/work", "env": { "HHE_BENCH_ITERATIONS": "1", "HHE_BENCH_WARMUPS": "0" } },
+    { "id": "fft-half-cbs-aes-transciphering", "cipher": "AES-128 AES_HALF_CBS", "language": "rust", "operation": "HHE.Decomp()", "backend": "TFHE-rs", "executable": "/opt/hhe/frameworks/fft-cbs/bench_aes_half_cbs", "workdir": "/work", "env": { "HHE_BENCH_ITERATIONS": "1", "HHE_BENCH_WARMUPS": "0" } },
+    { "id": "fft-half-cbs-aes-evaluation", "cipher": "AES-128 AES_HALF_CBS", "language": "rust", "operation": "AES half-CBS evaluation", "backend": "TFHE-rs", "executable": "/opt/hhe/frameworks/fft-cbs/bench_aes_half_cbs", "workdir": "/work", "env": { "HHE_BENCH_ITERATIONS": "1", "HHE_BENCH_WARMUPS": "0" } },
+    { "id": "fft-cbs-cmux", "cipher": "CBS CMUX1/2/3", "language": "rust", "operation": "improved_wopbs", "backend": "TFHE-rs", "executable": "/opt/hhe/frameworks/fft-cbs/bench_cbs", "workdir": "/work", "env": { "HHE_BENCH_ITERATIONS": "1", "HHE_BENCH_WARMUPS": "0" } },
+    { "id": "fft-hplhe", "cipher": "HP-LHE", "language": "rust", "operation": "high_prec_improved_wopbs", "backend": "TFHE-rs", "executable": "/opt/hhe/frameworks/fft-cbs/bench_hp_lhe", "workdir": "/work", "env": { "HHE_BENCH_ITERATIONS": "1", "HHE_BENCH_WARMUPS": "0" } }
+  ]
+}

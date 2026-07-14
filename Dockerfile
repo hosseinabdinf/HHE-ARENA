@@ -61,9 +61,12 @@ COPY --from=orchestrator-builder /out-hhe /opt/hhe/bin/hhe
 COPY --from=rust-builder /out-hhe-rust-probe /opt/hhe/bin/hhe-rust-probe
 COPY benchmarking-utilities/report/report_generator.py /opt/hhe/bin/hhe-report
 COPY benchmarking-utilities/python/utils/ /opt/hhe/python-utils/
+COPY ARENA.txt /opt/hhe/ARENA.txt
 COPY schemas/benchmark.schema.json /opt/hhe/schemas/benchmark.schema.json
+COPY schemas/benchmark-manifest.schema.json /opt/hhe/schemas/benchmark-manifest.schema.json
 COPY docker/entrypoint.sh /opt/hhe/bin/hhe-tooling
 COPY docker/preflight.sh /opt/hhe/bin/hhe-preflight
+COPY docker/validate_framework_image.py /opt/hhe/bin/hhe-validate-framework-image
 COPY docker/benchmark-manifest.json /opt/hhe/benchmarks/manifest.json
 RUN chmod 0555 /opt/hhe/bin/* \
  && mkdir -p /work \

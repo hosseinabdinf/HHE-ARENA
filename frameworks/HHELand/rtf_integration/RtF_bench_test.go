@@ -4,10 +4,19 @@ import (
 	"crypto/rand"
 	"fmt"
 	"math"
+	"sync"
 	"testing"
 
 	"HHELand/utils"
 )
+
+func runArenaBenchmark(b *testing.B, operation string, target func()) {
+	var once sync.Once
+	b.Run(operation, func(b *testing.B) {
+		once.Do(func() { utils.BenchmarkIter(operation, 1, target) })
+		b.ReportMetric(0, "ns/op")
+	})
+}
 
 // Benchmark RtF framework with HERA for 80-bit security full-slots parameter
 func BenchmarkRtFHera80f(b *testing.B) {
@@ -259,7 +268,7 @@ func benchmarkRtFHera(b *testing.B, name string, numRound int, paramIndex int, r
 
 	// FV Keystream
 	benchOffLat := fmt.Sprintf("RtF HERA Offline Latency")
-	b.Run(benchOffLat, func(b *testing.B) {
+	runArenaBenchmark(b, benchOffLat, func() {
 		fvKeystreams = hera.Crypt(nonces, kCt, heraModDown)
 		for i := 0; i < 1; i++ {
 			fvKeystreams[i] = fvEvaluator.SlotsToCoeffs(fvKeystreams[i], stcModDown)
@@ -268,7 +277,7 @@ func benchmarkRtFHera(b *testing.B, name string, numRound int, paramIndex int, r
 	})
 	/* We assume that b.N == 1 */
 	benchOffThrput := fmt.Sprintf("RtF HERA Offline Throughput")
-	b.Run(benchOffThrput, func(b *testing.B) {
+	runArenaBenchmark(b, benchOffThrput, func() {
 		for i := 1; i < 16; i++ {
 			fvKeystreams[i] = fvEvaluator.SlotsToCoeffs(fvKeystreams[i], stcModDown)
 			fvEvaluator.ModSwitchMany(fvKeystreams[i], fvKeystreams[i], fvKeystreams[i].Level())
@@ -277,7 +286,7 @@ func benchmarkRtFHera(b *testing.B, name string, numRound int, paramIndex int, r
 
 	var ctBoot *Ciphertext
 	benchOnline := fmt.Sprintf("RtF HERA Online Lat x1")
-	b.Run(benchOnline, func(b *testing.B) {
+	runArenaBenchmark(b, benchOnline, func() {
 		// Encrypt and mod switch to the lowest level
 		ciphertext := NewCiphertextFVLvl(params, 1, 0)
 		ciphertext.Value()[0] = plaintexts[0].Value()[0].CopyNew()
@@ -439,7 +448,7 @@ func benchmarkRtFRubato(b *testing.B, rubatoParam int) {
 	kCt := rubato.EncKey(key)
 
 	benchOffLat := fmt.Sprintf("RtF Rubato Offline Latency")
-	b.Run(benchOffLat, func(b *testing.B) {
+	runArenaBenchmark(b, benchOffLat, func() {
 		fvKeystreams = rubato.Crypt(nonces, counter, kCt, rubatoModDown)
 		for i := 0; i < 1; i++ {
 			fvKeystreams[i] = fvEvaluator.SlotsToCoeffs(fvKeystreams[i], stcModDown)
@@ -448,7 +457,7 @@ func benchmarkRtFRubato(b *testing.B, rubatoParam int) {
 	})
 	/* We assume that b.N == 1 */
 	benchOffThrput := fmt.Sprintf("RtF Rubato Offline Throughput")
-	b.Run(benchOffThrput, func(b *testing.B) {
+	runArenaBenchmark(b, benchOffThrput, func() {
 		for i := 1; i < outputsize; i++ {
 			fvKeystreams[i] = fvEvaluator.SlotsToCoeffs(fvKeystreams[i], stcModDown)
 			fvEvaluator.ModSwitchMany(fvKeystreams[i], fvKeystreams[i], fvKeystreams[i].Level())
@@ -457,7 +466,7 @@ func benchmarkRtFRubato(b *testing.B, rubatoParam int) {
 
 	var ctBoot *Ciphertext
 	benchOnline := fmt.Sprintf("RtF Rubato Online Lat x1")
-	b.Run(benchOnline, func(b *testing.B) {
+	runArenaBenchmark(b, benchOnline, func() {
 		// Encrypt and mod switch to the lowest level
 		ciphertext := NewCiphertextFVLvl(params, 1, 0)
 		ciphertext.Value()[0] = plaintexts[0].Value()[0].CopyNew()

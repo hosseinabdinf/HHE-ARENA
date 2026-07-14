@@ -5,6 +5,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include <time.h>
 
 #ifdef __cplusplus
@@ -97,8 +98,15 @@ void PrintMemory(const char* name, long start, long end);
  */
 #define HHE_BENCHMARK_ITER(name, count_arg, code)                           \
   do {                                                                       \
+    const char* _hhe_name = (name);                                          \
+    const char* _hhe_requested = getenv("HHE_BENCH_OPERATION");             \
+    if (_hhe_requested != NULL && _hhe_requested[0] != '\0' &&              \
+        strcmp(_hhe_requested, _hhe_name) != 0) {                            \
+      do { code; } while (0);                                                \
+      break;                                                                 \
+    }                                                                        \
     HHEBenchmarkConfig _hhe_cfg =                                             \
-        HHEBenchmarkConfigFromEnv((name), (size_t)(count_arg));              \
+        HHEBenchmarkConfigFromEnv(_hhe_name, (size_t)(count_arg));           \
     _hhe_cfg.language = HHE_CALLER_LANGUAGE;              \
     HHEBenchmarkSession _hhe_session;                                         \
     if (HHEBenchmarkBegin(&_hhe_session, &_hhe_cfg) != 0) abort();              \

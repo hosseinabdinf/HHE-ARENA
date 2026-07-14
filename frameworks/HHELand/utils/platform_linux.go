@@ -8,6 +8,8 @@ import (
 	"strings"
 	"syscall"
 	"unsafe"
+
+	"golang.org/x/sys/unix"
 )
 
 func pinCurrentThread(cpu int) error {
@@ -24,7 +26,7 @@ func pinCurrentThread(cpu int) error {
 }
 func currentCPU() *int {
 	var cpu uint32
-	_, _, errno := syscall.RawSyscall(syscall.SYS_GETCPU, uintptr(unsafe.Pointer(&cpu)), 0, 0)
+	_, _, errno := unix.RawSyscall(unix.SYS_GETCPU, uintptr(unsafe.Pointer(&cpu)), 0, 0)
 	if errno != 0 {
 		return nil
 	}

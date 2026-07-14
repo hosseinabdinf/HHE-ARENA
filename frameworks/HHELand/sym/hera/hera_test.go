@@ -4,6 +4,7 @@ import (
 	"HHELand"
 	"HHELand/utils"
 	"fmt"
+	"os"
 	"testing"
 )
 
@@ -38,8 +39,19 @@ func TestHera(t *testing.T) {
 func TestNbHera(t *testing.T) {
 	t.Run("HHE-ARENA:Hera", func(t *testing.T) {
 		utils.PrintHeader("Hera SKE Benchmark")
-		// test vectors Hera4 = {0,1,2,4}, Hera5={4,5,6,7}
-		tCase := TestVector[6]
+		variants := map[string]int{
+			"80f": 0, "80s": 1, "80af": 2, "80as": 3,
+			"128f": 4, "128s": 5, "128af": 6, "128as": 7,
+		}
+		variant := os.Getenv("HHE_BENCH_VARIANT")
+		if variant == "" {
+			variant = "128af"
+		}
+		index, ok := variants[variant]
+		if !ok {
+			t.Fatalf("unknown HHE_BENCH_VARIANT %q", variant)
+		}
+		tCase := TestVector[index]
 
 		fmt.Println(testString("HERA", tCase.Params))
 		heraCipher := NewHera(tCase.Key, tCase.Params)

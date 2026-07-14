@@ -1,0 +1,60 @@
+{
+  "$schema": "../schemas/image-catalog.schema.json",
+  "version": 1,
+  "matrix_version": 1,
+  "tooling": {
+    "tag": "hhe-arena:tooling",
+    "dockerfile": "Dockerfile",
+    "context": "."
+  },
+  "images": [
+    {
+      "id": "openssl-aes128-cbc-c",
+      "framework": "AES/OpenSSL",
+      "cipher": "AES-128-CBC",
+      "language": "c",
+      "backend": "openssl",
+      "operations": ["AES-128-CBC Encryption"],
+      "local_tag": "hhe-arena:openssl-aes-matrix1",
+      "pull_ref": null,
+      "manifest": "manifests/openssl-aes.v1.json",
+      "build": { "tag": "hhe-arena:openssl-aes-matrix1", "dockerfile": "frameworks/AES/Openssl/docker/Dockerfile", "context": ".", "args": { "TOOLING_IMAGE": "hhe-arena:tooling", "TOOLING_DIGEST": "development", "IMAGE_VERSION": "0.1.0-matrix.1" } }
+    },
+    {
+      "id": "hheland-rubato128l-go",
+      "framework": "HHELand",
+      "cipher": "Rubato-128-L",
+      "language": "go",
+      "backend": "native",
+      "operations": ["SKE.Enc()"],
+      "local_tag": "hhe-arena:hheland-rubato-matrix1",
+      "pull_ref": null,
+      "manifest": "manifests/hheland-rubato.v1.json",
+      "build": { "tag": "hhe-arena:hheland-rubato-matrix1", "dockerfile": "frameworks/HHELand/docker/rubato/Dockerfile", "context": ".", "args": { "TOOLING_IMAGE": "hhe-arena:tooling", "TOOLING_DIGEST": "development", "IMAGE_VERSION": "0.1.0-matrix.1" } }
+    },
+    {
+      "id": "elisabeth-clear-rust",
+      "framework": "Elisabeth",
+      "cipher": "Elisabeth",
+      "language": "rust",
+      "backend": "native",
+      "operations": ["SKE.Enc()", "SKE.Dec()"],
+      "local_tag": "hhe-arena:elisabeth-clear-matrix1",
+      "pull_ref": null,
+      "manifest": "manifests/elisabeth-clear.v1.json",
+      "build": { "tag": "hhe-arena:elisabeth-clear-matrix1", "dockerfile": "frameworks/elisabeth/docker/Dockerfile", "context": ".", "args": { "TOOLING_IMAGE": "hhe-arena:tooling", "TOOLING_DIGEST": "development", "IMAGE_VERSION": "0.1.0-matrix.1" } }
+    },
+    {
+      "id": "transistor-symmetric-python",
+      "framework": "Transistor",
+      "cipher": "Transistor",
+      "language": "python",
+      "backend": "native",
+      "operations": ["Sym.Enc()"],
+      "local_tag": "hhe-arena:transistor-symmetric-matrix1",
+      "pull_ref": null,
+      "manifest": "manifests/transistor-symmetric.v1.json",
+      "build": { "tag": "hhe-arena:transistor-symmetric-matrix1", "dockerfile": "frameworks/Transistor/symmetric/docker/Dockerfile", "context": ".", "args": { "TOOLING_IMAGE": "hhe-arena:tooling", "TOOLING_DIGEST": "development", "IMAGE_VERSION": "0.1.0-matrix.1" } }
+    }
+  ]
+}

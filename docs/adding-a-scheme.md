@@ -61,6 +61,9 @@ The harness must support:
 
 Emit one JSON object per warm-up or measured iteration. Preserve exact integer time_ns, serialized cycles when available, signed memory deltas, failures, and output errors. Never clamp negative memory changes or fabricate unavailable values.
 
+Honor `HHE_BENCH_HOSTNAME` before runtime hostname discovery so catalog
+sweeps do not fragment complete-host report groups by ephemeral container ID.
+
 Do not change the record shape locally. A necessary contract change must update schemas/benchmark.schema.json, docs/benchmark_schema.md, every language implementation, tests, and the schema version before framework code uses it.
 
 ## 4. Expose a concrete executable

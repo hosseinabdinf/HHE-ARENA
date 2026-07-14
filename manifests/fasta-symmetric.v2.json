@@ -1,0 +1,25 @@
+{
+  "$schema": "../schemas/benchmark-manifest.schema.json",
+  "version": 1,
+  "preflight": "/opt/hhe/bin/hhe-preflight",
+  "benchmarks": [
+    {
+      "id": "fasta-native-encrypt",
+      "cipher": "Fasta",
+      "language": "c",
+      "operation": "ske_encrypt",
+      "backend": "native",
+      "executable": "/opt/hhe/frameworks/fasta-symmetric/fasta-symmetric",
+      "workdir": "/opt/hhe/frameworks/fasta-symmetric"
+    },
+    {
+      "id": "fasta-native-decrypt",
+      "cipher": "Fasta",
+      "language": "c",
+      "operation": "ske_decrypt",
+      "backend": "native",
+      "executable": "/opt/hhe/frameworks/fasta-symmetric/fasta-symmetric",
+      "workdir": "/opt/hhe/frameworks/fasta-symmetric"
+    }
+  ]
+}

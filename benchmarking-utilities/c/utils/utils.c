@@ -173,6 +173,7 @@ int HHEBenchmarkIterationEnd(HHEBenchmarkSession* s) {
   int64_t ns=elapsed_ns(s->start_time,end);
   if(s->phase==HHE_PHASE_MEASURED&&s->measured_count<s->config.iterations)s->measured_ns[s->measured_count++]=(uint64_t)ns;
   char stamp[32],model[256];timestamp(stamp);cpu_model(model);long cpus=sysconf(_SC_NPROCESSORS_ONLN);
+  const char* hostname=getenv("HHE_BENCH_HOSTNAME");if(!hostname||!hostname[0])hostname=getenv("HOSTNAME");
   FILE* o=s->output;
   fputs("{\"schema_version\":\"1.0.0\",\"run_id\":",o);json_string(o,s->run_id);
   fputs(",\"timestamp_utc\":",o);json_string(o,stamp);
@@ -181,7 +182,7 @@ int HHEBenchmarkIterationEnd(HHEBenchmarkSession* s) {
   fputs(",\"security_profile\":",o);json_string(o,s->config.security_profile);fputs(",\"parameters\":{}}",o);
   fputs(",\"runtime\":{\"language\":",o);json_string(o,s->config.language);fputs(",\"implementation\":",o);json_string(o,s->config.implementation);
   fputs(",\"version\":null,\"gc_mode\":\"not_applicable\",\"allocator\":\"system_glibc\"}",o);
-  fputs(",\"host\":{\"hostname\":null,\"os\":\"linux\",\"arch\":",o);
+  fputs(",\"host\":{\"hostname\":",o);json_string(o,hostname&&hostname[0]?hostname:NULL);fputs(",\"os\":\"linux\",\"arch\":",o);
 #if defined(__x86_64__)
   json_string(o,"x86_64");
 #else

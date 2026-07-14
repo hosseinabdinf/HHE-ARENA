@@ -3,21 +3,25 @@ package rubato
 import (
 	RtF "HHELand/rtf_integration"
 	"HHELand/sym/rubato"
+	"HHELand/utils"
 	"crypto/rand"
 	"fmt"
+	"sync"
 	"testing"
 )
 
 func BenchmarkRubato(b *testing.B) {
-	// comment below loop if you want to go over each testcase manually
-	// it helps to get benchmark results when there's memory limit in
-	// your test environment
 	for _, tc := range rubato.TestsVector {
 		benchHERubato(tc, b)
 	}
-	// uncomment following line if you want to use manual test case
-	// you can choose test cased from [0-2]
-	// benchHERubato(rubato.TestsVector[2], b)
+}
+
+func runArenaBenchmark(b *testing.B, operation string, target func()) {
+	var once sync.Once
+	b.Run(operation, func(b *testing.B) {
+		once.Do(func() { utils.BenchmarkIter(operation, 1, target) })
+		b.ReportMetric(0, "ns/op")
+	})
 }
 
 func benchHERubato(tc rubato.TestContext, b *testing.B) {
@@ -27,89 +31,50 @@ func benchHERubato(tc rubato.TestContext, b *testing.B) {
 	}
 
 	heRubato := NewHERubato()
-
 	heRubato.InitParams(tc.FVParamIndex, tc.Params, len(tc.Plaintext))
 
-	b.Run("Rubato/HEKeyGen", func(b *testing.B) {
-		b.ResetTimer()
-		for i := 0; i < b.N; i++ {
-			heRubato.HEKeyGen()
-		}
+	runArenaBenchmark(b, "Rubato/HEKeyGen", func() {
+		heRubato.HEKeyGen()
 	})
-
-	b.Run("Rubato/HalfBootKeyGen", func(b *testing.B) {
-		b.ResetTimer()
-		for i := 0; i < b.N; i++ {
-			heRubato.HalfBootKeyGen()
-		}
+	runArenaBenchmark(b, "Rubato/HalfBootKeyGen", func() {
+		heRubato.HalfBootKeyGen()
 	})
 
 	heRubato.InitHalfBootstrapper()
-
 	heRubato.InitEvaluator()
-
 	heRubato.InitCoefficients()
 
-	// use the plaintext data from test vector or generate Random
 	data := heRubato.RandomDataGen()
-
-	// need an array of 8-byte nonce for each block of data
 	nonces := heRubato.NonceGen()
-
-	// need an 8-byte counter
 	counter := make([]byte, 8)
 	_, _ = rand.Read(counter)
-
-	// generate key stream using plain rubato
 	keyStream := make([][]uint64, heRubato.N)
 
-	b.Run("Rubato/SymKeyStream", func(b *testing.B) {
-		b.ResetTimer()
-		for i := 0; i < b.N; i++ {
-			for i := 0; i < heRubato.N; i++ {
-				symRub := rubato.NewRubato(tc.Key, tc.Params)
-				keyStream[i] = symRub.KeyStream(nonces[i], counter)
-			}
+	runArenaBenchmark(b, "Rubato/SymKeyStream", func() {
+		for i := 0; i < heRubato.N; i++ {
+			symRub := rubato.NewRubato(tc.Key, tc.Params)
+			keyStream[i] = symRub.KeyStream(nonces[i], counter)
 		}
 	})
 
-	// data to coefficients
 	heRubato.DataToCoefficients(data)
-
-	b.Run("Rubato/EncryptSymData", func(b *testing.B) {
-		b.ResetTimer()
-		for i := 0; i < b.N; i++ {
-			heRubato.EncodeEncrypt(keyStream)
-		}
+	runArenaBenchmark(b, "Rubato/EncryptSymData", func() {
+		heRubato.EncodeEncrypt(keyStream)
 	})
 
 	heRubato.ScaleUp()
-
-	// FV Key Stream, encrypts symmetric key stream using BFV on the client side
-	b.Run("Rubato/EncSymKey", func(b *testing.B) {
-		b.ResetTimer()
-		for i := 0; i < b.N; i++ {
-			_ = heRubato.InitFvRubato()
-			heRubato.EncryptSymKey(tc.Key)
-		}
+	runArenaBenchmark(b, "Rubato/EncSymKey", func() {
+		_ = heRubato.InitFvRubato()
+		heRubato.EncryptSymKey(tc.Key)
 	})
 
-	// get BFV key stream using encrypted symmetric key, nonce, and counter on the server side
 	var fvKeyStreams []*RtF.Ciphertext
-	b.Run("Rubato/FVKeyStream", func(b *testing.B) {
-		b.ResetTimer()
-		for i := 0; i < b.N; i++ {
-			fvKeyStreams = heRubato.GetFvKeyStreams(nonces, counter)
-		}
+	runArenaBenchmark(b, "Rubato/FVKeyStream", func() {
+		fvKeyStreams = heRubato.GetFvKeyStreams(nonces, counter)
 	})
 
 	heRubato.ScaleCiphertext(fvKeyStreams)
-
-	// half bootstrapping
-	b.Run("Rubato/HalfBoot", func(b *testing.B) {
-		b.ResetTimer()
-		for i := 0; i < b.N; i++ {
-			_ = heRubato.HalfBoot()
-		}
+	runArenaBenchmark(b, "Rubato/HalfBoot", func() {
+		_ = heRubato.HalfBoot()
 	})
 }

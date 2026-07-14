@@ -1,0 +1,11 @@
+**
+!benchmarking-utilities/
+!benchmarking-utilities/rust/
+!benchmarking-utilities/rust/**
+!frameworks/
+!frameworks/Transistor/
+!frameworks/Transistor/homomorphic_implementation/
+!frameworks/Transistor/homomorphic_implementation/**
+!manifests/
+!manifests/transistor-homomorphic.v2.json
+**/target/

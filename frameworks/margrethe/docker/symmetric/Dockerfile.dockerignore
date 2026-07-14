@@ -1,0 +1,14 @@
+**
+!frameworks/
+frameworks/*
+!frameworks/margrethe/
+frameworks/margrethe/*
+!frameworks/margrethe/scripts/
+frameworks/margrethe/scripts/*
+!frameworks/margrethe/scripts/cipher.py
+!frameworks/margrethe/scripts/benchmark_utils.py
+!frameworks/margrethe/scripts/serialized_counter.py
+!frameworks/margrethe/scripts/run
+!manifests/
+manifests/*
+!manifests/margrethe-symmetric.v2.json

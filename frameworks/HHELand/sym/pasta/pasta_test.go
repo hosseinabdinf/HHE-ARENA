@@ -4,6 +4,7 @@ import (
 	"HHELand"
 	"HHELand/utils"
 	"fmt"
+	"os"
 	"reflect"
 	"testing"
 )
@@ -87,8 +88,7 @@ func TestPasta4(t *testing.T) {
 func TestNbPasta3(t *testing.T) {
 	t.Run("HHE-ARENA:Pasta3", func(t *testing.T) {
 		utils.PrintHeader("Pasta3 SKE Benchmark")
-		// test vectors Pasta3 = {0,1,2}
-		tCase := pasta3TestVector[1]
+		tCase := pastaBenchmarkCase(t, "Pasta3", pasta3TestVector, 1)
 
 		fmt.Println(testString("Pasta3", tCase.Params))
 		pastaCipher := NewPasta(tCase.Key, tCase.Params)
@@ -105,8 +105,7 @@ func TestNbPasta3(t *testing.T) {
 func TestNbPasta4(t *testing.T) {
 	t.Run("HHE-ARENA:Pasta4", func(t *testing.T) {
 		utils.PrintHeader("Pasta4 SKE Benchmark")
-		// test vectors Pasta4 = {0,1,2}
-		tCase := pasta4TestVector[0]
+		tCase := pastaBenchmarkCase(t, "Pasta4", pasta4TestVector, 0)
 
 		fmt.Println(testString("Pasta4", tCase.Params))
 		pastaCipher := NewPasta(tCase.Key, tCase.Params)
@@ -117,4 +116,19 @@ func TestNbPasta4(t *testing.T) {
 			_ = encryptor.Encrypt(tCase.Plaintext)
 		})
 	})
+}
+
+func pastaBenchmarkCase(t *testing.T, cipher string, vectors []TestContext, defaultIndex int) TestContext {
+	t.Helper()
+	variant := os.Getenv("HHE_BENCH_VARIANT")
+	if variant == "" {
+		return vectors[defaultIndex]
+	}
+	for _, candidate := range vectors {
+		if variant == fmt.Sprintf("%s-p%d", cipher, candidate.Params.Modulus) {
+			return candidate
+		}
+	}
+	t.Fatalf("unknown HHE_BENCH_VARIANT %q for %s", variant, cipher)
+	return TestContext{}
 }

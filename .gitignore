@@ -31,3 +31,4 @@ frameworks/**/core
 agent
 build
 results
+AGENT.md

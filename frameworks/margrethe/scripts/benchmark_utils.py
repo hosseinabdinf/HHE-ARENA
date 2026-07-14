@@ -226,13 +226,20 @@ def _cycle_delta(start, end):
     return end - start
 
 
+def _hostname():
+    hostname = os.getenv("HHE_BENCH_HOSTNAME")
+    if hostname:
+        return hostname
+    try:
+        return platform.node() or None
+    except OSError:
+        return None
+
+
 def _make_record(config, environment, run_id, phase, index, elapsed_ns,
                  cycles, memory, operation_error):
     error_text = None if operation_error is None else f"{type(operation_error).__name__}: {operation_error}"
-    try:
-        hostname = platform.node() or None
-    except OSError:
-        hostname = None
+    hostname = _hostname()
     return {
         "schema_version": "1.0.0",
         "run_id": run_id,

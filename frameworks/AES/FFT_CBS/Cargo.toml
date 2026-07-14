@@ -18,7 +18,7 @@ lazy_static = "1.4"
 # for benchmark utils
 
 [dev-dependencies]
-criterion = { version = "0.4", features = ["html_reports"] }
+criterion = { path = "../../../benchmarking-utilities/rust-criterion-compat", features = ["html_reports"] }
 concrete-fft = { version = "0.4.0", features = ["serde"] }
 
 

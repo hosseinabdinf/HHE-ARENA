@@ -1,0 +1,14 @@
+**
+!frameworks/
+frameworks/*
+!frameworks/Transistor/
+frameworks/Transistor/*
+!frameworks/Transistor/symmetric/
+frameworks/Transistor/symmetric/*
+!frameworks/Transistor/symmetric/main.py
+!frameworks/Transistor/symmetric/benchmark_utils.py
+!frameworks/Transistor/symmetric/serialized_counter.py
+!frameworks/Transistor/symmetric/run
+!manifests/
+manifests/*
+!manifests/transistor-symmetric.v1.json

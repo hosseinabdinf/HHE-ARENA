@@ -7,7 +7,13 @@ use std::env;
 fn main() {
     print_header("Elisabeth Symmetric Benchmarking");
     let args: Vec<String> = env::args().collect();
-    let nb_nibble = args[1].parse().unwrap();
+    let nb_nibble = args
+        .windows(2)
+        .find(|pair| pair[0] == "--nibbles")
+        .map(|pair| pair[1].parse().expect("--nibbles must be a positive integer"))
+        .unwrap_or(1usize);
+    assert!(nb_nibble > 0, "--nibbles must be positive");
+    let operation = env::var("HHE_BENCH_OPERATION").unwrap_or_else(|_| "SKE.Enc()".to_owned());
 
     let (mut encryptor, mut decryptor) =
         Encrypter::<u4>::new::<u4>(&SystemParameters::n60, None, None, None);
@@ -29,14 +35,19 @@ fn main() {
     let mut ciphertext = vec![u4(0); nb_nibble];
     let mut decryption = vec![u4(0); nb_nibble];
 
-    benchmark("SKE.Enc()", 100, || {
-        encryptor.encrypt(&mut ciphertext, &message);
-    });
-    benchmark("SKE.Dec()", 100, || {
-        decryptor.decrypt(&mut decryption, &ciphertext);
-    });
-
-    for (a, b) in message.iter().zip(decryption.iter()) {
-        assert_eq!(a.0, b.0);
+    match operation.as_str() {
+        "SKE.Enc()" => benchmark("SKE.Enc()", 100, || {
+            encryptor.encrypt(&mut ciphertext, &message);
+        }),
+        "SKE.Dec()" => {
+            encryptor.encrypt(&mut ciphertext, &message);
+            benchmark("SKE.Dec()", 100, || {
+                decryptor.decrypt(&mut decryption, &ciphertext);
+            });
+            for (a, b) in message.iter().zip(decryption.iter()) {
+                assert_eq!(a.0, b.0);
+            }
+        }
+        _ => panic!("unsupported HHE_BENCH_OPERATION: {operation}"),
     }
 }

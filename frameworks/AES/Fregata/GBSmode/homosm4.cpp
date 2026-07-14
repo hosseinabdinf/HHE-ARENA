@@ -1,5 +1,6 @@
 #include <iostream>
 #include <chrono>
+#include "../stateful_benchmark.h"
 #include <tfhe/tfhe_core.h>
 #include <tfhe/tfhe.h>
 #include <time.h>
@@ -371,6 +372,8 @@ int main()
     }
     cout << endl;
 #endif
+    HHEBenchmarkSession arena_benchmark;
+    hhe_stateful_benchmark_begin(&arena_benchmark, "SM4/HHE.Decomp");
     std::chrono::system_clock::time_point start, end;
     double AddRoundKey_totaltime = 0, LUT_totaltime = 0, Linear_totaltime = 0;
 
@@ -489,6 +492,7 @@ int main()
     std::cout << " Linear+XOR_totaltime: " << Linear_totaltime << " ms = " << Linear_totaltime / 1000 << " seconds , account for " << (Linear_totaltime / elapsed) * 100 << "%;" << std::endl;
 
     std::cout << " homoSM4 using gatebootstrapping costs: " << elapsed << "ms = " << elapsed / 60000 << " minutes.." << std::endl;
+    hhe_stateful_benchmark_end(&arena_benchmark);
 
     // 二、反序变换(在32轮F函数之后)
 

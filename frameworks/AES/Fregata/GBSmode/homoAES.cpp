@@ -1,5 +1,6 @@
 #include <iostream>
 #include <chrono>
+#include "../stateful_benchmark.h"
 #include <tfhe/tfhe_core.h>
 #include <tfhe/tfhe.h>
 #include <time.h>
@@ -576,6 +577,8 @@ int main()
     cout << endl;
 #endif
 
+    HHEBenchmarkSession arena_benchmark;
+    hhe_stateful_benchmark_begin(&arena_benchmark, "AES/HHE.Decomp");
     std::chrono::system_clock::time_point start, end;
     double AddRoundKey_totaltime = 0, SubByte_totaltime = 0, MixColumns_totaltime = 0;
     start = std::chrono::system_clock::now();
@@ -791,6 +794,7 @@ int main()
               << ", account for " << (SubByte_totaltime / elapsed) * 100 << "%;" << std::endl;
     std::cout << " MixColumns_totaltime: " << MixColumns_totaltime << " ms = " << MixColumns_totaltime / 1000 << " seconds, account for " << (MixColumns_totaltime / elapsed) * 100 << "%;" << std::endl;
     std::cout << " homoAES using gatebootstrapping costs: " << elapsed << " ms =" << elapsed / 60000 << " minutes.." << std::endl;
+    hhe_stateful_benchmark_end(&arena_benchmark);
 
     return 0;
 }

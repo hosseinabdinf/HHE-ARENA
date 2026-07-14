@@ -12,7 +12,7 @@ tfhe = { path = "../../tfhe", features = [ "boolean", "shortint", "integer" ] }
 
 # for benchmark utils
 [dev-dependencies]
-criterion = { version = "0.5.1", features = [ "html_reports" ]}
+criterion = { path = "../../../../benchmarking-utilities/rust-criterion-compat", features = [ "html_reports" ]}
 
 [[bench]]
 name = "trivium"

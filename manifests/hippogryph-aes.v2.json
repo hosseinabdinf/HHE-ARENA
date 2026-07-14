@@ -1,0 +1,9 @@
+{
+  "$schema": "../schemas/benchmark-manifest.schema.json",
+  "version": 1,
+  "preflight": "/opt/hhe/bin/hhe-preflight",
+  "benchmarks": [
+    { "id": "hippogryph-aes-encryption", "cipher": "AES-128 Hippogryph", "language": "rust", "operation": "TFHE Encryption of the plaintext", "backend": "odd-modulus TFHE", "executable": "/opt/hhe/frameworks/hippogryph/run-aes", "workdir": "/work", "env": { "HHE_BENCH_ITERATIONS": "1", "HHE_BENCH_WARMUPS": "0", "HHE_BENCH_OPERATION": "TFHE Encryption of the plaintext" } },
+    { "id": "hippogryph-aes-transciphering", "cipher": "AES-128 Hippogryph", "language": "rust", "operation": "Transciphering", "backend": "odd-modulus TFHE", "executable": "/opt/hhe/frameworks/hippogryph/run-aes", "workdir": "/work", "env": { "HHE_BENCH_ITERATIONS": "1", "HHE_BENCH_WARMUPS": "0", "HHE_BENCH_OPERATION": "Transciphering" } }
+  ]
+}

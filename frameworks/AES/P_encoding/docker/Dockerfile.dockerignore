@@ -1,0 +1,3 @@
+**/target
+**/.git
+frameworks/AES/P_encoding/tfhe-rs-odd/target

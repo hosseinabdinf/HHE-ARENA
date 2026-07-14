@@ -29,6 +29,7 @@ records warnings and continues. Output failures are returned by `Run`; legacy
 Legacy wrappers read `HHE_BENCH_OUTPUT`, `HHE_BENCH_CIPHER`,
 `HHE_BENCH_BACKEND`, `HHE_BENCH_SECURITY_PROFILE`,
 `HHE_BENCH_IMPLEMENTATION`, `HHE_BENCH_CPU`, `HHE_BENCH_WARMUPS`,
-`HHE_BENCH_GC`, and `HHE_BENCH_POLICY`.
+`HHE_BENCH_GC`, `HHE_BENCH_POLICY`, and the stable host override
+`HHE_BENCH_HOSTNAME`.
 
 See `../../docs/benchmark_schema.md` for schema and memory semantics.

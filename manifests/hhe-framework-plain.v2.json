@@ -1,0 +1,628 @@
+{
+  "$schema": "../schemas/benchmark-manifest.schema.json",
+  "version": 1,
+  "preflight": "/opt/hhe/bin/hhe-preflight",
+  "benchmarks": [
+    {
+      "id": "hhef-agrasta-ske-encrypt",
+      "cipher": "HHEF-agrasta",
+      "language": "cpp",
+      "operation": "ske_encrypt",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/agrasta_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-agrasta-ske-decrypt",
+      "cipher": "HHEF-agrasta",
+      "language": "cpp",
+      "operation": "ske_decrypt",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/agrasta_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-agrasta-plain-evaluate",
+      "cipher": "HHEF-agrasta",
+      "language": "cpp",
+      "operation": "plain_evaluate",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/agrasta_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-agrasta-packed-ske-encrypt",
+      "cipher": "HHEF-agrasta_packed",
+      "language": "cpp",
+      "operation": "ske_encrypt",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/agrasta_packed_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-agrasta-packed-ske-decrypt",
+      "cipher": "HHEF-agrasta_packed",
+      "language": "cpp",
+      "operation": "ske_decrypt",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/agrasta_packed_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-agrasta-packed-plain-evaluate",
+      "cipher": "HHEF-agrasta_packed",
+      "language": "cpp",
+      "operation": "plain_evaluate",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/agrasta_packed_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-rasta-5-ske-encrypt",
+      "cipher": "HHEF-rasta_5",
+      "language": "cpp",
+      "operation": "ske_encrypt",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/rasta_5_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-rasta-5-ske-decrypt",
+      "cipher": "HHEF-rasta_5",
+      "language": "cpp",
+      "operation": "ske_decrypt",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/rasta_5_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-rasta-5-plain-evaluate",
+      "cipher": "HHEF-rasta_5",
+      "language": "cpp",
+      "operation": "plain_evaluate",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/rasta_5_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-rasta-5-packed-ske-encrypt",
+      "cipher": "HHEF-rasta_5_packed",
+      "language": "cpp",
+      "operation": "ske_encrypt",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/rasta_5_packed_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-rasta-5-packed-ske-decrypt",
+      "cipher": "HHEF-rasta_5_packed",
+      "language": "cpp",
+      "operation": "ske_decrypt",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/rasta_5_packed_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-rasta-5-packed-plain-evaluate",
+      "cipher": "HHEF-rasta_5_packed",
+      "language": "cpp",
+      "operation": "plain_evaluate",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/rasta_5_packed_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-rasta-6-ske-encrypt",
+      "cipher": "HHEF-rasta_6",
+      "language": "cpp",
+      "operation": "ske_encrypt",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/rasta_6_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-rasta-6-ske-decrypt",
+      "cipher": "HHEF-rasta_6",
+      "language": "cpp",
+      "operation": "ske_decrypt",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/rasta_6_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-rasta-6-plain-evaluate",
+      "cipher": "HHEF-rasta_6",
+      "language": "cpp",
+      "operation": "plain_evaluate",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/rasta_6_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-rasta-6-packed-ske-encrypt",
+      "cipher": "HHEF-rasta_6_packed",
+      "language": "cpp",
+      "operation": "ske_encrypt",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/rasta_6_packed_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-rasta-6-packed-ske-decrypt",
+      "cipher": "HHEF-rasta_6_packed",
+      "language": "cpp",
+      "operation": "ske_decrypt",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/rasta_6_packed_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-rasta-6-packed-plain-evaluate",
+      "cipher": "HHEF-rasta_6_packed",
+      "language": "cpp",
+      "operation": "plain_evaluate",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/rasta_6_packed_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-dasta-5-ske-encrypt",
+      "cipher": "HHEF-dasta_5",
+      "language": "cpp",
+      "operation": "ske_encrypt",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/dasta_5_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-dasta-5-ske-decrypt",
+      "cipher": "HHEF-dasta_5",
+      "language": "cpp",
+      "operation": "ske_decrypt",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/dasta_5_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-dasta-5-plain-evaluate",
+      "cipher": "HHEF-dasta_5",
+      "language": "cpp",
+      "operation": "plain_evaluate",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/dasta_5_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-dasta-5-packed-ske-encrypt",
+      "cipher": "HHEF-dasta_5_packed",
+      "language": "cpp",
+      "operation": "ske_encrypt",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/dasta_5_packed_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-dasta-5-packed-ske-decrypt",
+      "cipher": "HHEF-dasta_5_packed",
+      "language": "cpp",
+      "operation": "ske_decrypt",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/dasta_5_packed_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-dasta-5-packed-plain-evaluate",
+      "cipher": "HHEF-dasta_5_packed",
+      "language": "cpp",
+      "operation": "plain_evaluate",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/dasta_5_packed_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-dasta-6-ske-encrypt",
+      "cipher": "HHEF-dasta_6",
+      "language": "cpp",
+      "operation": "ske_encrypt",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/dasta_6_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-dasta-6-ske-decrypt",
+      "cipher": "HHEF-dasta_6",
+      "language": "cpp",
+      "operation": "ske_decrypt",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/dasta_6_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-dasta-6-plain-evaluate",
+      "cipher": "HHEF-dasta_6",
+      "language": "cpp",
+      "operation": "plain_evaluate",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/dasta_6_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-dasta-6-packed-ske-encrypt",
+      "cipher": "HHEF-dasta_6_packed",
+      "language": "cpp",
+      "operation": "ske_encrypt",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/dasta_6_packed_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-dasta-6-packed-ske-decrypt",
+      "cipher": "HHEF-dasta_6_packed",
+      "language": "cpp",
+      "operation": "ske_decrypt",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/dasta_6_packed_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-dasta-6-packed-plain-evaluate",
+      "cipher": "HHEF-dasta_6_packed",
+      "language": "cpp",
+      "operation": "plain_evaluate",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/dasta_6_packed_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-lowmc-ske-encrypt",
+      "cipher": "HHEF-lowmc",
+      "language": "cpp",
+      "operation": "ske_encrypt",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/lowmc_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-lowmc-ske-decrypt",
+      "cipher": "HHEF-lowmc",
+      "language": "cpp",
+      "operation": "ske_decrypt",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/lowmc_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-lowmc-plain-evaluate",
+      "cipher": "HHEF-lowmc",
+      "language": "cpp",
+      "operation": "plain_evaluate",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/lowmc_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-filip-1216-ske-encrypt",
+      "cipher": "HHEF-filip_1216",
+      "language": "cpp",
+      "operation": "ske_encrypt",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/filip_1216_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-filip-1216-ske-decrypt",
+      "cipher": "HHEF-filip_1216",
+      "language": "cpp",
+      "operation": "ske_decrypt",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/filip_1216_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-filip-1216-plain-evaluate",
+      "cipher": "HHEF-filip_1216",
+      "language": "cpp",
+      "operation": "plain_evaluate",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/filip_1216_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-filip-1280-ske-encrypt",
+      "cipher": "HHEF-filip_1280",
+      "language": "cpp",
+      "operation": "ske_encrypt",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/filip_1280_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-filip-1280-ske-decrypt",
+      "cipher": "HHEF-filip_1280",
+      "language": "cpp",
+      "operation": "ske_decrypt",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/filip_1280_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-filip-1280-plain-evaluate",
+      "cipher": "HHEF-filip_1280",
+      "language": "cpp",
+      "operation": "plain_evaluate",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/filip_1280_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-kreyvium-ske-encrypt",
+      "cipher": "HHEF-kreyvium",
+      "language": "cpp",
+      "operation": "ske_encrypt",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/kreyvium_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-kreyvium-ske-decrypt",
+      "cipher": "HHEF-kreyvium",
+      "language": "cpp",
+      "operation": "ske_decrypt",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/kreyvium_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-kreyvium-plain-evaluate",
+      "cipher": "HHEF-kreyvium",
+      "language": "cpp",
+      "operation": "plain_evaluate",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/kreyvium_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-kreyvium-12-ske-encrypt",
+      "cipher": "HHEF-kreyvium_12",
+      "language": "cpp",
+      "operation": "ske_encrypt",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/kreyvium_12_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-kreyvium-12-ske-decrypt",
+      "cipher": "HHEF-kreyvium_12",
+      "language": "cpp",
+      "operation": "ske_decrypt",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/kreyvium_12_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-kreyvium-12-plain-evaluate",
+      "cipher": "HHEF-kreyvium_12",
+      "language": "cpp",
+      "operation": "plain_evaluate",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/kreyvium_12_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-kreyvium-13-ske-encrypt",
+      "cipher": "HHEF-kreyvium_13",
+      "language": "cpp",
+      "operation": "ske_encrypt",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/kreyvium_13_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-kreyvium-13-ske-decrypt",
+      "cipher": "HHEF-kreyvium_13",
+      "language": "cpp",
+      "operation": "ske_decrypt",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/kreyvium_13_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-kreyvium-13-plain-evaluate",
+      "cipher": "HHEF-kreyvium_13",
+      "language": "cpp",
+      "operation": "plain_evaluate",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/kreyvium_13_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-pasta-3-ske-encrypt",
+      "cipher": "HHEF-pasta_3",
+      "language": "cpp",
+      "operation": "ske_encrypt",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/pasta_3_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-pasta-3-ske-decrypt",
+      "cipher": "HHEF-pasta_3",
+      "language": "cpp",
+      "operation": "ske_decrypt",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/pasta_3_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-pasta-3-plain-evaluate",
+      "cipher": "HHEF-pasta_3",
+      "language": "cpp",
+      "operation": "plain_evaluate",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/pasta_3_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-pasta-4-ske-encrypt",
+      "cipher": "HHEF-pasta_4",
+      "language": "cpp",
+      "operation": "ske_encrypt",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/pasta_4_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-pasta-4-ske-decrypt",
+      "cipher": "HHEF-pasta_4",
+      "language": "cpp",
+      "operation": "ske_decrypt",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/pasta_4_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-pasta-4-plain-evaluate",
+      "cipher": "HHEF-pasta_4",
+      "language": "cpp",
+      "operation": "plain_evaluate",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/pasta_4_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-pasta2-3-ske-encrypt",
+      "cipher": "HHEF-pasta2_3",
+      "language": "cpp",
+      "operation": "ske_encrypt",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/pasta2_3_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-pasta2-3-ske-decrypt",
+      "cipher": "HHEF-pasta2_3",
+      "language": "cpp",
+      "operation": "ske_decrypt",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/pasta2_3_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-pasta2-3-plain-evaluate",
+      "cipher": "HHEF-pasta2_3",
+      "language": "cpp",
+      "operation": "plain_evaluate",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/pasta2_3_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-pasta2-4-ske-encrypt",
+      "cipher": "HHEF-pasta2_4",
+      "language": "cpp",
+      "operation": "ske_encrypt",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/pasta2_4_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-pasta2-4-ske-decrypt",
+      "cipher": "HHEF-pasta2_4",
+      "language": "cpp",
+      "operation": "ske_decrypt",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/pasta2_4_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-pasta2-4-plain-evaluate",
+      "cipher": "HHEF-pasta2_4",
+      "language": "cpp",
+      "operation": "plain_evaluate",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/pasta2_4_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-masta-4-ske-encrypt",
+      "cipher": "HHEF-masta_4",
+      "language": "cpp",
+      "operation": "ske_encrypt",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/masta_4_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-masta-4-ske-decrypt",
+      "cipher": "HHEF-masta_4",
+      "language": "cpp",
+      "operation": "ske_decrypt",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/masta_4_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-masta-4-plain-evaluate",
+      "cipher": "HHEF-masta_4",
+      "language": "cpp",
+      "operation": "plain_evaluate",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/masta_4_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-masta-5-ske-encrypt",
+      "cipher": "HHEF-masta_5",
+      "language": "cpp",
+      "operation": "ske_encrypt",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/masta_5_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-masta-5-ske-decrypt",
+      "cipher": "HHEF-masta_5",
+      "language": "cpp",
+      "operation": "ske_decrypt",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/masta_5_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-masta-5-plain-evaluate",
+      "cipher": "HHEF-masta_5",
+      "language": "cpp",
+      "operation": "plain_evaluate",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/masta_5_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-hera-5-ske-encrypt",
+      "cipher": "HHEF-hera_5",
+      "language": "cpp",
+      "operation": "ske_encrypt",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/hera_5_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-hera-5-ske-decrypt",
+      "cipher": "HHEF-hera_5",
+      "language": "cpp",
+      "operation": "ske_decrypt",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/hera_5_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-hera-5-plain-evaluate",
+      "cipher": "HHEF-hera_5",
+      "language": "cpp",
+      "operation": "plain_evaluate",
+      "backend": "plain",
+      "executable": "/opt/hhe/frameworks/hhe-framework-plain/hera_5_test",
+      "workdir": "/work"
+    }
+  ]
+}

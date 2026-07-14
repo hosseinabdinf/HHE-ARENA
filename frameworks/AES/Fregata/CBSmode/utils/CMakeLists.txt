@@ -7,6 +7,6 @@ set(UTILS_SRC
 )
 
 add_library(utils STATIC ${UTILS_SRC})
-target_compile_features(utils PUBLIC c_std_11)
+target_compile_features(utils PRIVATE c_std_11)
 
 target_include_directories(utils PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")

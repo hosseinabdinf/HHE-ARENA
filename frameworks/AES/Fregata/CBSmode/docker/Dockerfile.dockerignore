@@ -1,0 +1,9 @@
+.git
+results
+frameworks/AES/Fregata/CBSmode/.DS_Store
+frameworks/AES/Fregata/CBSmode/benchmark
+frameworks/AES/Fregata/CBSmode/test
+frameworks/AES/Fregata/CBSmode/tutorial
+frameworks/AES/Fregata/CBSmode/thirdparties/cereal/sandbox
+frameworks/AES/Fregata/CBSmode/thirdparties/cereal/unittests
+frameworks/AES/Fregata/CBSmode/thirdparties/gperftools

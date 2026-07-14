@@ -1,0 +1,11 @@
+**
+!benchmarking-utilities/
+!benchmarking-utilities/**
+!docker/
+!docker/**
+!frameworks/AES/Full-LUT/
+!frameworks/AES/Full-LUT/**
+!manifests/full-lut-aes.v2.json
+!schemas/
+!schemas/**
+!ARENA.txt

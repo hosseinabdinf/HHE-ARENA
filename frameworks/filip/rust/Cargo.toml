@@ -11,6 +11,7 @@ concrete-core = { git = "ssh://git@github.com/zama-ai/concrete", crate = "concre
 concrete-commons = { git = "ssh://git@github.com/zama-ai/concrete", crate = "concrete-commons", branch = "FiLIP" }
 
 [dependencies]
+hhe-benchmark = { path = "../../../benchmarking-utilities/rust" }
 concrete-core = "1.0.1"
 concrete-commons = "0.2.0"
 concrete-fftw = "0.1.2"
@@ -21,10 +22,6 @@ serde = "1.0.130"
 bincode = "2.0.0"
 
 crossterm = "0.28.1"
-
-[dev-dependencies]
-criterion = {version = "0.5.0", features = ["html_reports"]}
-pprof = { version = "0.14.0", features = ["flamegraph", "criterion"] }
 
 [[bench]]
 name = "benchmark-FiLIP"

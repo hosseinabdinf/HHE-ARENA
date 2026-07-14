@@ -20,7 +20,8 @@ the consuming Cargo package is recorded instead of the utility crate. Both
 entry points honor `HHE_BENCH_OUTPUT`, `HHE_BENCH_CIPHER`,
 `HHE_BENCH_OPERATION`, `HHE_BENCH_IMPLEMENTATION`, `HHE_BENCH_ITERATIONS`,
 `HHE_BENCH_WARMUPS`, `HHE_BENCH_BACKEND`, `HHE_BENCH_SECURITY_PROFILE`,
-`HHE_BENCH_CPU`, and `HHE_BENCH_POLICY`. Output defaults to
+`HHE_BENCH_CPU`, `HHE_BENCH_POLICY`, and `HHE_BENCH_HOSTNAME`. The latter
+overrides the runtime hostname for stable cross-container grouping. Output defaults to
 `benchmark.jsonl`.
 
 ## Allocator contract

@@ -3,6 +3,7 @@
 #include <chrono>
 #include "functional_bootstrap.cpp"
 #include "SM4.cpp"
+#include "../stateful_benchmark.h"
 
 extern void sm4_setkey(unsigned long RoundKey[], unsigned char key[]);
 
@@ -248,6 +249,8 @@ int main(int argc, char const *argv[])
     }
 
     // 32 round
+    HHEBenchmarkSession arena_benchmark;
+    hhe_stateful_benchmark_begin(&arena_benchmark, "SM4/HHE.Decomp");
     clock_t begin = clock();
 
     for (int testtime = 0; testtime < 1; testtime++)
@@ -552,6 +555,7 @@ int main(int argc, char const *argv[])
         std::cout << " Xor_totaltime: " << Xor_totaltime << " milliseconds = " << Xor_totaltime / 1000 << " seconds.. account for " << (Xor_totaltime / elapsed) * 100 << "%;" << std::endl;
         std::cout << " homoSM4 using functional bootstrapping costs: " << elapsed << "milliseconds = " << elapsed / 1000 << " seconds.." << std::endl;
     }
+    hhe_stateful_benchmark_end(&arena_benchmark);
 
     return 0;
 }

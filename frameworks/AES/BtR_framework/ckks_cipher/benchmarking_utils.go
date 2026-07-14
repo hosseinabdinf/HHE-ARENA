@@ -383,9 +383,7 @@ func makeRecord(config Config, env environment, runID string, currentPhase phase
 	item.Runtime.Allocator = "go_runtime"
 	item.Host.OS = runtime.GOOS
 	item.Host.Arch = runtime.GOARCH
-	if hostname, err := os.Hostname(); err == nil {
-		item.Host.Hostname = &hostname
-	}
+	item.Host.Hostname = benchmarkHostname()
 	item.Host.CPUModel = cpuModel()
 	cpus := runtime.NumCPU()
 	item.Host.LogicalCPUs = &cpus
@@ -397,6 +395,16 @@ func makeRecord(config Config, env environment, runID string, currentPhase phase
 	item.Measurement.Memory = memory
 	item.Status = "ok"
 	return item
+}
+
+func benchmarkHostname() *string {
+	if hostname := strings.TrimSpace(os.Getenv("HHE_BENCH_HOSTNAME")); hostname != "" {
+		return &hostname
+	}
+	if hostname, err := os.Hostname(); err == nil {
+		return &hostname
+	}
+	return nil
 }
 func printSummary(name string, values []int64, overhead uint64) {
 	if len(values) == 0 {

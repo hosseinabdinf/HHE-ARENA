@@ -1,0 +1,16 @@
+**
+!frameworks/
+frameworks/*
+!frameworks/AES/
+frameworks/AES/*
+!frameworks/AES/Tinyaes/
+!frameworks/AES/Tinyaes/**
+!manifests/
+manifests/*
+!manifests/tinyaes-aes.v2.json
+!schemas/
+schemas/*
+!schemas/benchmark-manifest.schema.json
+!docker/
+docker/*
+!docker/validate_framework_image.py

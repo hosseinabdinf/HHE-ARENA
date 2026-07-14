@@ -2,7 +2,9 @@ package rubato
 
 import (
 	"HHELand"
+	"HHELand/utils"
 	"fmt"
+	"sync"
 	"testing"
 )
 
@@ -17,32 +19,19 @@ func benchmarkRubato(tc *TestContext, b *testing.B) {
 	if testing.Short() {
 		b.Skip("skipping benchmark in short mode.")
 	}
-
-	var rubatoCipher Rubato
+	var cipher Rubato
 	var encryptor Encryptor
-	var newCiphertext HHELand.Ciphertext
+	var ciphertext HHELand.Ciphertext
+	runArenaBenchmark(b, "Rubato/NewRubato", func() { cipher = NewRubato(tc.Key, tc.Params) })
+	runArenaBenchmark(b, "Rubato/NewEncryptor", func() { encryptor = cipher.NewEncryptor() })
+	runArenaBenchmark(b, "Rubato/Encrypt", func() { ciphertext = encryptor.Encrypt(tc.Plaintext) })
+	runArenaBenchmark(b, "Rubato/Decrypt", func() { encryptor.Decrypt(ciphertext) })
+}
 
-	b.Run("Rubato/NewRubato", func(b *testing.B) {
-		for i := 0; i < b.N; i++ {
-			rubatoCipher = NewRubato(tc.Key, tc.Params)
-		}
-	})
-
-	b.Run("Rubato/NewEncryptor", func(b *testing.B) {
-		for i := 0; i < b.N; i++ {
-			encryptor = rubatoCipher.NewEncryptor()
-		}
-	})
-
-	b.Run("Rubato/Encrypt", func(b *testing.B) {
-		for i := 0; i < b.N; i++ {
-			newCiphertext = encryptor.Encrypt(tc.Plaintext)
-		}
-	})
-
-	b.Run("Rubato/Decrypt", func(b *testing.B) {
-		for i := 0; i < b.N; i++ {
-			encryptor.Decrypt(newCiphertext)
-		}
+func runArenaBenchmark(b *testing.B, operation string, target func()) {
+	var once sync.Once
+	b.Run(operation, func(b *testing.B) {
+		once.Do(func() { utils.BenchmarkIter(operation, 100, target) })
+		b.ReportMetric(0, "ns/op")
 	})
 }

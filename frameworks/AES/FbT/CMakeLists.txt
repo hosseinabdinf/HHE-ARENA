@@ -73,11 +73,7 @@ add_subdirectory(utils)
 # add_executable(example_bitdecomp example/example_bitdecomp.cpp)
 # add_executable(example_functional_keyswitch example/example_functional_keyswitch.cpp)
 # add_executable(example_increase_precision example/example_increase_precision.cpp)
-add_executable(example_aes example/example_aes.cpp
-    aestrans/src/AESState.cpp
-    aestrans/src/Fieldoperations.cpp
-    bitdecomp/src/LUTEvaluator.cpp
-    bitdecomp/src/RLWESwitchingMethods/RKSKDigitPrecompFast.cpp)
+add_executable(example_aes example/example_aes.cpp)
 
 
 # Interface for flags
@@ -99,7 +95,12 @@ target_include_directories(example_aes PUBLIC bitdecomp/include aestrans/include
 
 ##### Guided Optimization
 ### First compile using flags below and then run
-set(CMAKE_CXX_FLAGS "-Wall -Werror -DOPENFHE_VERSION=1.1.1 -Wno-parentheses -DMATHBACKEND=4 -mavx2 -O3 -flto -fprofile-instr-generate=${CMAKE_SOURCE_DIR}/profile.profraw")
+set(FBT_CXX_FLAGS "-Wall -Werror -DOPENFHE_VERSION=1.1.1 -Wno-parentheses -DMATHBACKEND=4 -mavx2 -O3 -flto")
+option(FBT_ENABLE_PROFILE_GENERATION "Enable LLVM profile instrumentation" ON)
+if(FBT_ENABLE_PROFILE_GENERATION)
+    string(APPEND FBT_CXX_FLAGS " -fprofile-instr-generate=${CMAKE_SOURCE_DIR}/profile.profraw")
+endif()
+set(CMAKE_CXX_FLAGS "${FBT_CXX_FLAGS}")
 ### Then, Call llvm-profdata before compiling with
 # set(CMAKE_CXX_FLAGS "-Wall -Werror -DOPENFHE_VERSION=1.1.1 -Wno-parentheses -DMATHBACKEND=4 -mavx2 -O3 -flto -fprofile-instr-use=${CMAKE_SOURCE_DIR}/profile1.profdata")
 

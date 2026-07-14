@@ -5,31 +5,28 @@ import (
 	"encoding/binary"
 	"fmt"
 	"github.com/tuneinsight/lattigo/v6/core/rlwe"
+	"sync"
 	"testing"
 )
 
 func BenchmarkPasta3(b *testing.B) {
-	// comment below loop if you want to go over each testcase manually
-	// it helps to get benchmark results when there's memory limit in
-	// your test environment
 	for _, tc := range pasta3TestVector {
 		benchHEPasta(tc, b)
 	}
-	// uncomment following line if you want to use manual test case
-	// you can choose test cased from [0-2]
-	//benchHEPasta(pasta3TestVector[0], b)
 }
 
 func BenchmarkPasta4(b *testing.B) {
-	// comment below loop if you want to go over each testcase manually
-	// it helps to get benchmark results when there's memory limit in
-	// your test environment
 	for _, tc := range pasta4TestVector {
 		benchHEPasta(tc, b)
 	}
-	// uncomment following line if you want to use manual test case
-	// you can choose test cased from [0-2]
-	//benchHEPasta(pasta4TestVector[0], b)
+}
+
+func runArenaBenchmark(b *testing.B, operation string, target func()) {
+	var once sync.Once
+	b.Run(operation, func(b *testing.B) {
+		once.Do(func() { utils.BenchmarkIter(operation, 1, target) })
+		b.ReportMetric(0, "ns/op")
+	})
 }
 
 func benchHEPasta(tc TestContext, b *testing.B) {
@@ -42,49 +39,31 @@ func benchHEPasta(tc TestContext, b *testing.B) {
 	logger.PrintDataLen(tc.Key)
 
 	hePasta := NewHEPasta()
-
 	hePasta.InitParams(tc.Params, tc.SymParams)
 
-	b.Run("PASTA/HEKeyGen", func(b *testing.B) {
-		b.ResetTimer()
-		for i := 0; i < b.N; i++ {
-			hePasta.HEKeyGen()
-		}
+	runArenaBenchmark(b, "PASTA/HEKeyGen", func() {
+		hePasta.HEKeyGen()
 	})
 
 	_ = hePasta.InitFvPasta()
 
-	b.Run("PASTA/GaloisKeysGen", func(b *testing.B) {
-		b.ResetTimer()
-		for i := 0; i < b.N; i++ {
-			hePasta.CreateGaloisKeys(len(tc.ExpCipherText))
-		}
+	runArenaBenchmark(b, "PASTA/GaloisKeysGen", func() {
+		hePasta.CreateGaloisKeys(len(tc.ExpCipherText))
 	})
 
-	//encrypts symmetric master key using BFV on the client side
-	b.Run("PASTA/EncryptSymKey", func(b *testing.B) {
-		b.ResetTimer()
-		for i := 0; i < b.N; i++ {
-			hePasta.EncryptSymKey(tc.Key)
-		}
+	runArenaBenchmark(b, "PASTA/EncryptSymKey", func() {
+		hePasta.EncryptSymKey(tc.Key)
 	})
 
 	nonce := make([]byte, 8)
 	binary.BigEndian.PutUint64(nonce, uint64(123456789))
 
-	// the server side
 	var fvCiphers []*rlwe.Ciphertext
-	b.Run("PASTA/Trancipher", func(b *testing.B) {
-		b.ResetTimer()
-		for i := 0; i < b.N; i++ {
-			fvCiphers = hePasta.Trancipher(nonce, tc.ExpCipherText)
-		}
+	runArenaBenchmark(b, "PASTA/Trancipher", func() {
+		fvCiphers = hePasta.Trancipher(nonce, tc.ExpCipherText)
 	})
 
-	b.Run("PASTA/Decrypt", func(b *testing.B) {
-		b.ResetTimer()
-		for i := 0; i < b.N; i++ {
-			hePasta.Decrypt(fvCiphers[0])
-		}
+	runArenaBenchmark(b, "PASTA/Decrypt", func() {
+		hePasta.Decrypt(fvCiphers[0])
 	})
 }

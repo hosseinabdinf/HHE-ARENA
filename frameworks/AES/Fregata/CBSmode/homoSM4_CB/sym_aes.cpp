@@ -33,8 +33,10 @@ int main() {
   }
 
   BENCHMARK("AES Key Expansion", { AESKeyExpansion(RoundKey, Key, NN); });
+  if (HHEBenchmarkOperationSelected("AES Key Expansion")) return 0;
 
   BENCHMARK("AES Sym Encryption", { Cipher(out, in, RoundKey, Nr); });
+  if (HHEBenchmarkOperationSelected("AES Sym Encryption")) return 0;
 
   printData("Text before encryption:", in, Nk * 4);
 

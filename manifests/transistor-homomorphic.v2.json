@@ -1,0 +1,16 @@
+{
+  "$schema": "../schemas/benchmark-manifest.schema.json",
+  "version": 1,
+  "preflight": "/opt/hhe/bin/hhe-preflight",
+  "benchmarks": [
+    {
+      "id": "transistor-homomorphic-rust",
+      "cipher": "Transistor",
+      "language": "rust",
+      "operation": "HHE.Decomp()",
+      "backend": "odd-modulus-tfhe",
+      "executable": "/opt/hhe/frameworks/transistor-homomorphic/homomorphic-transistor",
+      "workdir": "/work"
+    }
+  ]
+}

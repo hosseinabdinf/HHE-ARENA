@@ -1,8 +1,11 @@
 import gc
+import os
 import unittest
+from unittest.mock import patch
 
 from utils.benchmark_utils import (
     _memory_delta,
+    _hostname,
     _proportional_warmups,
     _set_gc,
     _signed_delta,
@@ -22,6 +25,11 @@ class BenchmarkUtilityTests(unittest.TestCase):
         memory = _memory_delta((100, 200, 300), (110, 220, 350))
         self.assertEqual(memory["peak_rss_bytes_delta"], 50)
         self.assertEqual(memory["ru_maxrss_bytes"], 350)
+
+    def test_hostname_override(self):
+        with patch.dict(os.environ, {"HHE_BENCH_HOSTNAME": "physical-host-01"}):
+            self.assertEqual(_hostname(), "physical-host-01")
+
     def test_gc_modes_are_explicit(self):
         was_enabled = gc.isenabled()
         try:

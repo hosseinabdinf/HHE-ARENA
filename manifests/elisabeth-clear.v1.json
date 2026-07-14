@@ -1,0 +1,27 @@
+{
+  "$schema": "../schemas/benchmark-manifest.schema.json",
+  "version": 1,
+  "preflight": "/opt/hhe/bin/hhe-preflight",
+  "benchmarks": [
+    {
+      "id": "elisabeth-clear-rust-encrypt",
+      "cipher": "Elisabeth",
+      "language": "rust",
+      "operation": "SKE.Enc()",
+      "backend": "native",
+      "executable": "/opt/hhe/frameworks/elisabeth/elisabeth-clear",
+      "args": ["--nibbles", "1"],
+      "workdir": "/work"
+    },
+    {
+      "id": "elisabeth-clear-rust-decrypt",
+      "cipher": "Elisabeth",
+      "language": "rust",
+      "operation": "SKE.Dec()",
+      "backend": "native",
+      "executable": "/opt/hhe/frameworks/elisabeth/elisabeth-clear",
+      "args": ["--nibbles", "1"],
+      "workdir": "/work"
+    }
+  ]
+}

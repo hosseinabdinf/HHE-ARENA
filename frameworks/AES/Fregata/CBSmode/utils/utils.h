@@ -5,6 +5,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include <time.h>
 
 #ifdef __cplusplus
@@ -86,6 +87,16 @@ void PrintTimeNS(struct timespec start, struct timespec end);
 void PrintCycles(uint64_t start, uint64_t end);
 void PrintMemory(const char* name, long start, long end);
 
+static inline int HHEBenchmarkOperationSelected(const char* operation) {
+  const char* requested = getenv("HHE_BENCH_OPERATION");
+  return requested && requested[0] && strcmp(requested, operation) == 0;
+}
+
+static inline int HHEBenchmarkOperationEnabled(const char* operation) {
+  const char* requested = getenv("HHE_BENCH_OPERATION");
+  return !requested || !requested[0] || strcmp(requested, operation) == 0;
+}
+
 #ifdef __cplusplus
 }
 #endif
@@ -95,28 +106,31 @@ void PrintMemory(const char* name, long start, long end);
  * session API because C/C++ call sites capture locals. The session API owns
  * warm-up/measured separation, per-iteration timing, JSONL, and summaries.
  */
-#define HHE_BENCHMARK_ITER(name, count_arg, code)                           \
+#define HHE_BENCHMARK_ITER(name, count_arg, ...)                            \
   do {                                                                       \
-    HHEBenchmarkConfig _hhe_cfg =                                             \
-        HHEBenchmarkConfigFromEnv((name), (size_t)(count_arg));              \
-    _hhe_cfg.language = HHE_CALLER_LANGUAGE;              \
-    HHEBenchmarkSession _hhe_session;                                         \
-    if (HHEBenchmarkBegin(&_hhe_session, &_hhe_cfg) != 0) abort();              \
-    for (int _hhe_phase = 0; _hhe_phase < 2 && !_hhe_session.failed;          \
-         ++_hhe_phase) {                                                      \
-      size_t _hhe_count = _hhe_phase == 0 ? _hhe_cfg.warmups                 \
-                                           : _hhe_cfg.iterations;             \
-      for (size_t _hhe_i = 0; _hhe_i < _hhe_count; ++_hhe_i) {               \
-        HHEBenchmarkIterationBegin(                                           \
-            &_hhe_session, _hhe_phase == 0 ? HHE_PHASE_WARMUP                \
-                                            : HHE_PHASE_MEASURED,             \
-            _hhe_i);                                                          \
-        do { code; } while (0);                                               \
-        if (HHEBenchmarkIterationEnd(&_hhe_session) != 0) break;              \
+    if (HHEBenchmarkOperationEnabled((name))) {                               \
+      HHEBenchmarkConfig _hhe_cfg =                                           \
+          HHEBenchmarkConfigFromEnv((name), (size_t)(count_arg));            \
+      _hhe_cfg.language = HHE_CALLER_LANGUAGE;                               \
+      HHEBenchmarkSession _hhe_session;                                       \
+      if (HHEBenchmarkBegin(&_hhe_session, &_hhe_cfg) != 0) abort();          \
+      for (int _hhe_phase = 0; _hhe_phase < 2 && !_hhe_session.failed;        \
+           ++_hhe_phase) {                                                    \
+        size_t _hhe_count = _hhe_phase == 0 ? _hhe_cfg.warmups               \
+                                             : _hhe_cfg.iterations;           \
+        for (size_t _hhe_i = 0; _hhe_i < _hhe_count; ++_hhe_i) {             \
+          HHEBenchmarkIterationBegin(                                         \
+              &_hhe_session, _hhe_phase == 0 ? HHE_PHASE_WARMUP              \
+                                              : HHE_PHASE_MEASURED,           \
+              _hhe_i);                                                        \
+          do { __VA_ARGS__; } while (0);                                      \
+          if (HHEBenchmarkIterationEnd(&_hhe_session) != 0) break;            \
+        }                                                                     \
       }                                                                       \
+      if (HHEBenchmarkFinish(&_hhe_session) != 0) abort();                    \
+    } else {                                                                  \
+      do { __VA_ARGS__; } while (0);                                          \
     }                                                                         \
-    if (HHEBenchmarkFinish(&_hhe_session) != 0)                               \
-      abort();                     \
   } while (0)
 
 #define BENCHMARK(name, ...) HHE_BENCHMARK_ITER((name), 1, __VA_ARGS__)

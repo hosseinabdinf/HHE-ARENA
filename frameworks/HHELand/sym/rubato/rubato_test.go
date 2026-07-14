@@ -2,6 +2,7 @@ package rubato
 
 import (
 	"fmt"
+	"os"
 	"testing"
 
 	"HHELand"
@@ -39,9 +40,16 @@ func TestRubato(t *testing.T) {
 func TestNbRubato(t *testing.T) {
 	t.Run("HHE-ARENA:Rubato", func(t *testing.T) {
 		utils.PrintHeader("Rubato SKE Benchmark")
-		// tCase := TestsVector[0] // for rubato 5
-		// tCase := TestsVector[1] // for rubato 3
-		tCase := TestsVector[2] // for rubato 2
+		variants := map[string]int{"128S": 0, "128M": 1, "128L": 2}
+		variant := os.Getenv("HHE_BENCH_VARIANT")
+		if variant == "" {
+			variant = "128L"
+		}
+		index, ok := variants[variant]
+		if !ok {
+			t.Fatalf("unknown HHE_BENCH_VARIANT %q", variant)
+		}
+		tCase := TestsVector[index]
 
 		fmt.Println(testString("Rubato", tCase.Params))
 

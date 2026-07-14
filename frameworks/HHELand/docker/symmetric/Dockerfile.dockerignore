@@ -1,0 +1,10 @@
+**
+!frameworks/
+frameworks/*
+!frameworks/HHELand/
+!frameworks/HHELand/**
+frameworks/HHELand/**/*_backup*
+frameworks/HHELand/**/benchmark.jsonl
+!manifests/
+manifests/*
+!manifests/hheland-symmetric.v2.json

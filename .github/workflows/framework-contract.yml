@@ -1,0 +1,25 @@
+name: framework-contract
+
+on:
+  push:
+    paths:
+      - "frameworks/**"
+      - "manifests/**"
+      - "schemas/**"
+      - "tools/validate_framework_contract.py"
+      - ".github/workflows/framework-contract.yml"
+  pull_request:
+    paths:
+      - "frameworks/**"
+      - "manifests/**"
+      - "schemas/**"
+      - "tools/validate_framework_contract.py"
+      - ".github/workflows/framework-contract.yml"
+
+jobs:
+  static-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate framework catalog and packaging contract
+        run: python tools/validate_framework_contract.py

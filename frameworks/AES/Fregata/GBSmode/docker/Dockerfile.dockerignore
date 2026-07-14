@@ -1,0 +1,14 @@
+.git
+.agents
+.codex
+agent
+results
+**/__pycache__
+**/*.pyc
+**/target
+**/build
+**/.venv
+frameworks/AES/Fregata/CBSmode
+frameworks/AES/Fregata/FBSmode
+frameworks/AES/Fregata/GBSmode/homosm4_backup.cpp.txt
+frameworks/AES/Fregata/GBSmode/README.md

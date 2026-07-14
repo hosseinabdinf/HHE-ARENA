@@ -1,0 +1,15 @@
+**
+!benchmarking-utilities/
+benchmarking-utilities/*
+!benchmarking-utilities/rust/
+!benchmarking-utilities/rust/**
+benchmarking-utilities/rust/target/
+!frameworks/
+frameworks/*
+!frameworks/elisabeth/
+!frameworks/elisabeth/**
+frameworks/elisabeth/target/
+frameworks/elisabeth/**/*_backup*
+!manifests/
+manifests/*
+!manifests/elisabeth-clear.v1.json

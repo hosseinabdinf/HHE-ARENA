@@ -1,0 +1,34 @@
+{
+  "$schema": "../schemas/benchmark-manifest.schema.json",
+  "version": 1,
+  "preflight": "/opt/hhe/bin/hhe-preflight",
+  "benchmarks": [
+    {
+      "id": "full-lut-aes-key-expansion",
+      "cipher": "AES-128 full-LUT",
+      "language": "cpp",
+      "operation": "Symmetric Key Expansion",
+      "backend": "native",
+      "executable": "/opt/hhe/frameworks/full-lut/full-lut",
+      "workdir": "/work"
+    },
+    {
+      "id": "full-lut-aes-tfhe-encryption",
+      "cipher": "AES-128 full-LUT",
+      "language": "cpp",
+      "operation": "TFHE-Sym-Encryption",
+      "backend": "TFHE",
+      "executable": "/opt/hhe/frameworks/full-lut/full-lut",
+      "workdir": "/work"
+    },
+    {
+      "id": "full-lut-aes-transciphering",
+      "cipher": "AES-128 full-LUT",
+      "language": "cpp",
+      "operation": "Transciphering",
+      "backend": "TFHE",
+      "executable": "/opt/hhe/frameworks/full-lut/full-lut",
+      "workdir": "/work"
+    }
+  ]
+}

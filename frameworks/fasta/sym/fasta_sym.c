@@ -8,6 +8,7 @@
 #include "Fasta.h"
 #include "utils.h"
 #include <stdio.h>
+#include <string.h>
 
 struct plaintext *readPlaintextFile(const char *filename) {
   /* Reads in plaintext from the given file and returns it in a plaintext
@@ -122,19 +123,36 @@ int main(int argc, char *argv[]) {
   printf("> Reading Plaintext (numblock: %d, lenght: %d)\n", ptxt->numBlocks,
          ptxt->block[0]->length);
 
-  PrintHeader("SYM Encryption");
-  HHE_BENCHMARK_ITER_HOOKS(
-      "ske_encrypt", 1,
-      if (ctxt != NULL) { deleteCiphertext(ctxt); ctxt = NULL; },
-      ctxt = encrypt(ptxt, K),
-      (void)0);
+  const char *requested_operation = getenv("HHE_BENCH_OPERATION");
+  int run_encrypt = requested_operation == NULL || requested_operation[0] == '\0' ||
+                    strcmp(requested_operation, "ske_encrypt") == 0;
+  int run_decrypt = requested_operation == NULL || requested_operation[0] == '\0' ||
+                    strcmp(requested_operation, "ske_decrypt") == 0;
+  if (!run_encrypt && !run_decrypt) {
+    fprintf(stderr, "Unsupported Fasta operation: %s\n", requested_operation);
+    deletePlaintext(ptxt);
+    DeleteBitVector(K);
+    return 2;
+  }
 
-  PrintHeader("SYM Decryption");
-  HHE_BENCHMARK_ITER_HOOKS(
-      "ske_decrypt", 1,
-      if (decrypted != NULL) { deletePlaintext(decrypted); decrypted = NULL; },
-      decrypted = decrypt(ctxt, K),
-      (void)0);
+  if (run_encrypt) {
+    PrintHeader("SYM Encryption");
+    HHE_BENCHMARK_ITER_HOOKS(
+        "ske_encrypt", 1,
+        if (ctxt != NULL) { deleteCiphertext(ctxt); ctxt = NULL; },
+        ctxt = encrypt(ptxt, K),
+        (void)0);
+  }
+
+  if (run_decrypt) {
+    if (ctxt == NULL) ctxt = encrypt(ptxt, K);
+    PrintHeader("SYM Decryption");
+    HHE_BENCHMARK_ITER_HOOKS(
+        "ske_decrypt", 1,
+        if (decrypted != NULL) { deletePlaintext(decrypted); decrypted = NULL; },
+        decrypted = decrypt(ctxt, K),
+        (void)0);
+  }
 
   // printCiphertextFile(ctxt, "ciphertext.txt");
   // printf("> Encryption of plaintext written to ciphertext.txt\n");

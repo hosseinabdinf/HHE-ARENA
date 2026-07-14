@@ -1,0 +1,17 @@
+{
+  "$schema": "../schemas/benchmark-manifest.schema.json",
+  "version": 1,
+  "preflight": "/opt/hhe/bin/hhe-preflight",
+  "benchmarks": [
+    {
+      "id": "hheland-rubato128l-go",
+      "cipher": "Rubato-128-L",
+      "language": "go",
+      "operation": "SKE.Enc()",
+      "backend": "native",
+      "executable": "/opt/hhe/frameworks/hheland-rubato/hheland-rubato.test",
+      "args": ["-test.run=^TestNbRubato$", "-test.v"],
+      "workdir": "/work"
+    }
+  ]
+}

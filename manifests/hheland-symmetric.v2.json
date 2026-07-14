@@ -1,0 +1,119 @@
+{
+  "$schema": "../schemas/benchmark-manifest.schema.json",
+  "version": 1,
+  "preflight": "/opt/hhe/bin/hhe-preflight",
+  "benchmarks": [
+    {
+      "id": "hheland-rubato-128s", "cipher": "Rubato-128S", "language": "go",
+      "operation": "SKE.Enc()", "backend": "native",
+      "executable": "/opt/hhe/frameworks/hheland-symmetric/hheland-rubato.test",
+      "args": ["-test.run=^TestNbRubato$", "-test.v"], "workdir": "/work",
+      "env": { "HHE_BENCH_VARIANT": "128S" }
+    },
+    {
+      "id": "hheland-rubato-128m", "cipher": "Rubato-128M", "language": "go",
+      "operation": "SKE.Enc()", "backend": "native",
+      "executable": "/opt/hhe/frameworks/hheland-symmetric/hheland-rubato.test",
+      "args": ["-test.run=^TestNbRubato$", "-test.v"], "workdir": "/work",
+      "env": { "HHE_BENCH_VARIANT": "128M" }
+    },
+    {
+      "id": "hheland-hera-80f", "cipher": "Hera-80f", "language": "go",
+      "operation": "SKE.Enc()", "backend": "native",
+      "executable": "/opt/hhe/frameworks/hheland-symmetric/hheland-hera.test",
+      "args": ["-test.run=^TestNbHera$", "-test.v"], "workdir": "/work",
+      "env": { "HHE_BENCH_VARIANT": "80f" }
+    },
+    {
+      "id": "hheland-hera-80s", "cipher": "Hera-80s", "language": "go",
+      "operation": "SKE.Enc()", "backend": "native",
+      "executable": "/opt/hhe/frameworks/hheland-symmetric/hheland-hera.test",
+      "args": ["-test.run=^TestNbHera$", "-test.v"], "workdir": "/work",
+      "env": { "HHE_BENCH_VARIANT": "80s" }
+    },
+    {
+      "id": "hheland-hera-80af", "cipher": "Hera-80af", "language": "go",
+      "operation": "SKE.Enc()", "backend": "native",
+      "executable": "/opt/hhe/frameworks/hheland-symmetric/hheland-hera.test",
+      "args": ["-test.run=^TestNbHera$", "-test.v"], "workdir": "/work",
+      "env": { "HHE_BENCH_VARIANT": "80af" }
+    },
+    {
+      "id": "hheland-hera-80as", "cipher": "Hera-80as", "language": "go",
+      "operation": "SKE.Enc()", "backend": "native",
+      "executable": "/opt/hhe/frameworks/hheland-symmetric/hheland-hera.test",
+      "args": ["-test.run=^TestNbHera$", "-test.v"], "workdir": "/work",
+      "env": { "HHE_BENCH_VARIANT": "80as" }
+    },
+    {
+      "id": "hheland-hera-128f", "cipher": "Hera-128f", "language": "go",
+      "operation": "SKE.Enc()", "backend": "native",
+      "executable": "/opt/hhe/frameworks/hheland-symmetric/hheland-hera.test",
+      "args": ["-test.run=^TestNbHera$", "-test.v"], "workdir": "/work",
+      "env": { "HHE_BENCH_VARIANT": "128f" }
+    },
+    {
+      "id": "hheland-hera-128s", "cipher": "Hera-128s", "language": "go",
+      "operation": "SKE.Enc()", "backend": "native",
+      "executable": "/opt/hhe/frameworks/hheland-symmetric/hheland-hera.test",
+      "args": ["-test.run=^TestNbHera$", "-test.v"], "workdir": "/work",
+      "env": { "HHE_BENCH_VARIANT": "128s" }
+    },
+    {
+      "id": "hheland-hera-128af", "cipher": "Hera-128af", "language": "go",
+      "operation": "SKE.Enc()", "backend": "native",
+      "executable": "/opt/hhe/frameworks/hheland-symmetric/hheland-hera.test",
+      "args": ["-test.run=^TestNbHera$", "-test.v"], "workdir": "/work",
+      "env": { "HHE_BENCH_VARIANT": "128af" }
+    },
+    {
+      "id": "hheland-hera-128as", "cipher": "Hera-128as", "language": "go",
+      "operation": "SKE.Enc()", "backend": "native",
+      "executable": "/opt/hhe/frameworks/hheland-symmetric/hheland-hera.test",
+      "args": ["-test.run=^TestNbHera$", "-test.v"], "workdir": "/work",
+      "env": { "HHE_BENCH_VARIANT": "128as" }
+    },
+    {
+      "id": "hheland-pasta3-p65537", "cipher": "Pasta3-p65537", "language": "go",
+      "operation": "SKE.Enc()", "backend": "native",
+      "executable": "/opt/hhe/frameworks/hheland-symmetric/hheland-pasta.test",
+      "args": ["-test.run=^TestNbPasta3$", "-test.v"], "workdir": "/work",
+      "env": { "HHE_BENCH_VARIANT": "Pasta3-p65537" }
+    },
+    {
+      "id": "hheland-pasta3-p8088322049", "cipher": "Pasta3-p8088322049", "language": "go",
+      "operation": "SKE.Enc()", "backend": "native",
+      "executable": "/opt/hhe/frameworks/hheland-symmetric/hheland-pasta.test",
+      "args": ["-test.run=^TestNbPasta3$", "-test.v"], "workdir": "/work",
+      "env": { "HHE_BENCH_VARIANT": "Pasta3-p8088322049" }
+    },
+    {
+      "id": "hheland-pasta3-p1096486890805657601", "cipher": "Pasta3-p1096486890805657601", "language": "go",
+      "operation": "SKE.Enc()", "backend": "native",
+      "executable": "/opt/hhe/frameworks/hheland-symmetric/hheland-pasta.test",
+      "args": ["-test.run=^TestNbPasta3$", "-test.v"], "workdir": "/work",
+      "env": { "HHE_BENCH_VARIANT": "Pasta3-p1096486890805657601" }
+    },
+    {
+      "id": "hheland-pasta4-p65537", "cipher": "Pasta4-p65537", "language": "go",
+      "operation": "SKE.Enc()", "backend": "native",
+      "executable": "/opt/hhe/frameworks/hheland-symmetric/hheland-pasta.test",
+      "args": ["-test.run=^TestNbPasta4$", "-test.v"], "workdir": "/work",
+      "env": { "HHE_BENCH_VARIANT": "Pasta4-p65537" }
+    },
+    {
+      "id": "hheland-pasta4-p8088322049", "cipher": "Pasta4-p8088322049", "language": "go",
+      "operation": "SKE.Enc()", "backend": "native",
+      "executable": "/opt/hhe/frameworks/hheland-symmetric/hheland-pasta.test",
+      "args": ["-test.run=^TestNbPasta4$", "-test.v"], "workdir": "/work",
+      "env": { "HHE_BENCH_VARIANT": "Pasta4-p8088322049" }
+    },
+    {
+      "id": "hheland-pasta4-p1096486890805657601", "cipher": "Pasta4-p1096486890805657601", "language": "go",
+      "operation": "SKE.Enc()", "backend": "native",
+      "executable": "/opt/hhe/frameworks/hheland-symmetric/hheland-pasta.test",
+      "args": ["-test.run=^TestNbPasta4$", "-test.v"], "workdir": "/work",
+      "env": { "HHE_BENCH_VARIANT": "Pasta4-p1096486890805657601" }
+    }
+  ]
+}

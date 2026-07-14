@@ -23,7 +23,8 @@ The harness:
 - prints median/min/max for measured iterations.
 
 Configuration uses the `HHE_BENCH_*` environment variables documented by the
-Rust utility. CMake requires C11. The schema smoke test is registered through
+Rust utility, including `HHE_BENCH_HOSTNAME` as the stable host-identity
+override. CMake requires C11. The schema smoke test is registered through
 CTest when `BUILD_TESTING=ON`.
 
 ## Integration
