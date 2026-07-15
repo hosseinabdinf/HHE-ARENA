@@ -1,6 +1,8 @@
 #include <benchmark_util.h>
 #include <cipher.h>
 #include <stddef.h>
+#include <stdlib.h>
+#include <string.h>
 #include <test_data.h>
 #include <utils.h>
 
@@ -110,10 +112,21 @@ void test_CMUX_ct_mt() {
 }
 
 int main(int argc, char const *argv[]) {
-  PrintHeader("Margrethe Cipher");
-  PrintHeader("Multi-threaded Margrethe Transciphering");
-  test_CMUX_ct_mt();
-  PrintHeader("Single-threaded Margrethe Transciphering");
-  test_CMUX_ct();
+  const char *implementation = getenv("HHE_BENCH_IMPLEMENTATION");
+  if (implementation && strcmp(implementation, "margrethe-single") == 0) {
+    PrintHeader("Margrethe Cipher");
+    PrintHeader("Single-threaded Margrethe Transciphering");
+    test_CMUX_ct();
+  } else if (implementation && strcmp(implementation, "margrethe-multi") == 0) {
+    PrintHeader("Margrethe Cipher");
+    PrintHeader("Multi-threaded Margrethe Transciphering");
+    test_CMUX_ct_mt();
+  } else {
+    PrintHeader("Margrethe Cipher");
+    PrintHeader("Multi-threaded Margrethe Transciphering");
+    test_CMUX_ct_mt();
+    PrintHeader("Single-threaded Margrethe Transciphering");
+    test_CMUX_ct();
+  }
   return 0;
 }

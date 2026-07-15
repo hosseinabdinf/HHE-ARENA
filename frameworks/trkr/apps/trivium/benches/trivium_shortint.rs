@@ -1,6 +1,6 @@
 use criterion::Criterion;
 use tfhe::prelude::*;
-use tfhe::shortint::parameters::v1_1::{
+use tfhe::shortint::parameters::v1_0::{
     V1_0_PARAM_KEYSWITCH_1_1_KS_PBS_TO_2_2_KS_PBS_GAUSSIAN_2M128,
     V1_0_PARAM_MESSAGE_1_CARRY_1_KS_PBS_GAUSSIAN_2M128,
     V1_0_PARAM_MESSAGE_2_CARRY_2_KS_PBS_GAUSSIAN_2M128,

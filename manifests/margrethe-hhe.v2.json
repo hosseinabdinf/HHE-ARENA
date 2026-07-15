@@ -1,0 +1,9 @@
+{
+  "$schema": "../schemas/benchmark-manifest.schema.json",
+  "version": 1,
+  "preflight": "/opt/hhe/bin/hhe-preflight",
+  "benchmarks": [
+    { "id": "margrethe-hhe-single-thread", "cipher": "Margrethe", "language": "c", "operation": "HHE.Decomp() for 32 messages", "backend": "MOSFHET", "executable": "/opt/hhe/frameworks/margrethe-hhe/main_cipher", "workdir": "/work", "env": { "HHE_BENCH_ITERATIONS": "1", "HHE_BENCH_WARMUPS": "0", "HHE_BENCH_IMPLEMENTATION": "margrethe-single" } },
+    { "id": "margrethe-hhe-multi-thread", "cipher": "Margrethe", "language": "c", "operation": "HHE.Decomp() for 32 messages", "backend": "MOSFHET", "executable": "/opt/hhe/frameworks/margrethe-hhe/main_cipher", "workdir": "/work", "env": { "HHE_BENCH_ITERATIONS": "1", "HHE_BENCH_WARMUPS": "0", "HHE_BENCH_IMPLEMENTATION": "margrethe-multi" } }
+  ]
+}

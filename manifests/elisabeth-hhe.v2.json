@@ -1,0 +1,8 @@
+{
+  "$schema": "../schemas/benchmark-manifest.schema.json",
+  "version": 1,
+  "preflight": "/opt/hhe/bin/hhe-preflight",
+  "benchmarks": [
+    { "id": "elisabeth-hhe-decomp", "cipher": "Elisabeth", "language": "rust", "operation": "Elisabeth/HHE.Decomp", "backend": "HHE", "executable": "/opt/hhe/frameworks/elisabeth-hhe/benchmark-elisabeth", "args": ["256"], "workdir": "/work", "env": { "HHE_BENCH_ITERATIONS": "1", "HHE_BENCH_WARMUPS": "0" } }
+  ]
+}

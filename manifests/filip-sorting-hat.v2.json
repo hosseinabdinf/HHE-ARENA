@@ -1,0 +1,9 @@
+{
+  "$schema": "../schemas/benchmark-manifest.schema.json",
+  "version": 1,
+  "preflight": "/opt/hhe/bin/hhe-preflight",
+  "benchmarks": [
+    { "id": "filip-sorting-hat-ske-encrypt", "cipher": "FiLIP", "language": "cpp", "operation": "SKE.Enc()", "backend": "native", "executable": "/opt/hhe/frameworks/filip-sorting-hat/test_homomorphic_filip", "workdir": "/work", "env": { "HHE_BENCH_ITERATIONS": "1", "HHE_BENCH_WARMUPS": "0" } },
+    { "id": "filip-sorting-hat-hhe-decomp", "cipher": "FiLIP", "language": "cpp", "operation": "HHE.Decomp()", "backend": "TFHE", "executable": "/opt/hhe/frameworks/filip-sorting-hat/test_homomorphic_filip", "workdir": "/work", "env": { "HHE_BENCH_ITERATIONS": "1", "HHE_BENCH_WARMUPS": "0" } }
+  ]
+}

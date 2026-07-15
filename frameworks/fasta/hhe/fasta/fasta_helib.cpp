@@ -212,14 +212,12 @@ int main(int argc, char *argv[]) {
   unsigned long c = 2;
 
   PrintHeader("Initialising HE Context Object");
-  unique_ptr<Context> context_ptr;
   HHE_BENCHMARK_ITER_HOOKS(
       "he_context_setup", 1,
-      context_ptr.reset(),
-      context_ptr = make_unique<Context>(
-          ContextBuilder<BGV>().m(m).p(p).r(r).bits(bits).c(c).build()),
+      (void)0,
+      { Context context = ContextBuilder<BGV>().m(m).p(p).r(r).bits(bits).c(c).build(); },
       (void)0);
-  Context &context = *context_ptr;
+  Context context = ContextBuilder<BGV>().m(m).p(p).r(r).bits(bits).c(c).build();
 
   // Print the context
   cout << "----------------------------------- \n";

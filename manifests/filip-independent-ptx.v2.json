@@ -1,0 +1,10 @@
+{
+  "$schema": "../schemas/benchmark-manifest.schema.json",
+  "version": 1,
+  "preflight": "/opt/hhe/bin/hhe-preflight",
+  "benchmarks": [
+    { "id": "filip-independent-ptx-setup", "cipher": "FiLIP", "language": "cpp", "operation": "p-dependent HHE setup", "backend": "TFHE", "executable": "/opt/hhe/frameworks/filip-independent-ptx/test_homomorphic_filip_mod_p", "workdir": "/work", "env": { "HHE_BENCH_ITERATIONS": "1", "HHE_BENCH_WARMUPS": "0" } },
+    { "id": "filip-independent-ptx-ske-encrypt", "cipher": "FiLIP", "language": "cpp", "operation": "SKE.Enc()", "backend": "native", "executable": "/opt/hhe/frameworks/filip-independent-ptx/test_homomorphic_filip_mod_p", "workdir": "/work", "env": { "HHE_BENCH_ITERATIONS": "1", "HHE_BENCH_WARMUPS": "0" } },
+    { "id": "filip-independent-ptx-hhe-decomp", "cipher": "FiLIP", "language": "cpp", "operation": "HHE.Decom()", "backend": "TFHE", "executable": "/opt/hhe/frameworks/filip-independent-ptx/test_homomorphic_filip_mod_p", "workdir": "/work", "env": { "HHE_BENCH_ITERATIONS": "1", "HHE_BENCH_WARMUPS": "0" } }
+  ]
+}
