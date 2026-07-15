@@ -38,7 +38,13 @@ USER root
 COPY --from=builder /out/fasta-helib /opt/hhe/frameworks/fasta-rasta/fasta-helib
 COPY --from=builder /out/rasta-helib /opt/hhe/frameworks/fasta-rasta/rasta-helib
 COPY --from=builder /out/rasta-pack-helib /opt/hhe/frameworks/fasta-rasta/rasta-pack-helib
-COPY --from=builder /out/rasta-tfhe /opt/hhe/frameworks/fasta-rasta/rasta-tfhe
+COPY --from=builder /out/rasta-tfhe /opt/hhe/frameworks/fasta-rasta/rasta-tfhe-bin
+COPY --from=builder /src/frameworks/fasta/thirdparty/HElib/install/lib/ /opt/hhe/lib/
+COPY --from=builder /src/frameworks/fasta/thirdparty/NTL/usr/local/lib/ /opt/hhe/lib/
+COPY --from=builder /src/frameworks/fasta/thirdparty/GMP/usr/local/lib/ /opt/hhe/lib/
+COPY --from=builder /src/frameworks/fasta/thirdparty/m4ri/installed/lib/ /opt/hhe/lib/
+COPY --from=builder /src/frameworks/fasta/thirdparty/tfhe/installed/lib/ /opt/hhe/lib/
+ENV LD_LIBRARY_PATH=/opt/hhe/lib
 COPY frameworks/fasta/hhe/rasta/matrix_*.txt /opt/hhe/frameworks/fasta-rasta/rasta/
 COPY frameworks/fasta/hhe/rasta_pack/matrix_*.txt /opt/hhe/frameworks/fasta-rasta/rasta-pack/
 COPY frameworks/fasta/hhe/rasta_tfhe/matrix_*.txt /opt/hhe/frameworks/fasta-rasta/rasta-tfhe/
