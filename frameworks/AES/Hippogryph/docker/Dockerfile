@@ -31,6 +31,7 @@ LABEL org.opencontainers.image.title="HHE-ARENA Hippogryph AES/Rust benchmarks" 
       io.hhe-arena.tooling.digest="${TOOLING_DIGEST}"
 USER root
 COPY --from=builder /out/bin/run-aes /opt/hhe/frameworks/hippogryph/run-aes
+COPY frameworks/AES/Hippogryph/hippogriph/src/aes/data/ /opt/hhe/frameworks/hippogryph/src/aes/data/
 COPY manifests/hippogryph-aes.v2.json /opt/hhe/benchmarks/manifest.json
 RUN mkdir -p /work/results \
  && chown -R 65532:65532 /work \
