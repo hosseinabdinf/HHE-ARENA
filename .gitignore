@@ -32,3 +32,21 @@ agent
 build
 results
 AGENT.md
+
+# Generic language build and test artifacts
+**/target/
+**/.venv/
+**/venv/
+**/.pytest_cache/
+**/.mypy_cache/
+
+# Logs and temporary editor files
+*.log
+*.tmp
+*.bak
+*.swp
+
+# Local environment configuration
+.env
+.env.*
+!.env.example

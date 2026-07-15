@@ -12,6 +12,8 @@ New users should follow **[Getting started from scratch](docs/getting-started.md
 
 For the architecture, safety policy, reproducibility assumptions, and current project scope, see the **[Project guide](docs/project-guide.md)**.
 
+The current catalog of benchmark-ready schemes, Docker images, manifests, and declared contract operations is in **[Project Status: available schemes](docs/available-schemes.md)**.
+
 Platform-specific requirements are in the [platform documentation index](docs/README.md), with separate guides for [Windows/WSL2](docs/README.windows.md), [Docker](docs/README.docker.md), and [Linux bare metal](docs/README.linux.md).
 
 Contributors adding an implementation should follow **[Adding a new scheme or framework](docs/adding-a-scheme.md)**.
