@@ -1,0 +1,20 @@
+{
+  "$schema": "../schemas/benchmark-manifest.schema.json",
+  "version": 1,
+  "preflight": "/opt/hhe/bin/hhe-preflight",
+  "benchmarks": [
+    { "id": "frast-ske-ksgen", "cipher": "FRAST", "language": "rust", "operation": "SKE.KSGen()", "backend": "TFHE-rs", "executable": "/opt/hhe/frameworks/frast/frast_test", "workdir": "/work", "env": { "HHE_BENCH_ITERATIONS": "1", "HHE_BENCH_WARMUPS": "0" } },
+    { "id": "frast-ske-encrypt", "cipher": "FRAST", "language": "rust", "operation": "SYM.Enc()", "backend": "TFHE-rs", "executable": "/opt/hhe/frameworks/frast/frast_test", "workdir": "/work", "env": { "HHE_BENCH_ITERATIONS": "1", "HHE_BENCH_WARMUPS": "0" } },
+    { "id": "frast-hhe-decomp", "cipher": "FRAST", "language": "rust", "operation": "HHE.Decomp()", "backend": "TFHE-rs", "executable": "/opt/hhe/frameworks/frast/frast_test", "workdir": "/work", "env": { "HHE_BENCH_ITERATIONS": "1", "HHE_BENCH_WARMUPS": "0" } },
+    { "id": "frast-setup", "cipher": "FRAST", "language": "rust", "operation": "frast setup", "backend": "TFHE-rs", "executable": "/opt/hhe/frameworks/frast/bench_setup", "workdir": "/work", "env": { "HHE_BENCH_ITERATIONS": "1", "HHE_BENCH_WARMUPS": "0" } },
+    { "id": "frast-eval", "cipher": "FRAST", "language": "rust", "operation": "frast eval", "backend": "TFHE-rs", "executable": "/opt/hhe/frameworks/frast/bench_frast", "workdir": "/work", "env": { "HHE_BENCH_ITERATIONS": "1", "HHE_BENCH_WARMUPS": "0" } },
+    { "id": "frast-pbs-ks-elisabeth", "cipher": "PBS Elisabeth", "language": "rust", "operation": "KS/elisabeth", "backend": "TFHE-rs", "executable": "/opt/hhe/frameworks/frast/bench_gen_pbs", "workdir": "/work", "env": { "HHE_BENCH_ITERATIONS": "1", "HHE_BENCH_WARMUPS": "0" } },
+    { "id": "frast-pbs-gen-elisabeth", "cipher": "PBS Elisabeth", "language": "rust", "operation": "GenPBS/elisabeth", "backend": "TFHE-rs", "executable": "/opt/hhe/frameworks/frast/bench_gen_pbs", "workdir": "/work", "env": { "HHE_BENCH_ITERATIONS": "1", "HHE_BENCH_WARMUPS": "0" } },
+    { "id": "frast-pbs-ks-kreyvium", "cipher": "PBS Kreyvium", "language": "rust", "operation": "KS/kreyvium", "backend": "TFHE-rs", "executable": "/opt/hhe/frameworks/frast/bench_gen_pbs", "workdir": "/work", "env": { "HHE_BENCH_ITERATIONS": "1", "HHE_BENCH_WARMUPS": "0" } },
+    { "id": "frast-pbs-gen-kreyvium", "cipher": "PBS Kreyvium", "language": "rust", "operation": "GenPBS/kreyvium", "backend": "TFHE-rs", "executable": "/opt/hhe/frameworks/frast/bench_gen_pbs", "workdir": "/work", "env": { "HHE_BENCH_ITERATIONS": "1", "HHE_BENCH_WARMUPS": "0" } },
+    { "id": "frast-pbs-ks-frast", "cipher": "PBS FRAST", "language": "rust", "operation": "KS/frast", "backend": "TFHE-rs", "executable": "/opt/hhe/frameworks/frast/bench_gen_pbs", "workdir": "/work", "env": { "HHE_BENCH_ITERATIONS": "1", "HHE_BENCH_WARMUPS": "0" } },
+    { "id": "frast-pbs-gen-frast", "cipher": "PBS FRAST", "language": "rust", "operation": "GenPBS/frast", "backend": "TFHE-rs", "executable": "/opt/hhe/frameworks/frast/bench_gen_pbs", "workdir": "/work", "env": { "HHE_BENCH_ITERATIONS": "1", "HHE_BENCH_WARMUPS": "0" } },
+    { "id": "frast-online-elisabeth", "cipher": "Online Elisabeth", "language": "rust", "operation": "online/elisabeth", "backend": "TFHE-rs", "executable": "/opt/hhe/frameworks/frast/bench_online", "workdir": "/work", "env": { "HHE_BENCH_ITERATIONS": "1", "HHE_BENCH_WARMUPS": "0" } },
+    { "id": "frast-online-kreyvium", "cipher": "Online Kreyvium", "language": "rust", "operation": "online/kreyvium", "backend": "TFHE-rs", "executable": "/opt/hhe/frameworks/frast/bench_online", "workdir": "/work", "env": { "HHE_BENCH_ITERATIONS": "1", "HHE_BENCH_WARMUPS": "0" } }
+  ]
+}

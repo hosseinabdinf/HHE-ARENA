@@ -109,6 +109,18 @@ func TestBenchAllStableRawFiles(t *testing.T) {
 		t.Fatalf("%q %q", a, b)
 	}
 }
+func TestBenchAddsJSONLExtension(t *testing.T) {
+	p := manifestFile(t)
+	out := filepath.Join(t.TempDir(), "raw")
+	f := &fakeRunner{}
+	var stdout, stderr bytes.Buffer
+	if got := run([]string{"bench", "--manifest", p, "--language", "rust", "--output", out}, f, &stdout, &stderr); got != 0 {
+		t.Fatalf("exit=%d stderr=%s", got, stderr.String())
+	}
+	if got, _ := envValue(f.calls[0].env, "HHE_BENCH_OUTPUT"); got != out+".jsonl" {
+		t.Fatalf("output=%q", got)
+	}
+}
 func TestBenchNeedsOneMatch(t *testing.T) {
 	p := manifestFile(t)
 	var out, errw bytes.Buffer

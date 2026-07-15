@@ -547,6 +547,9 @@ func bench(a []string, all bool, r runner, out, errw io.Writer) int {
 		fmt.Fprintf(errw, "bench requires one match, found %d\n", len(z))
 		return 65
 	}
+	if !all {
+		o.output = jsonlPath(o.output)
+	}
 	if o.preflight {
 		if e = invokePreflight(m, o, r, out, errw); e != nil {
 			fmt.Fprintln(errw, e)
@@ -565,6 +568,13 @@ func bench(a []string, all bool, r runner, out, errw io.Writer) int {
 	}
 	return 0
 }
+func jsonlPath(path string) string {
+	if strings.EqualFold(filepath.Ext(path), ".jsonl") {
+		return path
+	}
+	return path + ".jsonl"
+}
+
 func containerBench(all bool, o *options, r runner, out, errw io.Writer) int {
 	c, e := loadImageCatalog(o.catalog)
 	if e != nil {

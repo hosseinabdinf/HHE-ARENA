@@ -10,10 +10,10 @@ hhe-benchmark = { path = "../../../benchmarking-utilities/rust" }
 tfhe = { version = "0.4.1", features = ["boolean", "shortint", "x86_64-unix"] }
 aligned-vec = { version = "0.5.0" }
 dyn-stack = { version = "0.9" }
-rand = { version = "*" }
+rand = "0.8.5"
 serde = { version = "*" }
-bincode = { version = "*" }
-sha3 = { version = "*" }
+bincode = "1.3.3"
+sha3 = "0.10.8"
 rayon = { version = "*", optional = true }
 pulp = "0.18.8"
 

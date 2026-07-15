@@ -877,6 +877,41 @@
                                  }
                    },
                    {
+                        "id":  "frast-rust",
+                        "framework":  "FRAST",
+                        "cipher":  "FRAST",
+                        "language":  "rust",
+                        "backend":  "TFHE-rs",
+                        "operations":  [
+                                           "SKE.KSGen()",
+                                           "SYM.Enc()",
+                                           "HHE.Decomp()",
+                                           "frast setup",
+                                           "frast eval",
+                                           "KS/elisabeth",
+                                           "GenPBS/elisabeth",
+                                           "KS/kreyvium",
+                                           "GenPBS/kreyvium",
+                                           "KS/frast",
+                                           "GenPBS/frast",
+                                           "online/elisabeth",
+                                           "online/kreyvium"
+                                       ],
+                        "local_tag":  "hhe-arena:frast-matrix2",
+                        "pull_ref":  null,
+                        "manifest":  "manifests/frast.v2.json",
+                        "build":  {
+                                      "tag":  "hhe-arena:frast-matrix2",
+                                      "dockerfile":  "frameworks/FRAST/docker/Dockerfile",
+                                      "context":  ".",
+                                      "args":  {
+                                                   "TOOLING_IMAGE":  "hhe-arena:tooling",
+                                                   "TOOLING_DIGEST":  "development",
+                                                   "IMAGE_VERSION":  "0.1.0-matrix.2"
+                                               }
+                                  }
+                   },
+                   {
                        "id":  "p-encoding-aes-rust",
                        "framework":  "AES/P-encoding",
                        "cipher":  "AES-128 P-encoding",
