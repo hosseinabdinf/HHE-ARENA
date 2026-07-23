@@ -17,12 +17,12 @@ hhe bench --catalog manifests/images.v2.json --image-policy auto \
   --operation "Transciphering" --iterations 1 --warmup 0
 ```
 
-The catalog currently contains 24 ready image entries.
+The catalog currently contains 25 ready image entries.
 
 | Framework / path | Scheme or cipher | Docker image | Contract manifest | Declared operations |
 |---|---|---|---|---|
 | AES/OpenSSL | AES-128-CBC | `hhe-arena:openssl-aes-matrix1` | [openssl-aes.v1.json](../manifests/openssl-aes.v1.json) | AES-128-CBC Encryption |
-| AES/TinyAES | AES-128-CBC | `hhe-arena:tinyaes-matrix2` | [tinyaes-aes.v2.json](../manifests/tinyaes-aes.v2.json) | AES-128-CBC Encryption |
+| AES/TinyAES | AES-128-CBC | `hhe-arena:tinyaes-aes-matrix2` | [tinyaes-aes.v2.json](../manifests/tinyaes-aes.v2.json) | AES-128-CBC Encryption |
 | AES/Full-LUT | AES-128 full-LUT | `hhe-arena:full-lut-aes-matrix2` | [full-lut-aes.v2.json](../manifests/full-lut-aes.v2.json) | Key expansion; TFHE symmetric encryption; transciphering |
 | AES/Fregata CBS | AES-128 CBS | `hhe-arena:fregata-cbs-aes-matrix2` | [fregata-cbs-aes.v2.json](../manifests/fregata-cbs-aes.v2.json) | AES and TFHE++ boundaries |
 | AES/Fregata GBS | AES-128 GBS | `hhe-arena:fregata-gbs-aes-matrix2` | [fregata-gbs-aes.v2.json](../manifests/fregata-gbs-aes.v2.json) | GBS AES pipeline |
@@ -31,6 +31,7 @@ The catalog currently contains 24 ready image entries.
 | AES/P-encoding | AES-128 P-encoding | `hhe-arena:p-encoding-aes-matrix2` | [p-encoding-aes.v2.json](../manifests/p-encoding-aes.v2.json) | TFHE plaintext encryption; transciphering |
 | HHELand | Rubato-128-L | `hhe-arena:hheland-rubato-matrix1` | [hheland-rubato.v1.json](../manifests/hheland-rubato.v1.json) | SKE.Enc() |
 | HHELand | Hera and Pasta | `hhe-arena:hheland-symmetric-matrix2` | [hheland-symmetric.v2.json](../manifests/hheland-symmetric.v2.json) | SKE.Enc() |
+| HHELand | HHE, RtF, BGV, and CKKS | `hhe-arena:hheland-hhe-matrix2` | [hheland-hhe-he.v2.json](../manifests/hheland-hhe-he.v2.json) | HHE.Decomp(); RtF; HE encrypt/evaluate |
 | Fasta/Rasta | Fasta | `hhe-arena:fasta-symmetric-matrix2` | [fasta-symmetric.v2.json](../manifests/fasta-symmetric.v2.json) | SKE encrypt; SKE decrypt |
 | Fasta/Rasta | Fasta and Rasta | `hhe-arena:fasta-rasta-matrix2` | [fasta-rasta.v2.json](../manifests/fasta-rasta.v2.json) | HElib/TFHE setup; HHE transciphering |
 | HHE Framework | 23 plain cipher variants | `hhe-arena:hhe-framework-plain-matrix2` | [hhe-framework-plain.v2.json](../manifests/hhe-framework-plain.v2.json) | SKE encrypt; SKE decrypt; plain evaluation |

@@ -40,11 +40,11 @@
                        "operations":  [
                                           "AES-128-CBC Encryption"
                                       ],
-                       "local_tag":  "hhe-arena:tinyaes-matrix2",
+                       "local_tag":  "hhe-arena:tinyaes-aes-matrix2",
                        "pull_ref":  null,
                        "manifest":  "manifests/tinyaes-aes.v2.json",
                        "build":  {
-                                     "tag":  "hhe-arena:tinyaes-matrix2",
+                                     "tag":  "hhe-arena:tinyaes-aes-matrix2",
                                      "dockerfile":  "frameworks/AES/Tinyaes/docker/Dockerfile",
                                      "context":  ".",
                                      "args":  {
@@ -877,39 +877,39 @@
                                  }
                    },
                    {
-                        "id":  "frast-rust",
-                        "framework":  "FRAST",
-                        "cipher":  "FRAST",
-                        "language":  "rust",
-                        "backend":  "TFHE-rs",
-                        "operations":  [
-                                           "SKE.KSGen()",
-                                           "SYM.Enc()",
-                                           "HHE.Decomp()",
-                                           "frast setup",
-                                           "frast eval",
-                                           "KS/elisabeth",
-                                           "GenPBS/elisabeth",
-                                           "KS/kreyvium",
-                                           "GenPBS/kreyvium",
-                                           "KS/frast",
-                                           "GenPBS/frast",
-                                           "online/elisabeth",
-                                           "online/kreyvium"
-                                       ],
-                        "local_tag":  "hhe-arena:frast-matrix2",
-                        "pull_ref":  null,
-                        "manifest":  "manifests/frast.v2.json",
-                        "build":  {
-                                      "tag":  "hhe-arena:frast-matrix2",
-                                      "dockerfile":  "frameworks/FRAST/docker/Dockerfile",
-                                      "context":  ".",
-                                      "args":  {
-                                                   "TOOLING_IMAGE":  "hhe-arena:tooling",
-                                                   "TOOLING_DIGEST":  "development",
-                                                   "IMAGE_VERSION":  "0.1.0-matrix.2"
-                                               }
-                                  }
+                       "id":  "frast-rust",
+                       "framework":  "FRAST",
+                       "cipher":  "FRAST",
+                       "language":  "rust",
+                       "backend":  "TFHE-rs",
+                       "operations":  [
+                                          "SKE.KSGen()",
+                                          "SYM.Enc()",
+                                          "HHE.Decomp()",
+                                          "frast setup",
+                                          "frast eval",
+                                          "KS/elisabeth",
+                                          "GenPBS/elisabeth",
+                                          "KS/kreyvium",
+                                          "GenPBS/kreyvium",
+                                          "KS/frast",
+                                          "GenPBS/frast",
+                                          "online/elisabeth",
+                                          "online/kreyvium"
+                                      ],
+                       "local_tag":  "hhe-arena:frast-matrix2",
+                       "pull_ref":  null,
+                       "manifest":  "manifests/frast.v2.json",
+                       "build":  {
+                                     "tag":  "hhe-arena:frast-matrix2",
+                                     "dockerfile":  "frameworks/FRAST/docker/Dockerfile",
+                                     "context":  ".",
+                                     "args":  {
+                                                  "TOOLING_IMAGE":  "hhe-arena:tooling",
+                                                  "TOOLING_DIGEST":  "development",
+                                                  "IMAGE_VERSION":  "0.1.0-matrix.2"
+                                              }
+                                 }
                    },
                    {
                        "id":  "p-encoding-aes-rust",
@@ -941,11 +941,37 @@
                        "cipher":  "Trivium/Kreyvium",
                        "language":  "rust",
                        "backend":  "TFHE-rs CPU/CUDA",
-                       "operations":  ["trivium bool warmup", "trivium bool generate 64 bits", "trivium byte warmup", "trivium byte generate 64 bits", "trivium byte transencrypt 64 bits", "trivium 1_1 warmup", "trivium 1_1 generate 64 bits", "trivium 1_1 transencrypt 64 bits", "kreyvium bool warmup", "kreyvium bool generate 64 bits", "kreyvium byte warmup", "kreyvium byte generate 64 bits", "kreyvium byte transencrypt 64 bits", "kreyvium 1_1 warmup", "kreyvium 1_1 generate 64 bits", "kreyvium 1_1 transencrypt 64 bits"],
+                       "operations":  [
+                                          "trivium bool warmup",
+                                          "trivium bool generate 64 bits",
+                                          "trivium byte warmup",
+                                          "trivium byte generate 64 bits",
+                                          "trivium byte transencrypt 64 bits",
+                                          "trivium 1_1 warmup",
+                                          "trivium 1_1 generate 64 bits",
+                                          "trivium 1_1 transencrypt 64 bits",
+                                          "kreyvium bool warmup",
+                                          "kreyvium bool generate 64 bits",
+                                          "kreyvium byte warmup",
+                                          "kreyvium byte generate 64 bits",
+                                          "kreyvium byte transencrypt 64 bits",
+                                          "kreyvium 1_1 warmup",
+                                          "kreyvium 1_1 generate 64 bits",
+                                          "kreyvium 1_1 transencrypt 64 bits"
+                                      ],
                        "local_tag":  "hhe-arena:trkr-matrix2",
                        "pull_ref":  null,
                        "manifest":  "manifests/trkr.v2.json",
-                       "build":  {"tag":  "hhe-arena:trkr-matrix2", "dockerfile":  "frameworks/trkr/docker/Dockerfile", "context":  ".", "args":  {"TOOLING_IMAGE":  "hhe-arena:tooling", "TOOLING_DIGEST":  "development", "IMAGE_VERSION":  "0.1.0-matrix.2"}}
+                       "build":  {
+                                     "tag":  "hhe-arena:trkr-matrix2",
+                                     "dockerfile":  "frameworks/trkr/docker/Dockerfile",
+                                     "context":  ".",
+                                     "args":  {
+                                                  "TOOLING_IMAGE":  "hhe-arena:tooling",
+                                                  "TOOLING_DIGEST":  "development",
+                                                  "IMAGE_VERSION":  "0.1.0-matrix.2"
+                                              }
+                                 }
                    },
                    {
                        "id":  "filip-independent-ptx-cpp",
@@ -953,55 +979,146 @@
                        "cipher":  "FiLIP",
                        "language":  "cpp",
                        "backend":  "native/TFHE",
-                       "operations":  ["p-dependent HHE setup", "SKE.Enc()", "HHE.Decom()"],
+                       "operations":  [
+                                          "p-dependent HHE setup",
+                                          "SKE.Enc()",
+                                          "HHE.Decom()"
+                                      ],
                        "local_tag":  "hhe-arena:filip-independent-ptx-matrix2",
                        "pull_ref":  null,
                        "manifest":  "manifests/filip-independent-ptx.v2.json",
-                       "build":  {"tag":  "hhe-arena:filip-independent-ptx-matrix2", "dockerfile":  "frameworks/filip/ind_ptx/docker/Dockerfile", "context":  ".", "args":  {"TOOLING_IMAGE":  "hhe-arena:tooling", "TOOLING_DIGEST":  "development", "IMAGE_VERSION":  "0.1.0-matrix.2"}}
-                   },                   {
+                       "build":  {
+                                     "tag":  "hhe-arena:filip-independent-ptx-matrix2",
+                                     "dockerfile":  "frameworks/filip/ind_ptx/docker/Dockerfile",
+                                     "context":  ".",
+                                     "args":  {
+                                                  "TOOLING_IMAGE":  "hhe-arena:tooling",
+                                                  "TOOLING_DIGEST":  "development",
+                                                  "IMAGE_VERSION":  "0.1.0-matrix.2"
+                                              }
+                                 }
+                   },
+                   {
                        "id":  "filip-sorting-hat-cpp",
                        "framework":  "FiLIP/Sorting Hat",
                        "cipher":  "FiLIP",
                        "language":  "cpp",
                        "backend":  "native/TFHE",
-                       "operations":  ["SKE.Enc()", "HHE.Decomp()"],
+                       "operations":  [
+                                          "SKE.Enc()",
+                                          "HHE.Decomp()"
+                                      ],
                        "local_tag":  "hhe-arena:filip-sorting-hat-matrix2",
                        "pull_ref":  null,
                        "manifest":  "manifests/filip-sorting-hat.v2.json",
-                       "build":  {"tag":  "hhe-arena:filip-sorting-hat-matrix2", "dockerfile":  "frameworks/filip/sorting_hat/docker/Dockerfile", "context":  ".", "args":  {"TOOLING_IMAGE":  "hhe-arena:tooling", "TOOLING_DIGEST":  "development", "IMAGE_VERSION":  "0.1.0-matrix.2"}}
-                   },                   {
+                       "build":  {
+                                     "tag":  "hhe-arena:filip-sorting-hat-matrix2",
+                                     "dockerfile":  "frameworks/filip/sorting_hat/docker/Dockerfile",
+                                     "context":  ".",
+                                     "args":  {
+                                                  "TOOLING_IMAGE":  "hhe-arena:tooling",
+                                                  "TOOLING_DIGEST":  "development",
+                                                  "IMAGE_VERSION":  "0.1.0-matrix.2"
+                                              }
+                                 }
+                   },
+                   {
                        "id":  "margrethe-hhe-c",
                        "framework":  "Margrethe",
                        "cipher":  "Margrethe",
                        "language":  "c",
                        "backend":  "MOSFHET",
-                       "operations":  ["HHE.Decomp() for 32 messages"],
+                       "operations":  [
+                                          "HHE.Decomp() for 32 messages (single-thread)",
+                                          "HHE.Decomp() for 32 messages (multi-thread)"
+                                      ],
                        "local_tag":  "hhe-arena:margrethe-hhe-matrix2",
                        "pull_ref":  null,
                        "manifest":  "manifests/margrethe-hhe.v2.json",
-                       "build":  {"tag":  "hhe-arena:margrethe-hhe-matrix2", "dockerfile":  "frameworks/margrethe/docker/hhe/Dockerfile", "context":  ".", "args":  {"TOOLING_IMAGE":  "hhe-arena:tooling", "TOOLING_DIGEST":  "development", "IMAGE_VERSION":  "0.1.0-matrix.2"}}
-                   },                   {
+                       "build":  {
+                                     "tag":  "hhe-arena:margrethe-hhe-matrix2",
+                                     "dockerfile":  "frameworks/margrethe/docker/hhe/Dockerfile",
+                                     "context":  ".",
+                                     "args":  {
+                                                  "TOOLING_IMAGE":  "hhe-arena:tooling",
+                                                  "TOOLING_DIGEST":  "development",
+                                                  "IMAGE_VERSION":  "0.1.0-matrix.2"
+                                              }
+                                 }
+                   },
+                   {
                        "id":  "elisabeth-hhe-rust",
                        "framework":  "Elisabeth",
                        "cipher":  "Elisabeth",
                        "language":  "rust",
                        "backend":  "HHE",
-                       "operations":  ["Elisabeth/HHE.Decomp"],
+                       "operations":  [
+                                          "Elisabeth/HHE.Decomp"
+                                      ],
                        "local_tag":  "hhe-arena:elisabeth-hhe-matrix2",
                        "pull_ref":  null,
                        "manifest":  "manifests/elisabeth-hhe.v2.json",
-                       "build":  {"tag":  "hhe-arena:elisabeth-hhe-matrix2", "dockerfile":  "frameworks/elisabeth/docker/hhe/Dockerfile", "context":  ".", "args":  {"TOOLING_IMAGE":  "hhe-arena:tooling", "TOOLING_DIGEST":  "development", "IMAGE_VERSION":  "0.1.0-matrix.2"}}
-                   },                   {
+                       "build":  {
+                                     "tag":  "hhe-arena:elisabeth-hhe-matrix2",
+                                     "dockerfile":  "frameworks/elisabeth/docker/hhe/Dockerfile",
+                                     "context":  ".",
+                                     "args":  {
+                                                  "TOOLING_IMAGE":  "hhe-arena:tooling",
+                                                  "TOOLING_DIGEST":  "development",
+                                                  "IMAGE_VERSION":  "0.1.0-matrix.2"
+                                              }
+                                 }
+                   },
+                   {
                        "id":  "fasta-rasta-c-cpp",
                        "framework":  "Fasta/Rasta",
                        "cipher":  "Fasta and Rasta",
                        "language":  "cpp",
                        "backend":  "HElib and TFHE",
-                       "operations":  ["he_context_setup", "he_key_switch_setup", "cipher_matrix_setup", "hhe_transcipher"],
+                       "operations":  [
+                                          "he_context_setup",
+                                          "he_key_switch_setup",
+                                          "cipher_matrix_setup",
+                                          "hhe_transcipher"
+                                      ],
                        "local_tag":  "hhe-arena:fasta-rasta-matrix2",
                        "pull_ref":  null,
                        "manifest":  "manifests/fasta-rasta.v2.json",
-                       "build":  {"tag":  "hhe-arena:fasta-rasta-matrix2", "dockerfile":  "frameworks/fasta/docker/hhe/Dockerfile", "context":  ".", "args":  {"TOOLING_IMAGE":  "hhe-arena:tooling", "TOOLING_DIGEST":  "development", "IMAGE_VERSION":  "0.1.0-matrix.2"}}
+                       "build":  {
+                                     "tag":  "hhe-arena:fasta-rasta-matrix2",
+                                     "dockerfile":  "frameworks/fasta/docker/hhe/Dockerfile",
+                                     "context":  ".",
+                                     "args":  {
+                                                  "TOOLING_IMAGE":  "hhe-arena:tooling",
+                                                  "TOOLING_DIGEST":  "development",
+                                                  "IMAGE_VERSION":  "0.1.0-matrix.2"
+                                              }
+                                 }
+                   },
+                   {
+                       "id":  "hheland-hhe-he-go",
+                       "framework":  "HHELand",
+                       "cipher":  "Hera, Pasta3, Pasta4, Rubato, RtF Hera, and RtF Rubato",
+                       "language":  "go",
+                       "backend":  "Lattigo BGV/CKKS",
+                       "operations":  [
+                                          "HHE.Decomp()",
+                                          "RtF.Hera/Rubato",
+                                          "HE.Encrypt/HE.Evaluate"
+                                      ],
+                       "local_tag":  "hhe-arena:hheland-hhe-matrix2",
+                       "pull_ref":  null,
+                       "manifest":  "manifests/hheland-hhe-he.v2.json",
+                       "build":  {
+                                     "tag":  "hhe-arena:hheland-hhe-matrix2",
+                                     "dockerfile":  "frameworks/HHELand/docker/hhe/Dockerfile",
+                                     "context":  ".",
+                                     "args":  {
+                                                  "TOOLING_IMAGE":  "hhe-arena:tooling",
+                                                  "TOOLING_DIGEST":  "development",
+                                                  "IMAGE_VERSION":  "0.1.0-matrix.2"
+                                              }
+                                 }
                    }
                ]
 }

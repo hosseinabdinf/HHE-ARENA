@@ -1,0 +1,57 @@
+{
+  "$schema": "../schemas/benchmark-manifest.schema.json",
+  "version": 1,
+  "preflight": "/opt/hhe/bin/hhe-preflight",
+  "benchmarks": [
+    {
+      "id": "hheland-hera-hhe",
+      "cipher": "Hera",
+      "language": "go",
+      "operation": "HHE.Decomp()",
+      "backend": "Lattigo BGV/CKKS",
+      "executable": "/opt/hhe/frameworks/hheland-hhe/hheland-hera-hhe.test",
+      "args": ["-test.run=^$", "-test.bench=^BenchmarkHera$", "-test.benchtime=1x", "-test.v"],
+      "workdir": "/work"
+    },
+    {
+      "id": "hheland-pasta-hhe",
+      "cipher": "Pasta3/Pasta4",
+      "language": "go",
+      "operation": "HHE.Decomp()",
+      "backend": "Lattigo BGV/CKKS",
+      "executable": "/opt/hhe/frameworks/hheland-hhe/hheland-pasta-hhe.test",
+      "args": ["-test.run=^$", "-test.bench=^BenchmarkPasta", "-test.benchtime=1x", "-test.v"],
+      "workdir": "/work"
+    },
+    {
+      "id": "hheland-rubato-hhe",
+      "cipher": "Rubato",
+      "language": "go",
+      "operation": "HHE.Decomp()",
+      "backend": "Lattigo BGV/CKKS",
+      "executable": "/opt/hhe/frameworks/hheland-hhe/hheland-rubato-hhe.test",
+      "args": ["-test.run=^$", "-test.bench=^BenchmarkRubato$", "-test.benchtime=1x", "-test.v"],
+      "workdir": "/work"
+    },
+    {
+      "id": "hheland-rtf-hhe",
+      "cipher": "RtF Hera/Rubato",
+      "language": "go",
+      "operation": "RtF.Hera/Rubato",
+      "backend": "Lattigo BGV/CKKS",
+      "executable": "/opt/hhe/frameworks/hheland-hhe/hheland-rtf-hhe.test",
+      "args": ["-test.run=^$", "-test.bench=^BenchmarkRtF", "-test.benchtime=1x", "-test.v"],
+      "workdir": "/work"
+    },
+    {
+      "id": "hheland-pure-he",
+      "cipher": "BGV/CKKS",
+      "language": "go",
+      "operation": "HE.Encrypt/HE.Evaluate",
+      "backend": "Lattigo BGV/CKKS",
+      "executable": "/opt/hhe/frameworks/hheland-hhe/hheland-pure-he.test",
+      "args": ["-test.run=^TestPure(Bgv|CKKS)$", "-test.v"],
+      "workdir": "/work"
+    }
+  ]
+}

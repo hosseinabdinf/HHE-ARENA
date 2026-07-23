@@ -162,7 +162,7 @@ func TestContainerBenchBuildDryRun(t *testing.T) {
 		t.Fatalf("dry run executed commands: %+v", f.calls)
 	}
 	s := out.String()
-	for _, want := range []string{"docker-command=docker build", "frameworks", "docker-command=docker run --rm --env HHE_BENCH_HOSTNAME=physical-host-01 --cpuset-cpus 2", "aes:test bench", "--operation encrypt", "--host-id physical-host-01", "target=/work/results"} {
+	for _, want := range []string{"docker-command=docker build", "frameworks", "docker-command=docker run --rm --env HHE_BENCH_HOSTNAME=physical-host-01 --cpuset-cpus 2", "aes:test bench", "--operation encrypt", "target=/work/results"} {
 		if !strings.Contains(s, want) {
 			t.Fatalf("missing %q in %s", want, s)
 		}

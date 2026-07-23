@@ -796,7 +796,7 @@ func runContainer(t imageTarget, o *options, hostOutput string, r runner, out, e
 	}
 	a = append(a, "--mount", "type=bind,source="+hostDir+",target=/work/results", t.Image.LocalTag, "bench",
 		"--cipher", cipher, "--language", language, "--operation", t.Operation, "--backend", backend,
-		"--iterations", strconv.Itoa(o.iterations), "--gc", o.gc, "--policy", o.policy, "--host-id", o.hostID, "--output", containerOutput)
+		"--iterations", strconv.Itoa(o.iterations), "--gc", o.gc, "--policy", o.policy, "--output", containerOutput)
 	if o.warmups >= 0 {
 		a = append(a, "--warmup", strconv.Itoa(o.warmups))
 	}

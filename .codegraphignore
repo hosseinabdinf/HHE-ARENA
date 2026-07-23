@@ -1,0 +1,25 @@
+# Generated/build output
+build/
+target/
+**/target/
+**/CMakeFiles/
+
+# Vendored third-party dependencies
+frameworks/**/thirdparty/
+frameworks/**/libs/
+
+# Compiled artifacts
+*.a
+*.so
+*.so.*
+*.dll
+*.lib
+*.o
+*.obj
+*.rlib
+*.rmeta
+*.pdb
+
+# Large generated/test data
+**/test_values.txt
+**/random_sample.csv

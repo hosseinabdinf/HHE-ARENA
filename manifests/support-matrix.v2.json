@@ -3374,10 +3374,10 @@
                                                                         "MOSFHET"
                                                                     ],
                                                        "operations":  [
-                                                                          "HHE.Decomp() for 32 messages"
+                                                                          "HHE.Decomp() for 32 messages (single-thread)"
                                                                       ],
                                                        "source_entrypoint":  "frameworks/margrethe/main_cipher.c",
-                                                       "status":  "deferred"
+                                                       "status":  "ready"
                                                    }
                                                ],
                                    "source_evidence":  [
@@ -3403,10 +3403,10 @@
                                                                         "MOSFHET"
                                                                     ],
                                                        "operations":  [
-                                                                          "HHE.Decomp() for 32 messages"
+                                                                          "HHE.Decomp() for 32 messages (multi-thread)"
                                                                       ],
                                                        "source_entrypoint":  "frameworks/margrethe/main_cipher.c",
-                                                       "status":  "deferred"
+                                                       "status":  "ready"
                                                    }
                                                ],
                                    "source_evidence":  [
@@ -4083,14 +4083,13 @@
                                                ],
                                 "resource_class":  "extreme",
                                 "readiness_class":  "he_hhe_heavy",
-                                "selection_status":  "deferred",
-                                "docker_status":  "not_started",
-                                "manifest_status":  "not_started",
+                                "selection_status":  "packaged_deferred",
+                                "docker_status":  "built",
+                                "manifest_status":  "ready",
                                 "known_blockers":  [
-                                                       "The mutable one-shot AES executable needs stable container packaging.",
-                                                       "Warm-up must remain zero unless complete ciphertext state reconstruction is implemented."
+                                                       "GBS AES execution is heavy and requires explicit authorization and a suitable high-memory host."
                                                    ],
-                                "notes":  "Only the GBS AES pipeline is in the intended support matrix; FBS/GBS SM4 source remains migrated but is excluded from CLI and image-catalog scope."
+                                "notes":  "Compiler-free contract image and one-shot GBS pipeline manifest are available; no workload executed."
                             },
                             {
                                 "id":  "btr-aes-ckks-go",
@@ -4115,12 +4114,13 @@
                                                ],
                                 "resource_class":  "heavy",
                                 "readiness_class":  "dependency_blocked",
-                                "selection_status":  "deferred",
+                                "selection_status":  "unsupported",
                                 "docker_status":  "blocked",
                                 "manifest_status":  "ready",
                                 "known_blockers":  [
-                                                       "BtR checkout omits Lattigo core/rlwe; pinned upstream v6.0.0/v6.1.0 bases do not provide the ShallowCopy/BootstrapReal APIs expected by the extension, and platform_linux.go uses removed syscall.SYS_GETCPU."
-                                                   ]
+                                                       "The checked-in extension requires Lattigo core/rlwe plus ShallowCopy and BootstrapReal APIs absent from compatible pinned upstream revisions; platform_linux.go also references removed syscall.SYS_GETCPU."
+                                                   ],
+                                "notes":  "Retain Docker recipe/manifest as source reference only; exclude from runnable catalog until a compatible pinned source revision or migration patch exists."
                             },
                             {
                                 "id":  "fft-cbs-aes-rust",
@@ -4170,12 +4170,13 @@
                                                ],
                                 "resource_class":  "extreme",
                                 "readiness_class":  "he_hhe_heavy",
-                                "selection_status":  "deferred",
-                                "docker_status":  "not_started",
-                                "manifest_status":  "not_started",
+                                "selection_status":  "packaged_deferred",
+                                "docker_status":  "built",
+                                "manifest_status":  "ready",
                                 "known_blockers":  [
-                                                       "Large TFHE-rs build/runtime and operation-selectable executable packaging are required."
-                                                   ]
+                                                       "FFT-CBS HE/HHE execution remains heavy and requires explicit authorization and a suitable host."
+                                                   ],
+                                "notes":  "Compiler-free contract image packages four prebuilt binaries and eight manifest jobs; no workload executed."
                             },
                             {
                                 "id":  "hippogryph-aes-rust",
@@ -4205,12 +4206,13 @@
                                                ],
                                 "resource_class":  "extreme",
                                 "readiness_class":  "he_hhe_heavy",
-                                "selection_status":  "deferred",
-                                "docker_status":  "not_started",
-                                "manifest_status":  "not_started",
+                                "selection_status":  "packaged_deferred",
+                                "docker_status":  "built",
+                                "manifest_status":  "ready",
                                 "known_blockers":  [
-                                                       "Pinned odd-modulus TFHE workspace build and stable runner are required."
-                                                   ]
+                                                       "Hippogryph TFHE execution remains heavy and requires explicit authorization and a suitable host."
+                                                   ],
+                                "notes":  "Compiler-free contract image packages plaintext encryption and transciphering jobs; no workload executed."
                             },
                             {
                                 "id":  "p-encoding-aes-rust",
@@ -4270,12 +4272,13 @@
                                                ],
                                 "resource_class":  "heavy",
                                 "readiness_class":  "he_hhe_heavy",
-                                "selection_status":  "deferred",
-                                "docker_status":  "not_started",
-                                "manifest_status":  "not_started",
+                                "selection_status":  "packaged_deferred",
+                                "docker_status":  "built",
+                                "manifest_status":  "ready",
                                 "known_blockers":  [
-                                                       "The homomorphic executable and manifest job are not packaged; the separate clear v1 unit remains ready."
-                                                   ]
+                                                       "Elisabeth HHE execution remains heavy and requires explicit authorization and a suitable host."
+                                                   ],
+                                "notes":  "Compiler-free contract image packages Elisabeth HHE.Decomp; no workload executed."
                             },
                             {
                                 "id":  "fasta-rasta-c-cpp",
@@ -4315,13 +4318,13 @@
                                                ],
                                 "resource_class":  "extreme",
                                 "readiness_class":  "he_hhe_heavy",
-                                "selection_status":  "deferred",
-                                "docker_status":  "not_started",
-                                "manifest_status":  "not_started",
+                                "selection_status":  "packaged_deferred",
+                                "docker_status":  "built",
+                                "manifest_status":  "ready",
                                 "known_blockers":  [
-                                                       "HElib and TFHE dependency images are not defined."
+                                                       "Fasta/Rasta HElib and TFHE execution remains heavy and requires explicit authorization and a suitable host."
                                                    ],
-                                "notes":  "The safe native Fasta binary is packaged separately as fasta-symmetric-c."
+                                "notes":  "Compiler-free contract image packages HElib/TFHE setup and transcipher jobs; no workload executed."
                             },
                             {
                                 "id":  "filip-independent-ptx-cpp",
@@ -4356,12 +4359,13 @@
                                                ],
                                 "resource_class":  "extreme",
                                 "readiness_class":  "he_hhe_heavy",
-                                "selection_status":  "deferred",
-                                "docker_status":  "not_started",
-                                "manifest_status":  "not_started",
+                                "selection_status":  "packaged_deferred",
+                                "docker_status":  "built",
+                                "manifest_status":  "ready",
                                 "known_blockers":  [
-                                                       "TFHE dependency packaging and a standalone safe-SKE execution mode are required."
-                                                   ]
+                                                       "FiLIP independent-PTX execution is heavy and requires explicit authorization and a suitable host."
+                                                   ],
+                                "notes":  "Compiler-free contract image packages setup, SKE encryption, and HHE decomposition jobs; no workload executed."
                             },
                             {
                                 "id":  "filip-sorting-hat-cpp",
@@ -4391,12 +4395,13 @@
                                                ],
                                 "resource_class":  "extreme",
                                 "readiness_class":  "he_hhe_heavy",
-                                "selection_status":  "deferred",
-                                "docker_status":  "not_started",
-                                "manifest_status":  "not_started",
+                                "selection_status":  "packaged_deferred",
+                                "docker_status":  "built",
+                                "manifest_status":  "ready",
                                 "known_blockers":  [
-                                                       "TFHE dependency packaging and a standalone safe-SKE execution mode are required."
-                                                   ]
+                                                       "FiLIP Sorting Hat execution is heavy and requires explicit authorization and a suitable host."
+                                                   ],
+                                "notes":  "Compiler-free contract image packages SKE encryption and HHE decomposition jobs; no workload executed."
                             },
                             {
                                 "id":  "filip-reference-rust",
@@ -4476,12 +4481,13 @@
                                                ],
                                 "resource_class":  "extreme",
                                 "readiness_class":  "he_hhe_heavy",
-                                "selection_status":  "deferred",
-                                "docker_status":  "not_started",
-                                "manifest_status":  "not_started",
+                                "selection_status":  "packaged_deferred",
+                                "docker_status":  "built",
+                                "manifest_status":  "ready",
                                 "known_blockers":  [
-                                                       "Large TFHE-rs build/runtime and stable operation-selectable runners are required."
-                                                   ]
+                                                       "FRAST HE/HHE execution is heavy and requires explicit authorization and a suitable host."
+                                                   ],
+                                "notes":  "Compiler-free contract image packages FRAST setup, SKE, KS, PBS, online, and HHE boundaries; no workload executed."
                             },
                             {
                                 "id":  "hhe-framework-cpp",
@@ -4647,12 +4653,13 @@
                                                ],
                                 "resource_class":  "extreme",
                                 "readiness_class":  "he_hhe_heavy",
-                                "selection_status":  "deferred",
-                                "docker_status":  "not_started",
-                                "manifest_status":  "not_started",
+                                "selection_status":  "packaged_deferred",
+                                "docker_status":  "built",
+                                "manifest_status":  "ready",
                                 "known_blockers":  [
-                                                       "Heavy package runners, pinned resource profiles, and explicit authorization for execution are required."
-                                                   ]
+                                                       "HE/HHE execution remains heavy and requires explicit authorization and a suitable high-memory host."
+                                                   ],
+                                "notes":  "Compiler-free contract image packages separate HHE, RtF, and pure BGV/CKKS test binaries; no workload executed."
                             },
                             {
                                 "id":  "margrethe-hhe-c",
@@ -4670,19 +4677,25 @@
                                               ],
                                 "operations":  [
                                                    {
-                                                       "name":  "HHE.Decomp() for 32 messages",
-                                                       "kind":  "hhe",
-                                                       "safe_smoke":  false
+                                                       "safe_smoke":  false,
+                                                       "name":  "HHE.Decomp() for 32 messages (single-thread)",
+                                                       "kind":  "hhe"
+                                                   },
+                                                   {
+                                                       "safe_smoke":  false,
+                                                       "name":  "HHE.Decomp() for 32 messages (multi-thread)",
+                                                       "kind":  "hhe"
                                                    }
                                                ],
                                 "resource_class":  "extreme",
                                 "readiness_class":  "he_hhe_heavy",
-                                "selection_status":  "deferred",
-                                "docker_status":  "not_started",
-                                "manifest_status":  "not_started",
+                                "selection_status":  "packaged_deferred",
+                                "docker_status":  "built",
+                                "manifest_status":  "ready",
                                 "known_blockers":  [
-                                                       "MOSFHET dependency packaging and a bounded resource profile are required."
-                                                   ]
+                                                       "Margrethe HHE execution is heavy and requires explicit authorization and a suitable host."
+                                                   ],
+                                "notes":  "Compiler-free contract image packages Margrethe HHE.Decomp jobs; no workload executed."
                             },
                             {
                                 "id":  "transistor-symmetric-python",
@@ -4773,13 +4786,13 @@
                                                ],
                                 "resource_class":  "extreme",
                                 "readiness_class":  "he_hhe_heavy",
-                                "selection_status":  "deferred",
-                                "docker_status":  "not_started",
-                                "manifest_status":  "not_started",
+                                "selection_status":  "packaged_deferred",
+                                "docker_status":  "built",
+                                "manifest_status":  "ready",
                                 "known_blockers":  [
-                                                       "CPU and CUDA variants require separate images and host capability declarations.",
-                                                       "Stable operation-selectable runners are required."
-                                                   ]
+                                                       "trkr TFHE execution is heavy and requires explicit authorization and a suitable host."
+                                                   ],
+                                "notes":  "Compiler-free contract image packages Trivium/Kreyvium application jobs; no workload executed."
                             },
                             {
                                 "id":  "yux-cpp",
@@ -4814,13 +4827,13 @@
                                                ],
                                 "resource_class":  "extreme",
                                 "readiness_class":  "he_hhe_heavy",
-                                "selection_status":  "deferred",
-                                "docker_status":  "not_started",
+                                "selection_status":  "unsupported",
+                                "docker_status":  "blocked",
                                 "manifest_status":  "not_started",
                                 "known_blockers":  [
-                                                       "HElib dependency packaging and a dispatcher across the five transciphering executables are required.",
-                                                       "Functional HE/HHE validation requires explicit authorization and a bounded resource profile."
-                                                   ]
+                                                       "frameworks/yux/thirdparty/build.sh clones HElib by branch and downloads/builds NTL, GMP, and M4RI at image-build time; no pinned dependency revision or compiler-free runtime contract is available."
+                                                   ],
+                                "notes":  "Retain as source reference; do not register until dependencies and runtime artifacts are reproducibly pinned."
                             },
                             {
                                 "id":  "elisabeth-clear-rust",

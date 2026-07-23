@@ -50,3 +50,6 @@ AGENT.md
 .env
 .env.*
 !.env.example
+
+# Local CodeGraph index
+.codegraph-cache/
