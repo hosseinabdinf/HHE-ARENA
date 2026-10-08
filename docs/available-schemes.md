@@ -1,13 +1,16 @@
 # Available schemes and benchmark images
 
-This page lists the scheme implementations currently registered in
-`manifests/images.v2.json` and ready for contract-based benchmarking.
+This page lists the scheme implementations packaged in
+`manifests/images.v2.json`. Matrix-v2 execution readiness varies by exact
+selector; catalog presence alone does not make a deferred operation runnable.
 
-“Ready” means that the implementation has a catalog entry, a version-1
+“Packaged” means that the implementation has a catalog entry, a version-1
 benchmark manifest, a Docker build definition, a non-root runtime contract,
-and declared executable jobs. It does not mean that a workload has already
-been run or that measurements are publication-grade. Check `results/` for
-collected runs and `docs/status.md` for migration and dependency notes.
+and declared executable jobs. It does not mean that every matrix selector is
+ready, that a workload has already been run, or that measurements are
+publication-grade. Check `docs/support-matrix.md` for selector readiness,
+`results/` for collected runs, and `docs/status.md` for migration and dependency
+notes.
 
 Run a registered image through the catalog CLI, for example:
 
@@ -17,7 +20,8 @@ hhe bench --catalog manifests/images.v2.json --image-policy auto \
   --operation "Transciphering" --iterations 1 --warmup 0
 ```
 
-The catalog currently contains 25 ready image entries.
+The catalog currently contains 26 image entries. Matrix readiness is tracked
+per exact operation in the support matrix.
 
 | Framework / path | Scheme or cipher | Docker image | Contract manifest | Declared operations |
 |---|---|---|---|---|

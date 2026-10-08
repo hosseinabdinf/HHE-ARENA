@@ -216,7 +216,23 @@
                                               },
                                               {
                                                   "variant_id":  "fft-cbs-cmux1",
-                                                  "cipher":  "CBS CMUX1/2/3",
+                                                  "cipher":  "CBS CMUX1",
+                                                  "backend":  "TFHE-rs",
+                                                  "operations":  [
+                                                                     "improved_wopbs"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "fft-cbs-cmux2",
+                                                  "cipher":  "CBS CMUX2",
+                                                  "backend":  "TFHE-rs",
+                                                  "operations":  [
+                                                                     "improved_wopbs"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "fft-cbs-cmux3",
+                                                  "cipher":  "CBS CMUX3",
                                                   "backend":  "TFHE-rs",
                                                   "operations":  [
                                                                      "improved_wopbs"
@@ -224,6 +240,54 @@
                                               },
                                               {
                                                   "variant_id":  "fft-hplhe-improved-2-2-e1",
+                                                  "cipher":  "HP-LHE",
+                                                  "backend":  "TFHE-rs",
+                                                  "operations":  [
+                                                                     "improved_wopbs"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "fft-hplhe-improved-2-2-e2",
+                                                  "cipher":  "HP-LHE",
+                                                  "backend":  "TFHE-rs",
+                                                  "operations":  [
+                                                                     "improved_wopbs"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "fft-hplhe-highprec-3-3-e1",
+                                                  "cipher":  "HP-LHE",
+                                                  "backend":  "TFHE-rs",
+                                                  "operations":  [
+                                                                     "high_prec_improved_wopbs"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "fft-hplhe-highprec-3-3-e2",
+                                                  "cipher":  "HP-LHE",
+                                                  "backend":  "TFHE-rs",
+                                                  "operations":  [
+                                                                     "high_prec_improved_wopbs"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "fft-hplhe-highprec-3-3-e3",
+                                                  "cipher":  "HP-LHE",
+                                                  "backend":  "TFHE-rs",
+                                                  "operations":  [
+                                                                     "high_prec_improved_wopbs"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "fft-hplhe-highprec-4-4-e1",
+                                                  "cipher":  "HP-LHE",
+                                                  "backend":  "TFHE-rs",
+                                                  "operations":  [
+                                                                     "high_prec_improved_wopbs"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "fft-hplhe-highprec-4-4-e2",
                                                   "cipher":  "HP-LHE",
                                                   "backend":  "TFHE-rs",
                                                   "operations":  [
@@ -909,7 +973,64 @@
                                                   "TOOLING_DIGEST":  "development",
                                                   "IMAGE_VERSION":  "0.1.0-matrix.2"
                                               }
-                                 }
+                                 },
+                       "matrix_targets":  [
+                                              {
+                                                  "variant_id":  "frast-default",
+                                                  "cipher":  "FRAST",
+                                                  "backend":  "TFHE-rs",
+                                                  "operations":  [
+                                                                     "SKE.KSGen()",
+                                                                     "SYM.Enc()",
+                                                                     "HHE.Decomp()",
+                                                                     "frast setup",
+                                                                     "frast eval"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "frast-pbs-elisabeth",
+                                                  "cipher":  "PBS Elisabeth",
+                                                  "backend":  "TFHE-rs",
+                                                  "operations":  [
+                                                                     "KS/elisabeth",
+                                                                     "GenPBS/elisabeth"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "frast-pbs-kreyvium",
+                                                  "cipher":  "PBS Kreyvium",
+                                                  "backend":  "TFHE-rs",
+                                                  "operations":  [
+                                                                     "KS/kreyvium",
+                                                                     "GenPBS/kreyvium"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "frast-pbs-frast",
+                                                  "cipher":  "PBS FRAST",
+                                                  "backend":  "TFHE-rs",
+                                                  "operations":  [
+                                                                     "KS/frast",
+                                                                     "GenPBS/frast"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "frast-pbs-elisabeth",
+                                                  "cipher":  "Online Elisabeth",
+                                                  "backend":  "TFHE-rs",
+                                                  "operations":  [
+                                                                     "online/elisabeth"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "frast-pbs-kreyvium",
+                                                  "cipher":  "Online Kreyvium",
+                                                  "backend":  "TFHE-rs",
+                                                  "operations":  [
+                                                                     "online/kreyvium"
+                                                                 ]
+                                              }
+                                          ]
                    },
                    {
                        "id":  "p-encoding-aes-rust",
@@ -959,6 +1080,66 @@
                                           "kreyvium 1_1 generate 64 bits",
                                           "kreyvium 1_1 transencrypt 64 bits"
                                       ],
+                       "matrix_targets":  [
+                                              {
+                                                  "variant_id":  "trkr-trivium-bool",
+                                                  "cipher":  "Trivium",
+                                                  "backend":  "TFHE-rs CPU/CUDA",
+                                                  "operations":  [
+                                                                     "trivium bool warmup",
+                                                                     "trivium bool generate 64 bits"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "trkr-trivium-byte",
+                                                  "cipher":  "Trivium",
+                                                  "backend":  "TFHE-rs CPU/CUDA",
+                                                  "operations":  [
+                                                                     "trivium byte warmup",
+                                                                     "trivium byte generate 64 bits",
+                                                                     "trivium byte transencrypt 64 bits"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "trkr-trivium-shortint",
+                                                  "cipher":  "Trivium",
+                                                  "backend":  "TFHE-rs CPU/CUDA",
+                                                  "operations":  [
+                                                                     "trivium 1_1 warmup",
+                                                                     "trivium 1_1 generate 64 bits",
+                                                                     "trivium 1_1 transencrypt 64 bits"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "trkr-kreyvium-bool",
+                                                  "cipher":  "Kreyvium",
+                                                  "backend":  "TFHE-rs CPU/CUDA",
+                                                  "operations":  [
+                                                                     "kreyvium bool warmup",
+                                                                     "kreyvium bool generate 64 bits"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "trkr-kreyvium-byte",
+                                                  "cipher":  "Kreyvium",
+                                                  "backend":  "TFHE-rs CPU/CUDA",
+                                                  "operations":  [
+                                                                     "kreyvium byte warmup",
+                                                                     "kreyvium byte generate 64 bits",
+                                                                     "kreyvium byte transencrypt 64 bits"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "trkr-kreyvium-shortint",
+                                                  "cipher":  "Kreyvium",
+                                                  "backend":  "TFHE-rs CPU/CUDA",
+                                                  "operations":  [
+                                                                     "kreyvium 1_1 warmup",
+                                                                     "kreyvium 1_1 generate 64 bits",
+                                                                     "kreyvium 1_1 transencrypt 64 bits"
+                                                                 ]
+                                              }
+                                          ],
                        "local_tag":  "hhe-arena:trkr-matrix2",
                        "pull_ref":  null,
                        "manifest":  "manifests/trkr.v2.json",
@@ -996,7 +1177,26 @@
                                                   "TOOLING_DIGEST":  "development",
                                                   "IMAGE_VERSION":  "0.1.0-matrix.2"
                                               }
-                                 }
+                                 },
+                       "matrix_targets":  [
+                                              {
+                                                  "variant_id":  "filip-independent-ptx",
+                                                  "cipher":  "FiLIP",
+                                                  "backend":  "native",
+                                                  "operations":  [
+                                                                     "SKE.Enc()"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "filip-independent-ptx",
+                                                  "cipher":  "FiLIP",
+                                                  "backend":  "TFHE",
+                                                  "operations":  [
+                                                                     "p-dependent HHE setup",
+                                                                     "HHE.Decom()"
+                                                                 ]
+                                              }
+                                          ]
                    },
                    {
                        "id":  "filip-sorting-hat-cpp",
@@ -1020,7 +1220,25 @@
                                                   "TOOLING_DIGEST":  "development",
                                                   "IMAGE_VERSION":  "0.1.0-matrix.2"
                                               }
-                                 }
+                                 },
+                       "matrix_targets":  [
+                                              {
+                                                  "variant_id":  "filip-sorting-hat",
+                                                  "cipher":  "FiLIP",
+                                                  "backend":  "native",
+                                                  "operations":  [
+                                                                     "SKE.Enc()"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "filip-sorting-hat",
+                                                  "cipher":  "FiLIP",
+                                                  "backend":  "TFHE",
+                                                  "operations":  [
+                                                                     "HHE.Decomp()"
+                                                                 ]
+                                              }
+                                          ]
                    },
                    {
                        "id":  "margrethe-hhe-c",
@@ -1093,7 +1311,49 @@
                                                   "TOOLING_DIGEST":  "development",
                                                   "IMAGE_VERSION":  "0.1.0-matrix.2"
                                               }
-                                 }
+                                 },
+                       "matrix_targets":  [
+                                              {
+                                                  "variant_id":  "fasta-helib",
+                                                  "cipher":  "Fasta",
+                                                  "backend":  "HElib",
+                                                  "operations":  [
+                                                                     "he_context_setup",
+                                                                     "he_key_switch_setup",
+                                                                     "hhe_transcipher"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "rasta-helib",
+                                                  "cipher":  "Rasta",
+                                                  "backend":  "HElib",
+                                                  "operations":  [
+                                                                     "he_context_setup",
+                                                                     "he_key_switch_setup",
+                                                                     "cipher_matrix_setup",
+                                                                     "hhe_transcipher"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "rasta-packed-helib",
+                                                  "cipher":  "Rasta packed",
+                                                  "backend":  "HElib",
+                                                  "operations":  [
+                                                                     "he_context_setup",
+                                                                     "he_key_switch_setup",
+                                                                     "hhe_transcipher"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "rasta-tfhe",
+                                                  "cipher":  "Rasta",
+                                                  "backend":  "TFHE",
+                                                  "operations":  [
+                                                                     "he_context_setup",
+                                                                     "hhe_transcipher"
+                                                                 ]
+                                              }
+                                          ]
                    },
                    {
                        "id":  "hheland-hhe-he-go",
@@ -1103,15 +1363,904 @@
                        "backend":  "Lattigo BGV/CKKS",
                        "operations":  [
                                           "HHE.Decomp()",
-                                          "RtF.Hera/Rubato",
-                                          "HE.Encrypt/HE.Evaluate"
+                                          "HE.Enc()",
+                                          "HE.Eval() = ax+b",
+                                          "Chebyshev HHE.Eval()",
+                                          "RtF HERA Offline Latency",
+                                          "RtF HERA Offline Throughput",
+                                          "RtF HERA Online Lat x1",
+                                          "RtF Rubato Offline Latency",
+                                          "RtF Rubato Offline Throughput",
+                                          "RtF Rubato Online Lat x1"
                                       ],
+                       "matrix_targets":  [
+                                              {
+                                                  "variant_id":  "hheland-bgv-n13qp218",
+                                                  "cipher":  "BGV",
+                                                  "backend":  "Lattigo BGV",
+                                                  "operations":  [
+                                                                     "HE.Enc()",
+                                                                     "HE.Eval() = ax+b"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hheland-bgv-n14qp438",
+                                                  "cipher":  "BGV",
+                                                  "backend":  "Lattigo BGV",
+                                                  "operations":  [
+                                                                     "HE.Enc()",
+                                                                     "HE.Eval() = ax+b"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hheland-bgv-n15qp880",
+                                                  "cipher":  "BGV",
+                                                  "backend":  "Lattigo BGV",
+                                                  "operations":  [
+                                                                     "HE.Enc()",
+                                                                     "HE.Eval() = ax+b"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hheland-ckks-n14qp438",
+                                                  "cipher":  "CKKS",
+                                                  "backend":  "Lattigo CKKS",
+                                                  "operations":  [
+                                                                     "HE.Enc()",
+                                                                     "HE.Eval() = ax+b",
+                                                                     "Chebyshev HHE.Eval()"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hheland-ckks-n15qp881",
+                                                  "cipher":  "CKKS",
+                                                  "backend":  "Lattigo CKKS",
+                                                  "operations":  [
+                                                                     "HE.Enc()",
+                                                                     "HE.Eval() = ax+b",
+                                                                     "Chebyshev HHE.Eval()"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hheland-ckks-pn16qp1761",
+                                                  "cipher":  "CKKS",
+                                                  "backend":  "Lattigo CKKS",
+                                                  "operations":  [
+                                                                     "HE.Enc()",
+                                                                     "HE.Eval() = ax+b",
+                                                                     "Chebyshev HHE.Eval()"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hheland-rubato-128s",
+                                                  "cipher":  "Rubato",
+                                                  "backend":  "Lattigo CKKS",
+                                                  "operations":  [
+                                                                     "HHE.Decomp()"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hheland-rubato-128m",
+                                                  "cipher":  "Rubato",
+                                                  "backend":  "Lattigo CKKS",
+                                                  "operations":  [
+                                                                     "HHE.Decomp()"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hheland-rubato-128l",
+                                                  "cipher":  "Rubato",
+                                                  "backend":  "Lattigo CKKS",
+                                                  "operations":  [
+                                                                     "HHE.Decomp()"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hheland-pasta3-p65537",
+                                                  "cipher":  "Pasta3",
+                                                  "backend":  "Lattigo BGV",
+                                                  "operations":  [
+                                                                     "HHE.Decomp()"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hheland-pasta3-p8088322049",
+                                                  "cipher":  "Pasta3",
+                                                  "backend":  "Lattigo BGV",
+                                                  "operations":  [
+                                                                     "HHE.Decomp()"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hheland-pasta3-p1096486890805657601",
+                                                  "cipher":  "Pasta3",
+                                                  "backend":  "Lattigo BGV",
+                                                  "operations":  [
+                                                                     "HHE.Decomp()"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hheland-pasta4-p65537",
+                                                  "cipher":  "Pasta4",
+                                                  "backend":  "Lattigo BGV",
+                                                  "operations":  [
+                                                                     "HHE.Decomp()"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hheland-pasta4-p8088322049",
+                                                  "cipher":  "Pasta4",
+                                                  "backend":  "Lattigo BGV",
+                                                  "operations":  [
+                                                                     "HHE.Decomp()"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hheland-pasta4-p1096486890805657601",
+                                                  "cipher":  "Pasta4",
+                                                  "backend":  "Lattigo BGV",
+                                                  "operations":  [
+                                                                     "HHE.Decomp()"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hheland-hera-128f",
+                                                  "cipher":  "Hera",
+                                                  "backend":  "Lattigo CKKS",
+                                                  "operations":  [
+                                                                     "HHE.Decomp()"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hheland-hera-128s",
+                                                  "cipher":  "Hera",
+                                                  "backend":  "Lattigo CKKS",
+                                                  "operations":  [
+                                                                     "HHE.Decomp()"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hheland-hera-128af",
+                                                  "cipher":  "Hera",
+                                                  "backend":  "Lattigo CKKS",
+                                                  "operations":  [
+                                                                     "HHE.Decomp()"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hheland-hera-128as",
+                                                  "cipher":  "Hera",
+                                                  "backend":  "Lattigo CKKS",
+                                                  "operations":  [
+                                                                     "HHE.Decomp()"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hheland-hera-80f",
+                                                  "cipher":  "Hera",
+                                                  "backend":  "RtF CKKS",
+                                                  "operations":  [
+                                                                     "RtF HERA Offline Latency",
+                                                                     "RtF HERA Offline Throughput",
+                                                                     "RtF HERA Online Lat x1"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hheland-hera-80s",
+                                                  "cipher":  "Hera",
+                                                  "backend":  "RtF CKKS",
+                                                  "operations":  [
+                                                                     "RtF HERA Offline Latency",
+                                                                     "RtF HERA Offline Throughput",
+                                                                     "RtF HERA Online Lat x1"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hheland-hera-80af",
+                                                  "cipher":  "Hera",
+                                                  "backend":  "RtF CKKS",
+                                                  "operations":  [
+                                                                     "RtF HERA Offline Latency",
+                                                                     "RtF HERA Offline Throughput",
+                                                                     "RtF HERA Online Lat x1"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hheland-hera-80as",
+                                                  "cipher":  "Hera",
+                                                  "backend":  "RtF CKKS",
+                                                  "operations":  [
+                                                                     "RtF HERA Offline Latency",
+                                                                     "RtF HERA Offline Throughput",
+                                                                     "RtF HERA Online Lat x1"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hheland-hera-128f",
+                                                  "cipher":  "Hera",
+                                                  "backend":  "RtF CKKS",
+                                                  "operations":  [
+                                                                     "RtF HERA Offline Latency",
+                                                                     "RtF HERA Offline Throughput",
+                                                                     "RtF HERA Online Lat x1"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hheland-hera-128s",
+                                                  "cipher":  "Hera",
+                                                  "backend":  "RtF CKKS",
+                                                  "operations":  [
+                                                                     "RtF HERA Offline Latency",
+                                                                     "RtF HERA Offline Throughput",
+                                                                     "RtF HERA Online Lat x1"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hheland-hera-128af",
+                                                  "cipher":  "Hera",
+                                                  "backend":  "RtF CKKS",
+                                                  "operations":  [
+                                                                     "RtF HERA Offline Latency",
+                                                                     "RtF HERA Offline Throughput",
+                                                                     "RtF HERA Online Lat x1"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hheland-hera-128as",
+                                                  "cipher":  "Hera",
+                                                  "backend":  "RtF CKKS",
+                                                  "operations":  [
+                                                                     "RtF HERA Offline Latency",
+                                                                     "RtF HERA Offline Throughput",
+                                                                     "RtF HERA Online Lat x1"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hheland-rubato-80s",
+                                                  "cipher":  "Rubato",
+                                                  "backend":  "RtF CKKS",
+                                                  "operations":  [
+                                                                     "RtF Rubato Offline Latency",
+                                                                     "RtF Rubato Offline Throughput",
+                                                                     "RtF Rubato Online Lat x1"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hheland-rubato-80m",
+                                                  "cipher":  "Rubato",
+                                                  "backend":  "RtF CKKS",
+                                                  "operations":  [
+                                                                     "RtF Rubato Offline Latency",
+                                                                     "RtF Rubato Offline Throughput",
+                                                                     "RtF Rubato Online Lat x1"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hheland-rubato-80l",
+                                                  "cipher":  "Rubato",
+                                                  "backend":  "RtF CKKS",
+                                                  "operations":  [
+                                                                     "RtF Rubato Offline Latency",
+                                                                     "RtF Rubato Offline Throughput",
+                                                                     "RtF Rubato Online Lat x1"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hheland-rubato-128s",
+                                                  "cipher":  "Rubato",
+                                                  "backend":  "RtF CKKS",
+                                                  "operations":  [
+                                                                     "RtF Rubato Offline Latency",
+                                                                     "RtF Rubato Offline Throughput",
+                                                                     "RtF Rubato Online Lat x1"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hheland-rubato-128m",
+                                                  "cipher":  "Rubato",
+                                                  "backend":  "RtF CKKS",
+                                                  "operations":  [
+                                                                     "RtF Rubato Offline Latency",
+                                                                     "RtF Rubato Offline Throughput",
+                                                                     "RtF Rubato Online Lat x1"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hheland-rubato-128l",
+                                                  "cipher":  "Rubato",
+                                                  "backend":  "RtF CKKS",
+                                                  "operations":  [
+                                                                     "RtF Rubato Offline Latency",
+                                                                     "RtF Rubato Offline Throughput",
+                                                                     "RtF Rubato Online Lat x1"
+                                                                 ]
+                                              }
+                                          ],
                        "local_tag":  "hhe-arena:hheland-hhe-matrix2",
                        "pull_ref":  null,
                        "manifest":  "manifests/hheland-hhe-he.v2.json",
                        "build":  {
                                      "tag":  "hhe-arena:hheland-hhe-matrix2",
                                      "dockerfile":  "frameworks/HHELand/docker/hhe/Dockerfile",
+                                     "context":  ".",
+                                     "args":  {
+                                                  "TOOLING_IMAGE":  "hhe-arena:tooling",
+                                                  "TOOLING_DIGEST":  "development",
+                                                  "IMAGE_VERSION":  "0.1.0-matrix.2"
+                                              }
+                                 }
+                   },
+                   {
+                       "id":  "hhe-framework-cpp",
+                       "framework":  "HHE Framework",
+                       "cipher":  "HHE Framework HE/HHE variants",
+                       "language":  "cpp",
+                       "backend":  "HElib, SEAL, TFHE",
+                       "operations":  [
+                                          "final_decrypt",
+                                          "he_encrypt",
+                                          "he_evaluate",
+                                          "he_key_encrypt",
+                                          "hhe_decrypt"
+                                      ],
+                       "matrix_targets":  [
+                                              {
+                                                  "variant_id":  "hhef-he-only",
+                                                  "cipher":  "HHEF-he_only",
+                                                  "backend":  "SEAL",
+                                                  "operations":  [
+                                                                     "he_encrypt",
+                                                                     "he_evaluate",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-he-only",
+                                                  "cipher":  "HHEF-he_only",
+                                                  "backend":  "HElib",
+                                                  "operations":  [
+                                                                     "he_encrypt",
+                                                                     "he_evaluate",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-he-only-z2",
+                                                  "cipher":  "HHEF-he_only_z2",
+                                                  "backend":  "TFHE",
+                                                  "operations":  [
+                                                                     "he_encrypt",
+                                                                     "he_evaluate",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-agrasta",
+                                                  "cipher":  "HHEF-agrasta",
+                                                  "backend":  "SEAL",
+                                                  "operations":  [
+                                                                     "he_key_encrypt",
+                                                                     "hhe_decrypt",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-agrasta",
+                                                  "cipher":  "HHEF-agrasta",
+                                                  "backend":  "HElib",
+                                                  "operations":  [
+                                                                     "he_key_encrypt",
+                                                                     "hhe_decrypt",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-agrasta",
+                                                  "cipher":  "HHEF-agrasta",
+                                                  "backend":  "TFHE",
+                                                  "operations":  [
+                                                                     "he_key_encrypt",
+                                                                     "hhe_decrypt",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-agrasta-packed",
+                                                  "cipher":  "HHEF-agrasta_packed",
+                                                  "backend":  "HElib",
+                                                  "operations":  [
+                                                                     "he_key_encrypt",
+                                                                     "hhe_decrypt",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-rasta-5",
+                                                  "cipher":  "HHEF-rasta_5",
+                                                  "backend":  "SEAL",
+                                                  "operations":  [
+                                                                     "he_key_encrypt",
+                                                                     "hhe_decrypt",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-rasta-5",
+                                                  "cipher":  "HHEF-rasta_5",
+                                                  "backend":  "HElib",
+                                                  "operations":  [
+                                                                     "he_key_encrypt",
+                                                                     "hhe_decrypt",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-rasta-5",
+                                                  "cipher":  "HHEF-rasta_5",
+                                                  "backend":  "TFHE",
+                                                  "operations":  [
+                                                                     "he_key_encrypt",
+                                                                     "hhe_decrypt",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-rasta-5-packed",
+                                                  "cipher":  "HHEF-rasta_5_packed",
+                                                  "backend":  "HElib",
+                                                  "operations":  [
+                                                                     "he_key_encrypt",
+                                                                     "hhe_decrypt",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-rasta-6",
+                                                  "cipher":  "HHEF-rasta_6",
+                                                  "backend":  "SEAL",
+                                                  "operations":  [
+                                                                     "he_key_encrypt",
+                                                                     "hhe_decrypt",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-rasta-6",
+                                                  "cipher":  "HHEF-rasta_6",
+                                                  "backend":  "HElib",
+                                                  "operations":  [
+                                                                     "he_key_encrypt",
+                                                                     "hhe_decrypt",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-rasta-6",
+                                                  "cipher":  "HHEF-rasta_6",
+                                                  "backend":  "TFHE",
+                                                  "operations":  [
+                                                                     "he_key_encrypt",
+                                                                     "hhe_decrypt",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-rasta-6-packed",
+                                                  "cipher":  "HHEF-rasta_6_packed",
+                                                  "backend":  "HElib",
+                                                  "operations":  [
+                                                                     "he_key_encrypt",
+                                                                     "hhe_decrypt",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-dasta-5",
+                                                  "cipher":  "HHEF-dasta_5",
+                                                  "backend":  "SEAL",
+                                                  "operations":  [
+                                                                     "he_key_encrypt",
+                                                                     "hhe_decrypt",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-dasta-5",
+                                                  "cipher":  "HHEF-dasta_5",
+                                                  "backend":  "HElib",
+                                                  "operations":  [
+                                                                     "he_key_encrypt",
+                                                                     "hhe_decrypt",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-dasta-5",
+                                                  "cipher":  "HHEF-dasta_5",
+                                                  "backend":  "TFHE",
+                                                  "operations":  [
+                                                                     "he_key_encrypt",
+                                                                     "hhe_decrypt",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-dasta-5-packed",
+                                                  "cipher":  "HHEF-dasta_5_packed",
+                                                  "backend":  "HElib",
+                                                  "operations":  [
+                                                                     "he_key_encrypt",
+                                                                     "hhe_decrypt",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-dasta-6",
+                                                  "cipher":  "HHEF-dasta_6",
+                                                  "backend":  "SEAL",
+                                                  "operations":  [
+                                                                     "he_key_encrypt",
+                                                                     "hhe_decrypt",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-dasta-6",
+                                                  "cipher":  "HHEF-dasta_6",
+                                                  "backend":  "HElib",
+                                                  "operations":  [
+                                                                     "he_key_encrypt",
+                                                                     "hhe_decrypt",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-dasta-6",
+                                                  "cipher":  "HHEF-dasta_6",
+                                                  "backend":  "TFHE",
+                                                  "operations":  [
+                                                                     "he_key_encrypt",
+                                                                     "hhe_decrypt",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-dasta-6-packed",
+                                                  "cipher":  "HHEF-dasta_6_packed",
+                                                  "backend":  "HElib",
+                                                  "operations":  [
+                                                                     "he_key_encrypt",
+                                                                     "hhe_decrypt",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-lowmc",
+                                                  "cipher":  "HHEF-lowmc",
+                                                  "backend":  "SEAL",
+                                                  "operations":  [
+                                                                     "he_key_encrypt",
+                                                                     "hhe_decrypt",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-lowmc",
+                                                  "cipher":  "HHEF-lowmc",
+                                                  "backend":  "HElib",
+                                                  "operations":  [
+                                                                     "he_key_encrypt",
+                                                                     "hhe_decrypt",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-lowmc",
+                                                  "cipher":  "HHEF-lowmc",
+                                                  "backend":  "TFHE",
+                                                  "operations":  [
+                                                                     "he_key_encrypt",
+                                                                     "hhe_decrypt",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-filip-1216",
+                                                  "cipher":  "HHEF-filip_1216",
+                                                  "backend":  "SEAL",
+                                                  "operations":  [
+                                                                     "he_key_encrypt",
+                                                                     "hhe_decrypt",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-filip-1216",
+                                                  "cipher":  "HHEF-filip_1216",
+                                                  "backend":  "HElib",
+                                                  "operations":  [
+                                                                     "he_key_encrypt",
+                                                                     "hhe_decrypt",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-filip-1216",
+                                                  "cipher":  "HHEF-filip_1216",
+                                                  "backend":  "TFHE",
+                                                  "operations":  [
+                                                                     "he_key_encrypt",
+                                                                     "hhe_decrypt",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-filip-1280",
+                                                  "cipher":  "HHEF-filip_1280",
+                                                  "backend":  "SEAL",
+                                                  "operations":  [
+                                                                     "he_key_encrypt",
+                                                                     "hhe_decrypt",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-filip-1280",
+                                                  "cipher":  "HHEF-filip_1280",
+                                                  "backend":  "HElib",
+                                                  "operations":  [
+                                                                     "he_key_encrypt",
+                                                                     "hhe_decrypt",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-filip-1280",
+                                                  "cipher":  "HHEF-filip_1280",
+                                                  "backend":  "TFHE",
+                                                  "operations":  [
+                                                                     "he_key_encrypt",
+                                                                     "hhe_decrypt",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-kreyvium",
+                                                  "cipher":  "HHEF-kreyvium",
+                                                  "backend":  "SEAL",
+                                                  "operations":  [
+                                                                     "he_key_encrypt",
+                                                                     "hhe_decrypt",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-kreyvium",
+                                                  "cipher":  "HHEF-kreyvium",
+                                                  "backend":  "HElib",
+                                                  "operations":  [
+                                                                     "he_key_encrypt",
+                                                                     "hhe_decrypt",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-kreyvium",
+                                                  "cipher":  "HHEF-kreyvium",
+                                                  "backend":  "TFHE",
+                                                  "operations":  [
+                                                                     "he_key_encrypt",
+                                                                     "hhe_decrypt",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-kreyvium-12",
+                                                  "cipher":  "HHEF-kreyvium_12",
+                                                  "backend":  "SEAL",
+                                                  "operations":  [
+                                                                     "he_key_encrypt",
+                                                                     "hhe_decrypt",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-kreyvium-12",
+                                                  "cipher":  "HHEF-kreyvium_12",
+                                                  "backend":  "HElib",
+                                                  "operations":  [
+                                                                     "he_key_encrypt",
+                                                                     "hhe_decrypt",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-kreyvium-12",
+                                                  "cipher":  "HHEF-kreyvium_12",
+                                                  "backend":  "TFHE",
+                                                  "operations":  [
+                                                                     "he_key_encrypt",
+                                                                     "hhe_decrypt",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-kreyvium-13",
+                                                  "cipher":  "HHEF-kreyvium_13",
+                                                  "backend":  "SEAL",
+                                                  "operations":  [
+                                                                     "he_key_encrypt",
+                                                                     "hhe_decrypt",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-kreyvium-13",
+                                                  "cipher":  "HHEF-kreyvium_13",
+                                                  "backend":  "HElib",
+                                                  "operations":  [
+                                                                     "he_key_encrypt",
+                                                                     "hhe_decrypt",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-kreyvium-13",
+                                                  "cipher":  "HHEF-kreyvium_13",
+                                                  "backend":  "TFHE",
+                                                  "operations":  [
+                                                                     "he_key_encrypt",
+                                                                     "hhe_decrypt",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-pasta-3",
+                                                  "cipher":  "HHEF-pasta_3",
+                                                  "backend":  "SEAL",
+                                                  "operations":  [
+                                                                     "he_key_encrypt",
+                                                                     "hhe_decrypt",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-pasta-3",
+                                                  "cipher":  "HHEF-pasta_3",
+                                                  "backend":  "HElib",
+                                                  "operations":  [
+                                                                     "he_key_encrypt",
+                                                                     "hhe_decrypt",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-pasta-4",
+                                                  "cipher":  "HHEF-pasta_4",
+                                                  "backend":  "SEAL",
+                                                  "operations":  [
+                                                                     "he_key_encrypt",
+                                                                     "hhe_decrypt",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-pasta-4",
+                                                  "cipher":  "HHEF-pasta_4",
+                                                  "backend":  "HElib",
+                                                  "operations":  [
+                                                                     "he_key_encrypt",
+                                                                     "hhe_decrypt",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-pasta2-3",
+                                                  "cipher":  "HHEF-pasta2_3",
+                                                  "backend":  "SEAL",
+                                                  "operations":  [
+                                                                     "he_key_encrypt",
+                                                                     "hhe_decrypt",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-pasta2-3",
+                                                  "cipher":  "HHEF-pasta2_3",
+                                                  "backend":  "HElib",
+                                                  "operations":  [
+                                                                     "he_key_encrypt",
+                                                                     "hhe_decrypt",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-pasta2-4",
+                                                  "cipher":  "HHEF-pasta2_4",
+                                                  "backend":  "SEAL",
+                                                  "operations":  [
+                                                                     "he_key_encrypt",
+                                                                     "hhe_decrypt",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-pasta2-4",
+                                                  "cipher":  "HHEF-pasta2_4",
+                                                  "backend":  "HElib",
+                                                  "operations":  [
+                                                                     "he_key_encrypt",
+                                                                     "hhe_decrypt",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-masta-4",
+                                                  "cipher":  "HHEF-masta_4",
+                                                  "backend":  "SEAL",
+                                                  "operations":  [
+                                                                     "he_key_encrypt",
+                                                                     "hhe_decrypt",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-masta-4",
+                                                  "cipher":  "HHEF-masta_4",
+                                                  "backend":  "HElib",
+                                                  "operations":  [
+                                                                     "he_key_encrypt",
+                                                                     "hhe_decrypt",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-masta-5",
+                                                  "cipher":  "HHEF-masta_5",
+                                                  "backend":  "SEAL",
+                                                  "operations":  [
+                                                                     "he_key_encrypt",
+                                                                     "hhe_decrypt",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-masta-5",
+                                                  "cipher":  "HHEF-masta_5",
+                                                  "backend":  "HElib",
+                                                  "operations":  [
+                                                                     "he_key_encrypt",
+                                                                     "hhe_decrypt",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-hera-5",
+                                                  "cipher":  "HHEF-hera_5",
+                                                  "backend":  "SEAL",
+                                                  "operations":  [
+                                                                     "he_key_encrypt",
+                                                                     "hhe_decrypt",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              },
+                                              {
+                                                  "variant_id":  "hhef-hera-5",
+                                                  "cipher":  "HHEF-hera_5",
+                                                  "backend":  "HElib",
+                                                  "operations":  [
+                                                                     "he_key_encrypt",
+                                                                     "hhe_decrypt",
+                                                                     "final_decrypt"
+                                                                 ]
+                                              }
+                                          ],
+                       "local_tag":  "hhe-arena:hhe-framework-he-matrix2",
+                       "pull_ref":  null,
+                       "manifest":  "manifests/hhe-framework-he.v2.json",
+                       "build":  {
+                                     "tag":  "hhe-arena:hhe-framework-he-matrix2",
+                                     "dockerfile":  "frameworks/hheFramework/docker/he/Dockerfile",
                                      "context":  ".",
                                      "args":  {
                                                   "TOOLING_IMAGE":  "hhe-arena:tooling",

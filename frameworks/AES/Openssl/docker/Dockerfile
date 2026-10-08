@@ -6,7 +6,7 @@ ARG TOOLING_IMAGE=hhe-arena:tooling
 FROM ${GCC_IMAGE} AS builder
 ARG DEBIAN_FRONTEND=noninteractive
 ARG CMAKE_VERSION=3.25.1-1
-ARG LIBSSL_DEV_VERSION=3.0.20-1~deb12u2
+ARG LIBSSL_DEV_VERSION=3.0.22-1~deb12u1
 RUN apt-get update \
  && apt-get install -y --no-install-recommends \
       cmake=${CMAKE_VERSION} \

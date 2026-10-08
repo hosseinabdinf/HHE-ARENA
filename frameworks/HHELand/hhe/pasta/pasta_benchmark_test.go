@@ -5,20 +5,52 @@ import (
 	"encoding/binary"
 	"fmt"
 	"github.com/tuneinsight/lattigo/v6/core/rlwe"
+	"os"
+	"strconv"
+	"strings"
 	"sync"
 	"testing"
 )
 
 func BenchmarkPasta3(b *testing.B) {
-	for _, tc := range pasta3TestVector {
+	for _, tc := range selectedPastaCases(b, "pasta3", pasta3TestVector) {
 		benchHEPasta(tc, b)
 	}
 }
 
 func BenchmarkPasta4(b *testing.B) {
-	for _, tc := range pasta4TestVector {
+	for _, tc := range selectedPastaCases(b, "pasta4", pasta4TestVector) {
 		benchHEPasta(tc, b)
 	}
+}
+
+func selectedPastaCases(b *testing.B, cipher string, cases []TestContext) []TestContext {
+	selected := os.Getenv("HHE_BENCH_VARIANT")
+	if selected == "" {
+		return cases
+	}
+	prefix := "hheland-" + cipher + "-p"
+	if !strings.HasPrefix(selected, prefix) {
+		otherCipher := "pasta3"
+		if cipher == "pasta3" {
+			otherCipher = "pasta4"
+		}
+		if strings.HasPrefix(selected, "hheland-"+otherCipher+"-") {
+			return nil
+		}
+		b.Fatalf("unsupported HHE_BENCH_VARIANT %q for HHE Pasta", selected)
+	}
+	modulus, err := strconv.ParseUint(strings.TrimPrefix(selected, prefix), 10, 64)
+	if err != nil {
+		b.Fatalf("invalid HHE_BENCH_VARIANT %q for HHE Pasta", selected)
+	}
+	for _, tc := range cases {
+		if tc.SymParams.Modulus == modulus {
+			return []TestContext{tc}
+		}
+	}
+	b.Fatalf("HHE_BENCH_VARIANT %q has no matching %s parameter case", selected, cipher)
+	return nil
 }
 
 func runArenaBenchmark(b *testing.B, operation string, target func()) {

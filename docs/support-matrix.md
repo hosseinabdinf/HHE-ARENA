@@ -11,7 +11,8 @@ The expansion inventory is
 [`manifests/support-matrix.v2.json`](../manifests/support-matrix.v2.json).
 Version 2 is deliberately **draft**: it records all migrated, project-owned
 non-FbT candidate paths and their packaging blockers, while
-`images.v2.json` contains only the subset with validated runnable packaging.
+`images.v2.json` contains the subset with validated packaging, including
+images whose HE/HHE operations remain deferred by the matrix.
 The frozen v1 files remain the authoritative baseline slice.
 
 ## Version 1 selection
@@ -87,8 +88,8 @@ packages:
 |---|---:|---|
 | `safe_lightweight` | 10 | A non-HE path can be bounded-smoked and packaged independently. |
 | `mixed` | 0 | Every safe clear path formerly grouped with HE/HHE work now has a separate packaging unit. |
-| `he_hhe_heavy` | 18 | The migrated boundary exists, but execution is not authorized as a routine smoke and dependency/resource packaging remains. |
-| `dependency_blocked` | 1 | The FiLIP Rust reference cannot currently build because its required upstream branch is unavailable. |
+| `he_hhe_heavy` | 17 | The migrated boundary exists, but execution is not authorized as a routine smoke; YuX HElib remains dependency blocked. |
+| `dependency_blocked` | 2 | BtR and the FiLIP Rust reference have unresolved source/API dependencies. |
 
 The inventory excludes AES/FbT, dependency-owned primitive suites, copied
 Lattigo/ring microbenchmarks, vendored TFHE tests, and Fregata's primitive
@@ -104,17 +105,41 @@ entry. Deferred, blocked, and uncataloged variants remain visible but cannot
 execute. A target may override its variant-level `implementation_id` when
 lightweight and HE/HHE paths are intentionally packaged as separate images.
 
-[`manifests/images.v2.json`](../manifests/images.v2.json) now contains thirteen
-validated images: the four retained v1 units, Transistor homomorphic Rust,
-TinyAES, HHELand symmetric, Margrethe SKE, Fasta native, HHE Framework plain,
-YuX symmetric, Full-LUT AES/TFHE, and Fregata CBS. Fregata adds two native AES
-and three TFHE++ jobs, bringing the current CLI to 112 runnable operation
-choices. Heavy operations remain opt-in and are not routine smokes.
+[`manifests/images.v2.json`](../manifests/images.v2.json) contains 26 image
+entries. The current full CLI listing has 435 matrix operation choices: 165
+are `runnable`, 268 are deferred, and 2 are blocked. Image packaging and
+operation readiness are separate: the 13 `packaged_deferred` implementations
+have images but their deferred matrix targets cannot execute through the host
+CLI. Current counts were verified on 2026-10-08 with `hhe list`; the prior
+full `bench-all --dry-run` audit is recorded below.
+
+The 2026-10-08 exact-selector dry-run audit covered 269 deferred choices and
+produced plans for 253 cataloged choices. Sixteen choices were uncataloged
+because BtR and YuX HElib are dependency blocked. Afterward, FiLIP
+independent-PTX native `SKE.Enc()` passed a bounded correctness run and was
+promoted; the current listing therefore has 268 deferred choices and 252
+cataloged deferred choices. The remaining 16 are unchanged dependency
+blockers. HHELand RtF and FFT-CBS route each parameter variant and operation
+exactly. These dry-runs do not execute benchmark workloads.
 
 An image-catalog entry is added only after its candidate has a pinned
 multi-stage Docker recipe, a compiler-free non-root runtime, a concrete
-embedded manifest, and contract validation. The next packaging order is:
+embedded manifest, and contract validation. HHE Framework HE/HHE has 55
+backend executables and 217 concrete manifest jobs; its selectors remain
+deferred. All ten safe-lightweight images pass bounded smoke and reporting;
+all sixteen heavy images pass workload-free build, listing, manifest, and link
+checks. The remaining release work is:
 
-1. continue build/contract validation with Fregata GBS AES and later heavy
-   candidates without running them;
-2. HE/HHE functional validation only with explicit authorization.
+1. resolve or explicitly exclude the blocked BtR, FiLIP Rust reference, and
+   YuX HElib units from the first supported release;
+2. validate every deferred HE/HHE selector; representative SEAL, TFHE, and
+   HElib checks exist, but the full HElib HHE command exceeded a ten-minute
+   bound on the current virtualized host;
+3. publish immutable image references and performance evidence from a host
+   that passes strict preflight and a configured registry.
+
+`tools/validate_project_inventory.py` checks matrix, catalog, and embedded
+manifest relationships in CI. It catches ready targets without matching image
+dispatch and catalog mappings that point to the wrong variant or operation.
+
+HHELand BGV and CKKS functional target evidence is recorded in `docs/status.md`; those matrix targets are ready for functional runs.

@@ -157,8 +157,12 @@ find_package(helib 2.2.0 QUIET)
 find_package(SEAL 3.7.3 QUIET)
 
 if (NOT helib_FOUND OR NOT SEAL_FOUND)
-    # prep external libraries
-    add_subdirectory(thirdparty)
+    option(HHE_FETCH_THIRDPARTY "Build missing third-party libraries" ON)
+    if(HHE_FETCH_THIRDPARTY)
+        add_subdirectory(thirdparty)
+    else()
+        message(FATAL_ERROR "Pinned HElib and SEAL installations are required")
+    endif()
 endif()
 
 # Import HElib
@@ -174,18 +178,18 @@ find_package(SEAL 3.7.3 REQUIRED
 )
 
 # Import TFHE
-set(TFHE_PREFIX "${CMAKE_SOURCE_DIR}/thirdparty/tfhe/installed")
-set(TFHE_INCLUDE_DIR "${TFHE_PREFIX}/include")
+set(TFHE_PREFIX "${CMAKE_SOURCE_DIR}/thirdparty/tfhe/installed" CACHE PATH "TFHE installation")
+set(TFHE_INCLUDE_DIR "${TFHE_PREFIX}/include" CACHE PATH "TFHE headers")
 # choose lib:
 # set(TFHE_LIB "${TFHE_PREFIX}/lib/libtfhe-fftw.so")
 # set(TFHE_LIB "${TFHE_PREFIX}/lib/libtfhe-nayuki-avx.so")
 # set(TFHE_LIB "${TFHE_PREFIX}/lib/libtfhe-nayuki-portable.so")
 # set(TFHE_LIB "${TFHE_PREFIX}/lib/libtfhe-spqlios-avx.so")
-set(TFHE_LIB "${TFHE_PREFIX}/lib/libtfhe-spqlios-fma.so")
+set(TFHE_LIB "${TFHE_PREFIX}/lib/libtfhe-spqlios-fma.so" CACHE FILEPATH "TFHE library")
 
-set(M4RI_PREFIX "${CMAKE_SOURCE_DIR}/thirdparty/m4ri/installed")
-set(M4RI_INCLUDE_DIR "${M4RI_PREFIX}/include")
-set(M4RI_LIB "${M4RI_PREFIX}/lib/libm4ri.so")
+set(M4RI_PREFIX "${CMAKE_SOURCE_DIR}/thirdparty/m4ri/installed" CACHE PATH "M4RI installation")
+set(M4RI_INCLUDE_DIR "${M4RI_PREFIX}/include" CACHE PATH "M4RI headers")
+set(M4RI_LIB "${M4RI_PREFIX}/lib/libm4ri.so" CACHE FILEPATH "M4RI library")
 
 # collect all cipher implementations
 add_subdirectory(ciphers)

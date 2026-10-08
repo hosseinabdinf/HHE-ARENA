@@ -1,5 +1,5 @@
 use criterion::{black_box, criterion_group, criterion_main, Criterion, BenchmarkId};
-use frast::{keygen_basic, generate_negacyclic_accumulator_from_sbox_half};
+use frast::{get_val_and_error, keygen_basic, generate_negacyclic_accumulator_from_sbox_half};
 use rand::Rng;
 use tfhe::{shortint::{prelude::*, CiphertextModulus}, core_crypto::{prelude::*, fft_impl::fft64::c64}};
 
@@ -54,7 +54,7 @@ fn criterion_benchmark(c: &mut Criterion) {
         let (
             lwe_secret_key,
             _,
-            _lwe_secret_key_after_ks,
+            lwe_secret_key_after_ks,
             fourier_bsk,
             ksk,
         ) = keygen_basic(
@@ -76,13 +76,31 @@ fn criterion_benchmark(c: &mut Criterion) {
         let ct_in = allocate_and_encrypt_new_lwe_ciphertext(&lwe_secret_key, pt, param.lwe_modular_std_dev, param.ciphertext_modulus, &mut encryption_generator);
 
         let mut ct_ks = LweCiphertext::new(0u64, param.lwe_dimension.to_lwe_size(), param.ciphertext_modulus);
+        // Keep the PBS input valid when the runner selects GenPBS alone.
+        keyswitch_lwe_ciphertext(&ksk, &ct_in, &mut ct_ks);
         group.bench_with_input(BenchmarkId::new("KS", *id), &param, |b, &_| b.iter(|| keyswitch_lwe_ciphertext(black_box(&ksk), black_box(&ct_in), black_box(&mut ct_ks))));
+
+        let selected_operation = std::env::var("HHE_BENCH_OPERATION").unwrap_or_default();
+        if selected_operation == format!("KS/{id}") {
+            let (decoded, error) = get_val_and_error(&lwe_secret_key_after_ks, &ct_ks, input as u64, delta);
+            assert_eq!(decoded, input as u64, "FRAST key switching changed plaintext: decoded={decoded}, error={error}");
+        }
 
         let sbox_half = (0..modulus_sup/2).map(|_| rng.gen_range(0..modulus_sup) as u64).collect::<Vec<u64>>();
         let accumulator = generate_negacyclic_accumulator_from_sbox_half(modulus_sup, param.ciphertext_modulus, fourier_bsk, delta, &sbox_half);
         let mut ct_out = LweCiphertext::new(0u64, lwe_secret_key.lwe_dimension().to_lwe_size(), param.ciphertext_modulus);
 
         group.bench_with_input(BenchmarkId::new("GenPBS", *id), &param, |b, &_| b.iter(|| gen_pbs(black_box(&ct_ks), black_box(&mut ct_out), black_box(&accumulator), black_box(&fourier_bsk))));
+
+        if selected_operation == format!("GenPBS/{id}") {
+            let expected = if input < modulus_sup / 2 {
+                sbox_half[input]
+            } else {
+                (modulus_sup as u64 - sbox_half[input - modulus_sup / 2]) % modulus_sup as u64
+            };
+            let (decoded, error) = get_val_and_error(&lwe_secret_key, &ct_out, expected, delta);
+            assert_eq!(decoded, expected, "FRAST PBS output mismatch: expected={expected}, decoded={decoded}, error={error}");
+        }
     }
 
 }

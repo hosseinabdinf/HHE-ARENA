@@ -2,6 +2,21 @@
 
 This guide defines the integration contract for adding an HHE scheme, cipher, backend, language port, or implementation variant. Keep framework code self-contained while sharing the benchmark record contract.
 
+For an existing C/C++ CMake target, `tools/scaffold_framework.py` creates a
+Dockerfile, embedded manifest, workload-free smoke script, and integration
+checklist. For example:
+
+```sh
+python tools/scaffold_framework.py example-cpp \
+  --cipher Example --operation encrypt --backend native --language cpp \
+  --source frameworks/example --target example_benchmark
+```
+
+The generated files stay outside the matrix and catalog until their source,
+timed boundary, dependencies, runtime libraries, and result pipeline are
+reviewed. The scaffold only covers C/C++ CMake projects; use the proven image
+recipes and the contract below for other languages.
+
 ## 1. Decide the integration unit
 
 Create a new top-level framework directory only when the implementation has its own upstream project, build system, dependency graph, or license. Add a scheme inside an existing framework when it uses that framework's runtime and build.

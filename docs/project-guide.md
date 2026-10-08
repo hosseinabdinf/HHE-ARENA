@@ -30,6 +30,8 @@ docker build -t hhe-arena:tooling .
 docker run --rm hhe-arena:tooling probe
 docker run --rm hhe-arena:tooling --help
 python tools/validate_framework_contract.py
+python tools/validate_project_inventory.py
+docker run --rm -v "$PWD:/src:ro" -w /src hhe-arena:tooling python tools/validate_json_schemas.py
 ```
 
 To inspect the current v2 hierarchy:
@@ -63,13 +65,15 @@ Windows Docker Desktop is useful for functional validation, but WSL commonly
 cannot verify invariant/nonstop TSC, governor, or Turbo state. Such runs may be
 schema-valid and useful for debugging, but their cycle counts are not
 publication-grade. Publication comparisons require matching preflight metadata
-on compatible bare-metal Linux hosts. Native Linux validation is currently
-deferred.
+on compatible bare-metal Linux hosts. The five lightweight matrix-v1
+operations passed a functional native Linux run with warning preflight; its
+RDTSCP, governor, and Turbo warnings prevent publication use.
 
 ## Adding a framework
 
 Follow [new-framework.md](new-framework.md) and
-[adding-a-scheme.md](adding-a-scheme.md). The minimum integration consists of
+[adding-a-scheme.md](adding-a-scheme.md). C/C++ CMake implementations can start
+with `tools/scaffold_framework.py`. The minimum integration consists of
 an active shared-harness call site, preserved `_backup` source, a version-1
 manifest, a compiler-free non-root Docker runtime, and catalog/support-matrix
 entries. The static contract gate checks these packaging invariants without
@@ -77,8 +81,11 @@ executing the benchmark.
 
 ## Current scope
 
-AES/FbT remains intentionally unchanged. BtR is dependency-blocked. HE/HHE
-workloads for the packaged heavy images are listed and selectable but remain
-non-smoke unless explicitly authorized. See [status.md](status.md) and
+AES/FbT remains intentionally unchanged. BtR, FiLIP/Rust reference, and YuX
+HElib are dependency blocked. HE/HHE
+workloads for packaged heavy images are listed; deferred matrix choices cannot
+execute through the host CLI. See [status.md](status.md) and
 [support-matrix.md](support-matrix.md) for the authoritative readiness and
-variant inventory.
+variant inventory. See [release-protocol.md](release-protocol.md) for functional
+acceptance, strict-host measurement rules, security-profile evidence, and
+immutable publication requirements.

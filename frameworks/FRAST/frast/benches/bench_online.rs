@@ -1,5 +1,5 @@
 use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
-use frast::{keygen::*, pbs::*, MODULUS, FRAST_HE_PARAM1};
+use frast::{get_val_and_error, keygen::*, pbs::*, MODULUS, FRAST_HE_PARAM1};
 use tfhe::shortint::{prelude::*, CiphertextModulus};
 use tfhe::core_crypto::{
     prelude::*,
@@ -112,11 +112,18 @@ fn criterion_benchmark(c: &mut Criterion) {
             encrypt_lwe_ciphertext(&lwe_secret_key_after_ks_online, &mut he_bit, Plaintext(0), param_online.lwe_modular_std_dev, &mut encryption_generator);
         }
 
-        group.bench_with_input(BenchmarkId::new(*id, *id), &param_online, |b, &_| b.iter(|| online(
+        group.bench_with_input(BenchmarkId::new(*id, *id), &param_online, |b, &_| b.iter(|| black_box(online(
             black_box(&he_bits),
             black_box(fourier_bsk_online),
             black_box(&ksk_from_online),
-        )));
+        ))));
+
+        let selected_operation = std::env::var("HHE_BENCH_OPERATION").unwrap_or_default();
+        if selected_operation == format!("online/{id}") {
+            let he_out = online(&he_bits, fourier_bsk_online, &ksk_from_online);
+            let (decoded, error) = get_val_and_error(&lwe_secret_key, &he_out, 0, 1u64 << 59);
+            assert_eq!(decoded, 0, "FRAST online changed zero plaintext: decoded={decoded}, error={error}");
+        }
     }
 }
 
@@ -124,7 +131,7 @@ fn online(
     he_bits: &LweCiphertextListOwned<u64>,
     fourier_bsk_online: FourierLweBootstrapKeyView,
     ksk_from_online: &LweKeyswitchKeyOwned<u64>,
-) {
+) -> LweCiphertextOwned<u64> {
     let ciphertext_modulus = he_bits.ciphertext_modulus();
 
     let mut he_out = LweCiphertext::new(0u64, ksk_from_online.output_lwe_size(), ciphertext_modulus);
@@ -148,6 +155,7 @@ fn online(
     }
 
     keyswitch_lwe_ciphertext(&ksk_from_online, &he_buf, &mut he_out);
+    he_out
 }
 
 criterion_group!(benches, criterion_benchmark);

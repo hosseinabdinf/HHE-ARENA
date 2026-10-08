@@ -2,6 +2,7 @@ use criterion::{black_box, criterion_group, criterion_main, Criterion, Benchmark
 use tfhe::core_crypto::prelude::*;
 use tfhe::core_crypto::fft_impl::fft64::c64;
 use auto_base_conv::{blind_rotate_for_msb, convert_to_ggsw_after_blind_rotate, gen_all_auto_keys, generate_scheme_switching_key, get_max_err_ggsw_bit, glwe_ciphertext_clone_from, glwe_ciphertext_monic_monomial_div, keygen_pbs, wopbs_instance::*};
+use auto_base_conv::utils::get_val_and_abs_err;
 
 
 criterion_group!(
@@ -18,12 +19,17 @@ fn criterion_benchmark_improved_wopbs(c: &mut Criterion) {
     let mut group = c.benchmark_group("wopbs");
 
     let param_list = [
-        (*BITWISE_CBS_CMUX1, 1, "CMUX1"),
-        (*BITWISE_CBS_CMUX2, 1, "CMUX2"),
-        (*BITWISE_CBS_CMUX3, 1, "CMUX3"),
+        (*BITWISE_CBS_CMUX1, 1, "CMUX1", "fft-cbs-cmux1"),
+        (*BITWISE_CBS_CMUX2, 1, "CMUX2", "fft-cbs-cmux2"),
+        (*BITWISE_CBS_CMUX3, 1, "CMUX3", "fft-cbs-cmux3"),
     ];
 
-    for (param, extract_size, id) in param_list.iter() {
+    for (param, extract_size, id, variant_id) in param_list.iter() {
+        if let Ok(selected) = std::env::var("HHE_BENCH_VARIANT") {
+            if selected != *variant_id {
+                continue;
+            }
+        }
         let lwe_dimension = param.lwe_dimension();
         let lwe_modular_std_dev = param.lwe_modular_std_dev();
         let glwe_dimension = param.glwe_dimension();
@@ -223,6 +229,14 @@ fn criterion_benchmark_improved_wopbs(c: &mut Criterion) {
             );
             buf.as_mut().clone_from_slice(buf_next.as_ref());
         }
+
+        let delta = 1u64 << (u64::BITS as usize - message_size);
+        let (decoded, output_error) = get_val_and_abs_err(&lwe_sk, &buf, 0u64, delta);
+        assert_eq!(
+            decoded,
+            0,
+            "CMUX output subtraction should encrypt zero; decoded={decoded}, error={output_error}",
+        );
 
         println!(
 "n: {}, N: {}, k: {}, l_pbs: {}, B_pbs: 2^{}, l_auto: {}, B_auto: 2^{}, l_ss: {}, B_ss: 2^{}, l_cbs: {}, B_cbs: 2^{}",

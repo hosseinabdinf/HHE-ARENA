@@ -15,7 +15,7 @@ RUN apt-get update \
  && pip install --no-cache-dir cffi==2.1.0 setuptools==80.9.0
 WORKDIR /app
 COPY frameworks/margrethe/scripts/serialized_counter.py ./
-RUN PYTHONPATH=/app python -c 'import serialized_counter; assert serialized_counter.available()'
+RUN PYTHONPATH=/app python -c 'import serialized_counter; assert serialized_counter._library() is not None'
 
 FROM ${TOOLING_IMAGE} AS runtime
 ARG IMAGE_REVISION=unknown
@@ -41,7 +41,7 @@ COPY manifests/margrethe-symmetric.v2.json /opt/hhe/benchmarks/manifest.json
 RUN chmod 0555 /opt/hhe/frameworks/margrethe-ske/run \
  && mkdir -p /work/results \
  && chown -R 65532:65532 /work \
- && PYTHONPATH=/opt/hhe/frameworks/margrethe-ske python -c 'import serialized_counter; assert serialized_counter.available()' \
+ && PYTHONPATH=/opt/hhe/frameworks/margrethe-ske python -c 'import serialized_counter; assert serialized_counter._library() is not None' \
  && PYTHONPATH=/opt/hhe/frameworks/margrethe-ske python -c 'import cipher; assert cipher.Cipher.__name__ == "Cipher"' \
  && hhe-validate-framework-image --require-benchmarks \
  && hhe list >/dev/null

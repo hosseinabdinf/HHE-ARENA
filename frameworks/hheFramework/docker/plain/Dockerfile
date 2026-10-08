@@ -24,6 +24,7 @@ RUN cmake -S frameworks/hheFramework/docker/plain -B /build \
  && cmake --build /build --parallel 2 \
  && cmake --install /build --prefix /out \
  && install -D -m 0555 /usr/lib/x86_64-linux-gnu/libm4ri-0.0.20200125.so /out/lib/libm4ri-0.0.20200125.so \
+ && install -D -m 0555 "$(gcc -print-file-name=libstdc++.so.6)" /out/lib/libstdc++.so.6 \
  && install -D -m 0555 /lib/x86_64-linux-gnu/libpng16.so.16 /out/lib/libpng16.so.16 \
  && install -D -m 0555 /lib/x86_64-linux-gnu/libz.so.1 /out/lib/libz.so.1
 

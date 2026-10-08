@@ -50,7 +50,7 @@ func matrixV2Files(t *testing.T) (string, string) {
 	dir := t.TempDir()
 	catalog := filepath.Join(dir, "images.v2.json")
 	matrix := filepath.Join(dir, "support-matrix.v2.json")
-	catalogData := `{"version":1,"matrix_version":2,"tooling":{"tag":"tooling:test","dockerfile":"Dockerfile","context":"."},"images":[{"id":"aes-c","framework":"AES/OpenSSL","cipher":"AES suite","language":"c","backend":"openssl","operations":["encrypt"],"matrix_targets":[{"variant_id":"aes128-cbc-openssl","cipher":"AES-128-CBC","backend":"openssl","operations":["encrypt"]}],"local_tag":"aes:test","pull_ref":null,"manifest":"manifests/aes.json","build":{"tag":"aes:test","dockerfile":"frameworks/aes/Dockerfile","context":"."}}]}`
+	catalogData := `{"version":1,"matrix_version":2,"tooling":{"tag":"tooling:test","dockerfile":"Dockerfile","context":"."},"images":[{"id":"aes-c","framework":"AES/OpenSSL","cipher":"AES suite","language":"c","backend":"openssl","operations":["encrypt"],"matrix_targets":[{"variant_id":"aes128-cbc-openssl","cipher":"AES-128-CBC","backend":"openssl","operations":["encrypt"]}],"local_tag":"aes:test","pull_ref":null,"manifest":"manifests/aes.json","build":{"tag":"aes:test","dockerfile":"frameworks/aes/Dockerfile","context":"."}},{"id":"rubato-go","framework":"HHELand","cipher":"Rubato","language":"go","backend":"Lattigo CKKS","operations":["HHE.Decomp()"],"matrix_targets":[{"variant_id":"rubato-128l","cipher":"Rubato","backend":"Lattigo CKKS","operations":["HHE.Decomp()"]}],"local_tag":"rubato:test","manifest":"manifests/rubato.json","build":{"tag":"rubato:test","dockerfile":"frameworks/rubato/Dockerfile","context":"."}}]}`
 	matrixData := `{"matrix_version":2,"selector_contract":{"wildcard":"all","selection_order":["family","path","cipher","variant","framework","backend","language"]},"benchmark_variants":[{"id":"aes128-cbc-openssl","family":"aes","cipher":"AES","variant":"AES-128-CBC","framework":"AES/OpenSSL","language":"c","implementation_id":"aes-heavy","targets":[{"path":"ske","backends":["openssl"],"operations":["encrypt"],"status":"ready","implementation_id":"aes-c"}]},{"id":"rubato-128l","family":"he_friendly","cipher":"Rubato","variant":"128L","framework":"HHELand","language":"go","implementation_id":"rubato-go","targets":[{"path":"hhe","backends":["Lattigo CKKS"],"operations":["HHE.Decomp()"],"status":"deferred"}]}]}`
 	if err := os.WriteFile(catalog, []byte(catalogData), 0644); err != nil {
 		t.Fatal(err)
@@ -264,6 +264,33 @@ func TestMatrixV2BenchRejectsDeferredTarget(t *testing.T) {
 	got := run([]string{"bench", "--catalog", catalog, "--family", "he_friendly", "--path", "hhe", "--cipher", "Rubato", "--variant", "128L", "--dry-run"}, &fakeRunner{}, &out, &errw)
 	if got != 65 || !strings.Contains(errw.String(), "none are runnable") {
 		t.Fatalf("exit=%d stdout=%s stderr=%s", got, out.String(), errw.String())
+	}
+}
+
+func TestMatrixV2BenchCanDryRunOneBoundedDeferredTarget(t *testing.T) {
+	catalog, _ := matrixV2Files(t)
+	args := []string{"bench", "--catalog", catalog, "--family", "he_friendly", "--path", "hhe", "--cipher", "Rubato", "--variant", "128L", "--framework", "HHELand", "--backend", "Lattigo CKKS", "--language", "go", "--operation", "HHE.Decomp()", "--image-policy", "local", "--iterations", "1", "--warmup", "0", "--core", "2", "--policy", "warn", "--validate-deferred", "--dry-run", "--output", filepath.Join(t.TempDir(), "deferred")}
+	var out, errw bytes.Buffer
+	got := run(args, &fakeRunner{}, &out, &errw)
+	if got != 0 || !strings.Contains(out.String(), "rubato:test bench --cipher Rubato") || !strings.Contains(out.String(), "--iterations 1") {
+		t.Fatalf("exit=%d stdout=%s stderr=%s", got, out.String(), errw.String())
+	}
+}
+
+func TestValidateDeferredRequiresSingleIterationAndWarmupZero(t *testing.T) {
+	catalog, _ := matrixV2Files(t)
+	for _, changed := range [][]string{{"--iterations", "2"}, {"--warmup", "1"}} {
+		args := []string{"bench", "--catalog", catalog, "--family", "he_friendly", "--path", "hhe", "--cipher", "Rubato", "--variant", "128L", "--framework", "HHELand", "--backend", "Lattigo CKKS", "--language", "go", "--operation", "HHE.Decomp()", "--image-policy", "local", "--iterations", "1", "--warmup", "0", "--core", "2", "--policy", "warn", "--validate-deferred", "--dry-run"}
+		for i := 0; i < len(args)-1; i++ {
+			if args[i] == changed[0] {
+				args[i+1] = changed[1]
+			}
+		}
+		var out, errw bytes.Buffer
+		got := run(args, &fakeRunner{}, &out, &errw)
+		if got != 64 || !strings.Contains(errw.String(), "requires --iterations 1 --warmup 0") {
+			t.Fatalf("args=%v exit=%d stdout=%s stderr=%s", changed, got, out.String(), errw.String())
+		}
 	}
 }
 func TestHelpUsesConfiguredArenaTitle(t *testing.T) {

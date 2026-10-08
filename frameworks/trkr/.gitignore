@@ -12,6 +12,7 @@ target/
 
 **/*.rmeta
 **/Cargo.lock
+!Cargo.lock
 **/*.bin
 
 # Some of our bench outputs

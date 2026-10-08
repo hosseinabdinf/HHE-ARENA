@@ -13,7 +13,11 @@ WORKDIR /src/frameworks/filip/sorting_hat/src
 RUN mkdir -p run \
  && make libfinal.a \
  && make test_homomorphic_filip \
- && install -D -m 0555 run/test_homomorphic_filip /out/test_homomorphic_filip
+ && install -D -m 0555 run/test_homomorphic_filip /out/test_homomorphic_filip \
+ && install -D -m 0555 "$(gcc -print-file-name=libstdc++.so.6)" /out/lib/libstdc++.so.6 \
+ && install -D -m 0555 /usr/lib/x86_64-linux-gnu/libntl.so.44 /out/lib/libntl.so.44 \
+ && install -D -m 0555 /usr/lib/x86_64-linux-gnu/libgf2x.so.3 /out/lib/libgf2x.so.3 \
+ && install -D -m 0555 /usr/lib/x86_64-linux-gnu/libfftw3.so.3 /out/lib/libfftw3.so.3
 
 FROM ${TOOLING_IMAGE} AS runtime
 ARG IMAGE_REVISION=unknown
@@ -32,7 +36,9 @@ LABEL org.opencontainers.image.title="HHE-ARENA FiLIP Sorting Hat benchmarks" \
       io.hhe-arena.tooling.digest="${TOOLING_DIGEST}"
 USER root
 COPY --from=builder /out/test_homomorphic_filip /opt/hhe/frameworks/filip-sorting-hat/test_homomorphic_filip
+COPY --from=builder /out/lib/ /opt/hhe/lib/
 COPY manifests/filip-sorting-hat.v2.json /opt/hhe/benchmarks/manifest.json
+ENV LD_LIBRARY_PATH=/opt/hhe/lib
 RUN mkdir -p /work/results \
  && chown -R 65532:65532 /work \
  && hhe-validate-framework-image --require-benchmarks \

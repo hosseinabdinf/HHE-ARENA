@@ -1,8 +1,9 @@
 # New framework integration checklist
 
-This scaffold is the minimum contract for adding a framework to HHE-ARENA. It
-is intentionally workload-free: the repository CI checks metadata and image
-construction requirements, but never runs HE/HHE benchmarks.
+This checklist is the minimum contract for adding a framework to HHE-ARENA.
+CI builds and bounded-smokes declared safe lightweight images; HE/HHE image
+jobs remain workload-free. `tools/scaffold_framework.py` creates the initial
+Dockerfile, manifest, smoke script, and checklist for C/C++ CMake targets.
 
 ## Required changes
 
@@ -27,7 +28,11 @@ From the repository root, run:
 
 ```text
 python tools/validate_framework_contract.py
+python tools/validate_project_inventory.py
+python tools/validate_json_schemas.py
 ```
 
-This verifies every catalog entry, its manifest jobs, Dockerfile validator
-hook, and non-root runtime declaration without building or executing an image.
+These verify schemas, catalog/manifest/matrix selectors, Dockerfile validator
+hooks, and non-root runtime declarations without executing a workload. The
+schema script requires `jsonschema==4.23.0`; run it inside the tooling image
+if the host Python has an older package.

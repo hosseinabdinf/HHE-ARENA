@@ -76,9 +76,10 @@
           "uniqueItems": true,
           "items": { "type": "string", "minLength": 1 }
         },
-		"implementation_id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._-]*$" },
+        "implementation_id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._-]*$" },
         "source_entrypoint": { "type": "string", "minLength": 1 },
-        "status": { "enum": ["ready", "deferred", "blocked"] }
+        "status": { "enum": ["ready", "deferred", "blocked"] },
+        "deferred_reason": { "type": "string", "minLength": 1 }
       }
     },
     "benchmark_variant": {
@@ -139,8 +140,8 @@
         "readiness_class": {
           "enum": ["safe_lightweight", "he_hhe_heavy", "dependency_blocked", "mixed"]
         },
-        "selection_status": { "enum": ["selected", "deferred", "unsupported"] },
-        "docker_status": { "enum": ["not_started", "in_progress", "ready", "blocked"] },
+        "selection_status": { "enum": ["selected", "packaged_deferred", "deferred", "unsupported"] },
+        "docker_status": { "enum": ["not_started", "in_progress", "ready", "built", "blocked"] },
         "manifest_status": { "enum": ["not_started", "draft", "ready", "blocked"] },
         "known_blockers": { "type": "array", "items": { "type": "string", "minLength": 1 } },
         "notes": { "type": "string" }

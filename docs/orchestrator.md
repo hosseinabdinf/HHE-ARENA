@@ -108,6 +108,22 @@ advertises the same operation. `bench` rejects deferred, blocked, and
 uncataloged choices. `bench-all` executes only runnable choices, reports how
 many matched choices it skipped, and fails when no runnable choice remains.
 
+For an explicitly authorized functional check of one packaged but deferred
+choice, `bench --validate-deferred` permits exactly one operation while
+leaving the matrix status unchanged. It requires all selectors, a local image,
+one measured iteration, zero warmups, a selected CPU, and warning policy. It
+rejects blocked, uncataloged, multi-target, and `bench-all` requests. Review
+the dry-run first, then remove `--dry-run` for the functional check; promote
+the matrix target only after its raw record and generated report validate.
+
+```sh
+hhe bench --catalog manifests/images.v2.json --family aes --path hhe \
+  --cipher AES --variant 'AES-128 GBS' --framework 'AES/Fregata GBS' \
+  --backend 'TFHE++' --language cpp --operation 'GBS AES pipeline' \
+  --image-policy local --iterations 1 --warmup 0 --core 0 --policy warn \
+  --validate-deferred --dry-run --output /tmp/fregata-gbs-validation
+```
+
 A framework image may advertise `matrix_targets` when one packaging unit
 contains several variant-specific manifest jobs. Each entry maps a matrix
 variant ID to the cipher/backend/operation values understood by the embedded

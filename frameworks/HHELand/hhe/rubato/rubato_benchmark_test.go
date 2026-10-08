@@ -6,11 +6,25 @@ import (
 	"HHELand/utils"
 	"crypto/rand"
 	"fmt"
+	"os"
 	"sync"
 	"testing"
 )
 
 func BenchmarkRubato(b *testing.B) {
+	variants := map[string]int{
+		"hheland-rubato-128s": 0,
+		"hheland-rubato-128m": 1,
+		"hheland-rubato-128l": 2,
+	}
+	if selected := os.Getenv("HHE_BENCH_VARIANT"); selected != "" {
+		index, ok := variants[selected]
+		if !ok || index >= len(rubato.TestsVector) {
+			b.Fatalf("unsupported HHE_BENCH_VARIANT %q for HHE Rubato", selected)
+		}
+		benchHERubato(rubato.TestsVector[index], b)
+		return
+	}
 	for _, tc := range rubato.TestsVector {
 		benchHERubato(tc, b)
 	}

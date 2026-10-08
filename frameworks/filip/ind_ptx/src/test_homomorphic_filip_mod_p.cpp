@@ -241,6 +241,10 @@ void test_simulate_homomorphic_filip_dec(SchemeLWE& s_lwe,
     BENCHMARK_ITER("SKE.Enc()", BENCHMARK_ITERATIONS,
                    { ctxt_filip = filip.enc(iv, msg_bin); });
 
+#ifdef SKE_BENCH_ONLY
+    assert(filip.dec(iv, ctxt_filip) == msg_bin);
+#endif
+
 #ifndef SKE_BENCH_ONLY
     SKey_boot& sk_boot = s_lwe.sk_boot;
 
@@ -283,7 +287,9 @@ void test_simulate_homomorphic_filip_dec(SchemeLWE& s_lwe,
 #endif
   }
 
+#ifndef SKE_BENCH_ONLY
   cout << homFilip << endl << endl;
+#endif
 }
 
 int main() {

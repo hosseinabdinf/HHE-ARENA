@@ -219,6 +219,9 @@ func Run(config Config, target func()) error {
 
 func Benchmark(name string, target func()) { BenchmarkIter(name, 1, target) }
 func BenchmarkIter(name string, iterations int, target func()) {
+	if selectedOperation := os.Getenv("HHE_BENCH_OPERATION"); selectedOperation != "" && selectedOperation != name {
+		return
+	}
 	config := ConfigFromEnv(name, iterations)
 	if err := Run(config, target); err != nil {
 		panic(fmt.Sprintf("benchmark failed: %v", err))

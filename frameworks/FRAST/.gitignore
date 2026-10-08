@@ -1,6 +1,7 @@
 target/
 
 **/Cargo.lock
+!frast/Cargo.lock
 **/*.bin
 
 err.sage.py

@@ -1,6 +1,6 @@
 # Benchmark utility migration status
 
-Last audited: 2026-07-14
+Last audited: 2026-10-08
 
 This is a static source audit of framework benchmark call sites. No HE test or benchmark was executed. The status answers whether a cipher path actually uses the shared schema-1.0.0 harness; the presence of a copied utility file alone is not sufficient.
 
@@ -29,7 +29,7 @@ The new contract includes `HHE_BENCH_*` configuration, proportional or explicit 
 | AES / BtR (Lattigo) | AES-over-CKKS transciphering; BFV/BGV/CKKS and multiparty internals | **Mixed / dependency-blocked** | `examples/btr_cipher/main.go` actively wraps the shared Go harness, but packaging is blocked: the checkout omits `core/rlwe`, pinned upstream v6.0.0/v6.1.0 bases lack the extension's `ShallowCopy`/`BootstrapReal` APIs, and `platform_linux.go` uses removed `syscall.SYS_GETCPU`. Upstream Lattigo internal suites remain dependency-owned `testing.B` benchmarks. |
 | AES / FFT-CBS | AES, AES half-CBS, circuit bootstrapping, HP-LHE | **New** | Active tests use the shared Rust harness; the four former Criterion binaries now resolve to the local schema adapter and retain `_backup` sources/manifests. A pinned, compiler-free, non-root image exposes eight non-smoke jobs across AES, half-CBS, CMUX, and HP-LHE. |
 | AES / Hippogryph | Hippogryph AES / odd-modulus TFHE | **New** | Active AES measurements use a thin facade over the shared Rust schema harness. A pinned compiler-free non-root image exposes two non-smoke jobs (TFHE plaintext encryption and transciphering); no HE/HHE workload ran. |
-| AES / P-encoding | P-encoding AES / odd-modulus TFHE | **New** | Active AES measurements use a thin facade over the shared Rust schema harness. |
+| AES / P-encoding | P-encoding AES / odd-modulus TFHE | **New** | Active AES measurements use a thin facade over the shared Rust schema harness; the image includes its AES circuit data and both exact operations passed separate single-operation functional runs. |
 | Elisabeth | Elisabeth clear and homomorphic paths | **New** | Clear/homomorphic tests and the standalone encryption/transciphering benchmark use the shared Rust schema harness; the original Criterion source is retained as `_backup`. |
 | Fasta | Fasta symmetric and HElib; Rasta HElib, packed HElib, and TFHE | **New** | All five active executables use schema-1.0.0 sessions. Reset/cleanup hooks keep input reconstruction and disposal outside timing; legacy sources are retained as sibling `_backup` files. |
 | FiLIP / independent-PTX | FiLIP p-dependent setup, SKE encryption, HHE decomposition | **New** | Active `BENCHMARK_ITER` call sites use migrated C utilities. |
@@ -45,8 +45,17 @@ The new contract includes `HHE_BENCH_*` configuration, proportional or explicit 
 | Trivium/Kreyvium (`trkr`) | Trivium and Kreyvium TFHE-rs application paths | **New** | Application tests use the shared Rust harness; the former Criterion application bench resolves to the local schema adapter and retains `_backup` sources/manifests. |
 | YuX | Yu2x-8, Yu2x-16, Yupx-p; symmetric, key schedule, HE key encryption, transciphering and final HE decrypt operations | **New** | Test executables actively use migrated C/C++ `BENCHMARK` macros and link the new utility. |
 
-### Current packaging blockers`r`n`r`nYuX HElib transciphering (`yux-cpp`) is not runnable: `frameworks/yux/thirdparty/build.sh` clones an unpinned HElib branch and builds NTL, GMP, and M4RI during image creation. No reproducible compiler-free runtime contract exists, so the five HElib variants remain outside the image catalog. The native YuX symmetric image remains available.`r`n`r`nAES/BtR is separately dependency/API-blocked: the checked-in extension requires Lattigo `core/rlwe`, `ShallowCopy`, and `BootstrapReal` APIs unavailable in compatible pinned revisions, while `platform_linux.go` references removed `syscall.SYS_GETCPU`. Its recipe and manifest remain source references only and it stays outside the image catalog.`r`n`r`nThe FiLIP Rust reference unit is also blocked because its required upstream FiLIP branch is unavailable; it remains outside the image catalog. Neither blocker involved workload execution.`r`n`r`n### Margrethe workflow validation (2026-07-23)
-`rnBoth Margrethe paths completed through the catalog CLI, Docker image, embedded manifest, benchmark runner, JSONL validation, and report generation with one measured iteration and zero warmups. Margrethe SKE completed successfully (`78,112,800 ns`); single-thread Margrethe HHE completed successfully (`2,529,476,178 ns`). Each produced one valid record and zero invalid records. The run used warning preflight on Docker Desktop/WSL; invariant/nonstop TSC and performance-governor checks were not verified, so these are functional validation results, not publication-grade performance data.
+### Current packaging blockers
+
+YuX HElib transciphering (`yux-cpp`) is not runnable: `frameworks/yux/thirdparty/build.sh` clones an unpinned HElib branch and builds NTL, GMP, and M4RI during image creation. No reproducible compiler-free runtime contract exists, so the five HElib variants remain outside the image catalog. The native YuX symmetric image remains available.
+
+AES/BtR is separately dependency/API-blocked: the checked-in extension requires Lattigo `core/rlwe`, `ShallowCopy`, and `BootstrapReal` APIs unavailable in compatible pinned revisions, while `platform_linux.go` references removed `syscall.SYS_GETCPU`. Its recipe and manifest remain source references only and it stays outside the image catalog.
+
+The FiLIP Rust reference unit is also blocked because its required upstream FiLIP branch is unavailable; it remains outside the image catalog. Neither blocker involved workload execution.
+
+### Margrethe workflow validation (2026-07-23)
+
+Both Margrethe paths completed through the catalog CLI, Docker image, embedded manifest, benchmark runner, JSONL validation, and report generation with one measured iteration and zero warmups. Margrethe SKE completed successfully (`78,112,800 ns`); single-thread Margrethe HHE completed successfully (`2,529,476,178 ns`). Each produced one valid record and zero invalid records. The run used warning preflight on Docker Desktop/WSL; invariant/nonstop TSC and performance-governor checks were not verified, so these are functional validation results, not publication-grade performance data.
 
 ## Framework details
 
@@ -213,13 +222,13 @@ shared contract, and returns validated raw data plus reports. A new framework
 should be addable through a documented adapter, Docker build, and manifest
 entry rather than changes throughout the orchestrator.
 
-**Estimated overall readiness: approximately 89%.** This is a planning
-estimate, not a test-coverage metric. The measurement and reporting foundation
-and matrix-v1 container/dispatch slice are complete. Native-host portability
-evidence, release publication, and CI remain.
-Completion means that every framework in the declared support matrix has a
-reproducible image, production manifest, lightweight end-to-end smoke, and
-documented limitations.
+Overall readiness is not expressed as a percentage while matrix v2 remains
+draft. The measurement and reporting foundation and matrix-v1 container slice
+are complete; HE/HHE functional evidence, strict publication-host evidence,
+image publication, and broader CI remain.
+Completion means that every supported matrix choice has a matching image and
+manifest, a verified contract, functional evidence appropriate to its workload,
+and documented limitations. Unsupported choices retain explicit blockers.
 
 | Order | Required capability | Current readiness | Remaining work / completion criterion |
 |---:|---|---:|---|
@@ -227,13 +236,13 @@ documented limitations.
 | 2 | Migrate project-owned scheme benchmark boundaries | **95%** | Non-FbT scheme paths are migrated. AES/FbT is explicitly deferred; dependency-owned primitive suites are outside the scheme support matrix unless later promoted. |
 | 3 | Stable CLI selection and orchestration | **100%** | `hhe list`, `bench`, and `bench-all` consume the matrix-v2 hierarchy `family -> path -> cipher -> variant -> framework -> backend -> language`, accept `all`, show declared/effective readiness, and execute only ready targets backed by the image catalog. |
 | 4 | Schema validation and report generation | **100%** | Catalog runs now standardize output as a `raw/` plus `report/` bundle and automatically invoke schema validation and CSV/LaTeX/pgfplots timing and memory reporting after every selected container succeeds. |
-| 5 | Define the supported framework/cipher/backend matrix | **100%** | Frozen v1 remains the runnable four-image slice. Draft `manifests/support-matrix.v2.json` separates 29 build/readiness units from 103 source-audited benchmark variants: 10 AES/conventional, 72 HE-friendly, and 21 pure HE. Native Fasta, HHE Framework plain/SKE, and YuX symmetric are separate from their deferred HE/HHE packages. |
-| 6 | Reproducible Docker build for every supported framework | **52%** | Seventeen of 29 v2 candidates now have contract-v1 images. Hippogryph and P-encoding AES/Rust are packaged heavy images; remaining candidates are deferred until their packaging tasks are scheduled. |
-| 7 | Production manifests for concrete binaries | **52%** | Seventeen v2 candidates have production manifests and are listed in `manifests/images.v2.json`. Hippogryph adds two jobs, bringing the catalog to 123 runnable operation choices. Heavy choices remain explicitly non-smoke. |
-| 8 | End-to-end container workflow | **85%** | All five matrix-v1 symmetric targets completed build/select -> warning preflight -> CPU-pinned process -> JSONL validation -> reports on Windows Docker Desktop. Catalog execution now wires validation/report bundles automatically and gives every language container one stable host identity. Repeat on native Linux. Heavy HE validation still requires explicit authorization. |
-| 9 | Host-platform independence | **30%** | Windows Docker Desktop is functionally verified, but its WSL preflight failed publication assumptions. Native Linux, macOS Docker, and ARM remain unvalidated; publication-grade cycle measurements remain limited to compatible bare-metal Linux hosts. |
-| 10 | Easy addition and migration workflow | **75%** | Adding-scheme and schema documentation plus shared adapters exist. Add a scaffold/template that creates the Dockerfile, manifest, smoke target, report wiring, and acceptance checklist together. |
-| 11 | CI, release artifacts, and reproducibility evidence | **15%** | Add CI that builds each lightweight image target, validates manifests, runs only safe synthetic/plain smokes, and publishes pinned image digests. Record full HE validation separately on suitable hardware. |
+| 5 | Define the supported framework/cipher/backend matrix | **Inventory complete; release scope open** | Frozen v1 remains the runnable four-image slice. Draft `manifests/support-matrix.v2.json` separates 29 build/readiness units from 103 source-audited benchmark variants: 10 AES/conventional, 72 HE-friendly, and 21 pure HE. Native Fasta, HHE Framework plain/SKE, and YuX symmetric are separate from their deferred HE/HHE packages. |
+| 6 | Reproducible Docker build for every supported framework | **90%** | Twenty-six of 29 v2 candidates have contract-v1 images. The three outside the catalog are dependency-blocked BtR, FiLIP/Rust reference, and YuX HElib. Heavy packaged images remain subject to their matrix execution status. |
+| 7 | Production manifests for concrete binaries | **90%** | Twenty-six v2 candidates have production manifests and are listed in `manifests/images.v2.json`. Catalog presence alone does not make a deferred matrix choice runnable. |
+| 8 | End-to-end container workflow | **90%** | All five matrix-v1 symmetric targets completed build/select -> warning preflight -> JSONL validation -> reports on Windows Docker Desktop and native Linux. Catalog execution wires validation/report bundles automatically and gives every language container one stable host identity. Heavy HE validation still requires explicit authorization. |
+| 9 | Host-platform independence | **45%** | Windows Docker Desktop and native Linux are functionally verified. Native Linux preflight still could not confirm RDTSCP, performance governor, or Turbo state. macOS Docker and ARM remain unvalidated; publication-grade cycle measurements require a compatible, controlled host. |
+| 10 | Easy addition and migration workflow | **Template available** | `tools/scaffold_framework.py` creates a C/C++ Dockerfile, manifest, workload-free smoke script, report path, and integration checklist. Other languages use the documented contract and existing recipes. |
+| 11 | CI, release artifacts, and reproducibility evidence | **Build/smoke jobs added; publication open** | CI validates schemas and inventory, builds all ten lightweight images, runs one bounded safe smoke and report per image, and offers a separate workload-free heavy build job. Immutable registry digests and controlled-host HE evidence remain open. |
 
 ### Recommended implementation order
 
@@ -268,8 +277,8 @@ documented limitations.
    jobs without running its AES or homomorphic workload.
 11. **Complete:** Fregata GBS AES is packaged as a pinned compiler-free
    contract image with one non-smoke job; no AES or TFHE++ workload ran.
-12. **Deferred by user:** Repeat the lightweight runnable matrix workflow on
-   native Linux; do not schedule this until explicitly resumed.
+12. **Complete (functional):** Repeated the five lightweight matrix-v1 operations
+   on native Linux with warning preflight, schema validation, and reports.
 13. **Complete:** FFT-CBS AES/Rust is packaged as a pinned compiler-free
    contract image with eight non-smoke jobs; no HE/HHE workload ran.
 14. **Complete:** Hippogryph AES/Rust is packaged as a pinned compiler-free
@@ -281,13 +290,68 @@ documented limitations.
 17. **Complete (bounded):** Transistor HHE ran one measured iteration with
    preflight and report validation; WSL warnings mean its cycles are not publication-grade.
 
-The immediate critical path is therefore **heavy image contract packaging
-without workload execution -> native Linux portability -> CI and release
-evidence**. Migrating more
+The immediate critical path is therefore **bounded HE/HHE validation ->
+publication-host and release evidence -> immutable image publication**. Migrating more
 internal microbenchmarks does not materially advance the ideal goal unless
 those microbenchmarks are added to the declared support matrix.
 
+### Elisabeth HHE packaging verification (2026-10-07)
+
+The existing `elisabeth-hhe-rust` image was rebuilt from its pinned Dockerfile.
+Its embedded framework-image contract check passed for one benchmark job, and
+`hhe list` inside the image listed `Elisabeth/HHE.Decomp`. The host CLI also
+listed the matching v2 matrix choice. The choice remains `deferred` and
+`bench --dry-run` rejects it under the current execution gate. No Elisabeth
+HHE workload was run.
+
+### Inventory reconciliation (2026-10-07)
+
+The v2 matrix has 29 implementation units and 103 variants; the catalog has
+26 images. The host CLI lists 515 operation choices, including 120 marked
+runnable. `tools/validate_project_inventory.py` now checks implementation and
+variant IDs, catalog readiness, matrix dispatch selectors, and manifest jobs
+in CI. It exposed and resolved the Transistor HHE backend spelling mismatch
+and an FFT-CBS HP-LHE mapping that pointed at a different operation. The
+unmapped HP-LHE manifest job remains packaged but deferred until its exact
+variant selector is represented. These checks do not execute workloads.
+
+### HHE Framework HE/HHE packaging and CI (2026-10-07)
+
+The HHE Framework HE/HHE image built from exact HElib, SEAL, and TFHE source
+revisions plus pinned Debian build dependencies. Its runtime contains 55
+prebuilt backend executables and no GCC. The embedded manifest has 217 jobs;
+contract validation, shared-library checks for all executables, and `hhe list`
+passed without executing an HE/HHE workload. The catalog maps 55 variant and
+backend selectors. The matrix still marks all those targets deferred, and a
+CLI dry-run rejects their execution.
+
+CI now has JSON Schema and cross-file static checks, ten lightweight
+build/smoke/report jobs with retained JSONL artifacts, and a separate manual
+heavy build-only workflow. The new CI smoke path was exercised locally on
+OpenSSL: one valid record, zero invalid records, and a generated report.
+GitHub-hosted CI has not yet run these new jobs. Strict publication preflight
+failed here because the host is virtualized, RDTSCP was not reported, and the
+governor and Turbo state were unconfirmed. See `docs/release-protocol.md`.
+
 ### Matrix-v1 functional smoke evidence
+
+On 2026-10-07, the AES/OpenSSL catalog entry built and ran on native Linux
+with one measured iteration and zero warm-ups. Its image passed contract
+validation; the report pipeline accepted one JSONL record with zero invalid
+records. The run used warning policy without preflight, so it establishes
+functional catalog execution but does not validate publication conditions.
+The OpenSSL Dockerfile pin was updated to the available Bookworm
+`libssl-dev` version, and catalog Docker runs now use the host UID/GID so
+their non-root processes can write to host-owned result bundles.
+
+The same native Linux host then completed all five matrix-v1 catalog operations
+with one measured iteration, zero warm-ups, and warning preflight. The report
+validated five records with zero invalid records and generated timing and memory
+artifacts under `/tmp/hhe-matrix-v1-linux-complete-20261007/`. Preflight passed
+Linux, x86-64, constant/nonstop TSC, and the 32 GiB memory floor, but did not
+confirm RDTSCP, a uniform performance governor, or Turbo state. CPU pinning
+was not requested. Transistor emitted null cycles as designed when RDTSCP is
+unavailable. These results are functional evidence, not publication data.
 
 On 2026-07-14, Windows Docker Desktop/WSL built all four matrix-v1 images and
 ran the five declared symmetric operations with one measured iteration, zero
@@ -335,3 +399,490 @@ When a path is migrated:
 3. add or validate its manifest entry separately;
 4. update the row and audit date here;
 5. do not mark an entire framework new while legacy benchmark executables remain.
+
+## Matrix v2 completion pass (2026-10-07)
+
+All ten safe-lightweight catalog images built and passed a one-iteration,
+zero-warmup functional smoke run. Their JSONL records passed schema validation
+and report generation. All sixteen heavy images built, listed their expected
+jobs, and passed embedded-manifest and shared-library checks without running
+benchmark workloads. The first pass found and fixed missing FRAST and trkr
+Cargo lockfiles, missing runtime libraries in both FiLIP C++ images, a
+Margrethe build-time RDTSCP assumption, and HHE Framework's C++ runtime link.
+
+The orchestrator Go tests, project inventory check, and framework contract
+check pass. Representative HHE Framework jobs produced four complete valid
+records across SEAL and TFHE HE encryption. HElib HHE decryption produced two
+valid records, then exceeded a ten-minute run bound; its container was stopped.
+These samples do not promote any deferred matrix target. Strict publication
+preflight still fails on the virtualized host; exact deferred HE/HHE workload
+evidence and immutable registry pull references remain open. Local logs and
+generated functional artifacts are kept under `/tmp` for this workspace
+session and are not publication evidence.
+
+### Deferred HE/HHE selector review (2026-10-07)
+
+AES/Full-LUT `Transciphering` is the first target reviewed individually. Its
+matrix selector and CLI dry-run resolve to
+`hhe-arena:full-lut-aes-matrix2` and the expected manifest job. Functional
+execution is blocked on this host because Docker socket access is denied; the
+target also requires a suitable high-memory host. No readiness was changed.
+Dry-run output is under `/tmp/hhe-first-deferred-dryrun`.
+
+After Docker access was granted through the execution sandbox, a one-iteration,
+zero-warmup Full-LUT `Transciphering` run started. Key generation completed,
+but TFHE encryption remained CPU-bound beyond the ten-minute bound, using
+about 33 GiB of RAM and emitting no complete JSONL record. The container was
+stopped and verified absent. Both Full-LUT HE/HHE selectors are now deferred;
+the native key-expansion selector remains ready. The empty run artifact is
+under `/tmp/hhe-first-deferred-functional`.
+
+The next target, AES/Fregata CBS `AES Transciphering`, also resolves through
+the matrix and CLI dry-run to `hhe-arena:fregata-cbs-aes-matrix2` and its
+matching manifest job. Its first attempt was limited to a dry-run while Docker
+socket access was unavailable in the default sandbox. The dry-run output is
+under `/tmp/hhe-second-deferred-dryrun`.
+
+On retry with Docker access, all three Fregata CBS TFHE++ operations completed
+one measured iteration each with zero warmups: `Encrypt Plaintext`, `Make SBox
+Table`, and `AES Transciphering`. Each produced one `status=ok` record, and
+each report validated one record with zero issues. The transciphering boundary
+took 241.85 seconds; the other two were below one millisecond. The local image
+ID was `sha256:0bd046a07c61513529116676dd587705691b26f75ab7768ffc7a1ae949238f3a`.
+The VM warning policy reported no RDTSCP, non-performance governor, and unknown
+Turbo state, so these are functional checks only. Artifacts are under
+`/tmp/hhe-second-deferred-functional`, `/tmp/hhe-fregata-encrypt-plaintext`,
+and `/tmp/hhe-fregata-sbox-table`.
+
+AES/Fregata GBS was the next scheme. Its exact matrix selector was deferred,
+so a narrow `--validate-deferred` mode was added to the host CLI. The mode
+requires exact selectors, one measured iteration, zero warmups, local image
+policy, a selected CPU, warning policy, and a single cataloged deferred
+operation; it does not alter matrix readiness. Its CLI dry-run resolved to
+`hhe-arena:fregata-gbs-aes-matrix2`. A first one-iteration attempt stayed in
+the first TFHE `SubBytes` step for ten minutes. A second attempt ran for twenty
+minutes: the first `SubBytes` took about seventeen minutes, round one
+completed, and round two remained in `SubBytes`; no complete JSONL record was
+emitted. Both containers were stopped and verified absent. The full AES
+pipeline needs a faster host or a longer bounded run, so it stays
+deferred. Empty artifacts are under `/tmp/hhe-fregata-gbs-functional` and
+`/tmp/hhe-fregata-gbs-functional-retry`.
+
+After these changes, orchestrator Go tests pass; inventory validation reports
+29 implementations, 103 variants, 26 images, and 73 ready targets; framework
+contract validation passes for all 26 images; and JSON Schema validation
+passes for all 32 documents. `--validate-deferred` behavior and bounds have
+dedicated Go coverage.
+
+The catalog security-profile scan found two explicit profiles, both AES-128,
+and zero HHE-128 claims. The latest full CLI listing (2026-10-08) contains 435
+operation choices: 164 runnable, 269 deferred, and two blocked. A full
+`bench-all --dry-run` generated dispatch plans for all 164 runnable choices,
+skipped the 271 non-ready choices, created no output bundle, and started no
+benchmark containers. The selector counts are also recorded in
+[`support-matrix.md`](support-matrix.md).
+
+FFT-CBS AES_TIGHT completed its three exact operations serially: `AES
+SYM.Enc()`, `HHE.Decomp()`, and `AES evaluation`. Each one-iteration,
+zero-warmup invocation produced 29 `status=ok` records and a report with zero
+invalid records. The local image ID is
+`sha256:45415db2c8886924325ceb87d92c59150e6e3a2ae3099aeeb87a05f14a5c6977`.
+The host records warn that RDTSCP and performance governor checks failed, so
+these results validate functionality only. The AES_TIGHT HHE target is now
+ready; AES_HALF_CBS and the pure-HE FFT-CBS targets remain deferred. Artifacts
+are under `/tmp/hhe-fft-cbs-tight-hhe-functional`,
+`/tmp/hhe-fft-cbs-tight-ske-functional`, and
+`/tmp/hhe-fft-cbs-tight-aes-eval-functional`.
+
+FFT-CBS AES_HALF_CBS then completed the same three operations serially. Each
+report validated 28 records with zero issues, and all raw rows had
+`status=ok`. Its target is now ready. Artifacts are under
+`/tmp/hhe-fft-cbs-half-hhe-functional`,
+`/tmp/hhe-fft-cbs-half-ske-functional`, and
+`/tmp/hhe-fft-cbs-half-aes-eval-functional`. The remaining pure-HE FFT-CBS
+profiles are still deferred.
+
+AES/Hippogryph then completed `TFHE Encryption of the plaintext` and
+`Transciphering` in separate one-iteration invocations. Each produced two
+valid records and passed the AES known-answer output check; each report had
+zero issues. The target is ready. The local image ID is
+`sha256:beffa0efe1f6819623b4c45a29fd7f4629801fd1164a3cdaaa82bbd66e35f906`.
+Artifacts are under `/tmp/hhe-hippogryph-he-encryption-functional` and
+`/tmp/hhe-hippogryph-transciphering-functional`. These remain functional
+results only because host preflight warnings preclude performance use.
+
+P-encoding's earlier two-operation invocations exposed a shared Rust harness
+bug: each call in a process inherited the selected operation label, so one
+invocation could emit a second, expensive operation under the wrong name. The
+shared helper now skips unselected calls. P-encoding prepares encrypted input
+outside the measurement when transciphering is selected, preserving the AES
+known-answer check while measuring only that operation. Rebuilt image
+`sha256:e4989237e646d7a1e37191b86871e7b4bdc0010af9b5fce0dafbe26a61c5554a`
+passed contract checks. Encryption completed in 6.48 ms with exactly one
+valid selected-operation record. Transciphering completed in 434.97 seconds,
+returned the expected AES ciphertext, and its report validated exactly one
+record with zero invalid records. The target is ready for functional runs;
+host preflight warnings still preclude performance claims. Artifacts are
+under `/tmp/hhe-pencoding-selected/encryption.jsonl` and
+`/tmp/hhe-pencoding-selected/transciphering.jsonl`.
+
+HHE Framework's HE-only Z2/TFHE target then completed `he_encrypt`,
+`he_evaluate`, and `final_decrypt` as separate one-iteration runs. Each report
+validated one record with zero invalid records, and all five input rows per
+operation reported `OK`. This target is ready for functional runs. Artifacts
+are under `/tmp/hhe-hheframework-tfhe-z2-he-encrypt.jsonl`,
+`/tmp/hhe-hheframework-tfhe-z2-he-evaluate.jsonl`, and
+`/tmp/hhe-hheframework-tfhe-z2-final-decrypt.jsonl`. The host still fails
+strict performance preflight.
+
+HHE Framework's HE-only Zp variant completed `he_encrypt`, `he_evaluate`, and
+`final_decrypt` separately for both SEAL and HElib, with one iteration per
+run. Each operation/backend report validated three records (one per parameter
+configuration) with zero invalid records, and all three parameter cases
+reported `OK`. This target is ready for functional runs. Artifacts are under
+`/tmp/hhe-hheframework-seal-he-encrypt.jsonl`,
+`/tmp/hhe-hheframework-seal-he-evaluate.jsonl`,
+`/tmp/hhe-hheframework-seal-final-decrypt.jsonl`,
+`/tmp/hhe-hheframework-helib-he-encrypt.jsonl`,
+`/tmp/hhe-hheframework-helib-he-evaluate.jsonl`, and
+`/tmp/hhe-hheframework-helib-final-decrypt.jsonl`. These are functional
+results only; the host fails strict performance preflight.
+
+HHELand's pure-BGV target mapping now carries the selected parameter variant.
+The BGV test selects the corresponding config, and the shared Go helper skips
+unselected operations. The rebuilt image has separate BGV encryption and
+evaluation jobs. N13QP218, N14QP438, and N15QP880 each passed both operations
+in separate one-iteration runs and matched the reference output. Every report
+validated one record with zero invalid records. All three BGV matrix targets
+are ready. Artifacts are under `/tmp/hhe-hheland-bgv-n13-encrypt.jsonl`,
+`/tmp/hhe-hheland-bgv-n13-evaluate.jsonl`, `/tmp/hhe-hheland-bgv-n14-encrypt.jsonl`,
+`/tmp/hhe-hheland-bgv-n14-evaluate.jsonl`, `/tmp/hhe-hheland-bgv-n15-encrypt.jsonl`,
+and `/tmp/hhe-hheland-bgv-n15-evaluate.jsonl`. The three CKKS variants are also ready, as documented below.
+
+
+HHELand's pure-CKKS targets now carry the selected parameter variant and
+operation. N14QP438, N15QP881, and PN16QP1761 each passed encryption, linear
+evaluation, and Chebyshev evaluation as separate one-iteration runs. Each
+report contained one valid record; the linear and Chebyshev checks passed, and
+Chebyshev evaluation reported precision statistics. All three CKKS matrix
+targets are ready for functional runs. Artifacts are under `/tmp/hhe-hheland-ckks-n14-encrypt.jsonl`,
+`/tmp/hhe-hheland-ckks-n14-evaluate.jsonl`, `/tmp/hhe-hheland-ckks-n14-chebyshev.jsonl`,
+`/tmp/hhe-hheland-ckks-n15-encrypt.jsonl`, `/tmp/hhe-hheland-ckks-n15-evaluate.jsonl`,
+`/tmp/hhe-hheland-ckks-n15-chebyshev.jsonl`, `/tmp/hhe-hheland-ckks-pn16-encrypt.jsonl`,
+`/tmp/hhe-hheland-ckks-pn16-evaluate.jsonl`, and
+`/tmp/hhe-hheland-ckks-pn16-chebyshev.jsonl`. Strict performance publication
+remains blocked by host preflight.
+
+
+TRKR Trivium/Kreyvium catalog dispatch now maps each matrix variant to its
+exact cipher name, so the selected operation matches the packaged manifest.
+The first Trivium bool warmup attempt exposed a dispatch mismatch; after fixing
+the mapping, the exact warmup ran for ten minutes without output or a record
+and was stopped. The container is absent and the raw output file is empty at
+`/tmp/hhe-trkr-trivium-bool-warmup.jsonl`. TRKR remains deferred pending a
+suitable faster execution host.
+
+
+HHE Framework Agrasta HHE targets now use the instrumented operation label
+`he_key_encrypt` (previously listed as `he_encrypt`) and are tracked per
+backend. SEAL `he_key_encrypt`, `hhe_decrypt`, and `final_decrypt` each passed
+both correctness cases and produced two valid records, so the SEAL backend
+target is ready. HElib key encryption emitted two valid records but its larger
+correctness case exceeded ten minutes before completing, so HElib remains
+deferred; TFHE has not yet been run. Artifacts are under
+`/tmp/hhe-hhef-agrasta-seal-he-key-encrypt.jsonl`,
+`/tmp/hhe-hhef-agrasta-seal-hhe-decrypt.jsonl`,
+`/tmp/hhe-hhef-agrasta-seal-final-decrypt.jsonl`, and
+`/tmp/hhe-hhef-agrasta-helib-he-key-encrypt.jsonl`.
+
+Agrasta TFHE `he_key_encrypt` produced two schema-valid records, but the run
+was stopped after ten minutes during the second correctness case's homomorphic
+decryption. The complete selected invocation did not pass, so the TFHE target
+remains deferred. Its partial artifact is under
+`/tmp/hhe-hhef-agrasta-tfhe-he-key-encrypt.jsonl`.
+
+Rasta-5 SEAL `he_key_encrypt` passed its first parameter case, then the larger
+case remained in a single homomorphic round for more than ten minutes. Two
+JSONL records emitted before the timeout validate, but the full correctness
+case did not finish; Rasta-5 remains deferred. Artifact:
+`/tmp/hhe-hhef-rasta5-seal-he-key-encrypt.jsonl`.
+
+
+HHE Framework Pasta-3 on SEAL passed `he_key_encrypt`, `hhe_decrypt`, and
+`final_decrypt` in separate runs. Each operation passed all six correctness
+cases and produced six valid records with zero invalid. The SEAL backend target
+is ready; Pasta-3 HElib remains deferred. Artifacts are under
+`/tmp/hhe-hhef-pasta3-seal-he-key-encrypt.jsonl`,
+`/tmp/hhe-hhef-pasta3-seal-hhe-decrypt.jsonl`, and
+`/tmp/hhe-hhef-pasta3-seal-final-decrypt.jsonl`.
+
+
+Pasta-3 HElib `he_key_encrypt`, `hhe_decrypt`, and `final_decrypt` each
+passed all six correctness cases in separate serial runs. Each report validated
+six records with zero invalid. The HElib backend is ready, so both Pasta-3 HHE
+backends are now ready for functional runs. Artifacts are under
+`/tmp/hhe-hhef-pasta3-helib-he-key-encrypt.jsonl`,
+`/tmp/hhe-hhef-pasta3-helib-hhe-decrypt.jsonl`, and
+`/tmp/hhe-hhef-pasta3-helib-final-decrypt.jsonl`. Strict performance
+publication remains blocked by host preflight.
+
+
+HHE Framework Pasta-4 SEAL `he_key_encrypt`, `hhe_decrypt`, and
+`final_decrypt` each passed all six correctness cases in separate serial runs.
+Each report validated six records with zero invalid. The SEAL backend is ready;
+Pasta-4 HElib remains deferred. Artifacts are under
+`/tmp/hhe-hhef-pasta4-seal-he-key-encrypt.jsonl`,
+`/tmp/hhe-hhef-pasta4-seal-hhe-decrypt.jsonl`, and
+`/tmp/hhe-hhef-pasta4-seal-final-decrypt.jsonl`. Strict performance
+publication remains blocked by host preflight.
+
+
+HHE Framework Pasta-4 HElib `he_key_encrypt`, `hhe_decrypt`, and
+`final_decrypt` each passed all six correctness cases in separate serial runs.
+Each report validated six records with zero invalid. The HElib backend is ready,
+completing the Pasta-4 HHE backend matrix. Artifacts are under
+`/tmp/hhe-hhef-pasta4-helib-he-key-encrypt.jsonl`,
+`/tmp/hhe-hhef-pasta4-helib-hhe-decrypt.jsonl`, and
+`/tmp/hhe-hhef-pasta4-helib-final-decrypt.jsonl`. Strict performance
+publication remains blocked by host preflight.
+
+
+HHE Framework Pasta2-3 SEAL `he_key_encrypt`, `hhe_decrypt`, and
+`final_decrypt` each passed all six correctness cases in separate serial runs.
+Each report validated six records with zero invalid. The SEAL backend is ready;
+Pasta2-3 HElib remains deferred. Artifacts are under
+`/tmp/hhe-hhef-pasta2-3-seal-he-key-encrypt.jsonl`,
+`/tmp/hhe-hhef-pasta2-3-seal-hhe-decrypt.jsonl`, and
+`/tmp/hhe-hhef-pasta2-3-seal-final-decrypt.jsonl`. Strict performance
+publication remains blocked by host preflight.
+
+
+Pasta2-3 plain SKE `ske_encrypt` completed all three correctness cases. Its
+report validated three records with zero invalid. Artifact: `/tmp/hhe-hhef-pasta2-3-ske-encrypt.jsonl`. This is functional evidence for the encryption operation; no additional heavy HHE schemes were started after Pasta2.
+
+
+### Deferred selector dispatch audit (2026-10-08)
+
+The host CLI listed 435 matrix choices: 164 ready, 269 deferred, and 2
+blocked. A `bench-all --dry-run` prepared 164 dispatches and skipped 271
+non-ready choices; it created no result bundle and launched no containers.
+Then each deferred operation was checked separately with exact selectors and
+`--validate-deferred --dry-run`. Dispatch plans succeeded for 253 of 269.
+The 16 uncataloged choices are BtR and YuX HElib, both dependency blocked; no
+cataloged mapping failures remain. No benchmark workloads were run.
+
+The audit corrected Fasta/Rasta, FiLIP C++, and FRAST catalog mappings, aligned
+Elisabeth's HHE backend, and added exact HHELand RtF and FFT-CBS variant and
+operation routing. HHELand now filters nested benchmark metrics by the exact
+operation selected by the host runner. Inventory validation detects duplicate
+variant/backend/operation mappings. Framework contract and inventory checks
+pass for all 26 images and 29 implementations; all edited manifests parse and
+`git diff --check` passes. The pinned schema check could not be repeated in
+this environment because `jsonschema==4.23.0` and the tooling image are
+unavailable. Further project phases await user direction. Heavy HHE schemes
+remain stopped after Pasta2.
+
+### Host-independent release preparation (2026-10-08)
+
+The release protocol now records the proposed first-release scope: 26 cataloged
+implementation images, with functional support claims limited to ready matrix
+targets. Deferred targets remain unclaimed, and the three dependency-blocked
+units plus AES/FbT remain excluded. This is still a proposal; matrix v2 remains
+draft pending owner approval and completion of the release gates.
+
+Current inventory is 29 implementation records, 103 variants, 73 ready
+targets, 87 deferred targets, and 2 blocked targets. The catalog contains 26
+images and no immutable pull references. Only the OpenSSL and TinyAES manifest
+jobs declare `AES-128`; there are no `HHE-128` claims. A release evidence
+record checklist now specifies commit and scope, per-target manifest selectors,
+registry digests, raw result/report checksums, correctness outcomes, exclusions,
+and host metadata.
+
+Schema validation passes all 32 JSON documents; framework contract validation
+passes all 26 catalog images; inventory validation and `git diff --check` pass.
+No readiness state changed. Remaining gates are controlled-host correctness
+and performance evidence, first-release scope approval, and registry
+credentials and destination. Heavy HHE execution remains stopped after Pasta2.
+
+A read-only local image audit found all 26 catalog tags present. Each image has
+the required OCI contract labels, the expected matrix/manifest/results/resource
+metadata, the `65532:65532` runtime user, and the `hhe-tooling` entrypoint. These
+are local image IDs only; the catalog still has zero published pull references.
+
+### FFT-CBS deferred pure-HE runtime samples (2026-10-08)
+
+After user approval to resume, all ten deferred pure-HE FFT-CBS matrix
+selectors ran sequentially as bounded functional invocations (one measured
+iteration, zero warmups, CPU 0). They covered three CMUX selectors, two
+improved HP-LHE selectors, and five high-precision HP-LHE selectors. Their
+reports validated 2, 2, 2, 8, 4, 12, 6, 4, 16, and 8 records respectively,
+with zero invalid records. CMUX1 was repeated once after fixing a Criterion
+adapter operation-name mismatch; that check also validated two records.
+
+The image was rebuilt with the exact variant and operation-prefix routing.
+At the time of these sample runs, the sources printed maximum-error
+diagnostics without asserting a correctness threshold. The samples therefore
+establish runtime and JSONL behavior only; all ten targets remain deferred and
+no performance claim follows. Run bundles
+are `/tmp/hhe-fft-cbs-cmux1-retry-20261008`,
+`/tmp/hhe-fft-cbs-cmux2-20261008`, `/tmp/hhe-fft-cbs-cmux3-20261008`,
+`/tmp/hhe-fft-hplhe-improved-2-2-e1-20261008`,
+`/tmp/hhe-fft-hplhe-improved-2-2-e2-20261008`,
+`/tmp/hhe-fft-hplhe-highprec-3-3-e1-20261008`,
+`/tmp/hhe-fft-hplhe-highprec-3-3-e2-20261008`,
+`/tmp/hhe-fft-hplhe-highprec-3-3-e3-20261008`,
+`/tmp/hhe-fft-hplhe-highprec-4-4-e1-20261008`, and
+`/tmp/hhe-fft-hplhe-highprec-4-4-e2-20261008`. The CMUX1 adapter recheck is
+under `/tmp/hhe-fft-cbs-cmux1-prefix-check-20261008`.
+
+The pinned tooling image validates all 32 JSON documents. That run found
+six RtF operation entries encoded as strings; these are now proper operation
+objects. Project inventory validation passes (29 implementations, 103
+variants, 26 images, 73 ready targets), and `git diff --check` passes. The
+current VM still fails strict publication preflight. Heavy HHE scheme runs
+remain stopped after Pasta2.
+
+### FFT-CBS correctness check review (2026-10-08)
+
+A temporary assertion on individual decrypted GGSW matrix coefficients used
+half of each gadget spacing as a standalone correctness threshold. That is
+not a valid scheme-level correctness test: the helper is a noise diagnostic,
+and correctness must be checked on the consuming operation's output. The
+assertion was removed. Two CMUX1 runs failed that diagnostic assertion at row
+6 (the second reported `2296560889102336` against `2251799813685248`), but
+those failures do not establish an incorrect final output. Their timing JSONL
+records are not correctness evidence. CMUX1 remains deferred until an
+end-to-end decrypted output check passes. No other FFT-CBS selector or HHE
+scheme was run for this diagnostic.
+
+### FFT-CBS CMUX1 output check (2026-10-08)
+
+The invalid per-row assertion was removed. The benchmark now checks the
+decrypted final LWE after subtracting the CMUX lookup result from the encrypted
+input; for CMUX1's all-ones input and identity lookup, that difference must
+decode to zero. The rebuilt image passed its 11-job contract check. One exact,
+bounded CMUX1 run (one iteration, zero warmups, CPU 0) passed the output check
+and generated two valid records with zero invalid. CMUX1 is now ready; the
+other nine pure-HE FFT-CBS selectors remain deferred. Artifact:
+`/tmp/hhe-fft-cbs-cmux1-e2e-20261008`. No further HHE scheme was run.
+Current inventory is 75 ready, 85 deferred, and 2 blocked matrix targets; the
+host CLI reports 166 ready, 267 deferred, and 2 blocked operation choices.
+
+### FFT-CBS CMUX2 output check (2026-10-08)
+
+The same final-output assertion passed for the exact CMUX2 selector in one
+bounded run (one iteration, zero warmups, CPU 0). Its report validated two
+records with zero invalid. CMUX2 is ready; CMUX3 and the seven HP-LHE selectors
+remain deferred. Artifact: `/tmp/hhe-fft-cbs-cmux2-e2e-20261008`. No further
+HHE scheme was run. Current inventory is 76 ready, 84 deferred, and 2 blocked
+matrix targets; the host CLI reports 167 ready, 266 deferred, and 2 blocked
+operation choices.
+
+### FFT-CBS HP-LHE e2 output check (2026-10-08)
+
+The exact `IMPROVED_WOPBS_2_2/e2` selector passed the final decrypted-output
+assertion in one bounded run (one iteration, zero warmups, CPU 0). Its report
+validated four records with zero invalid. Both standard improved HP-LHE
+extraction profiles are now ready. Artifact:
+`/tmp/hhe-fft-hplhe-improved-2-2-e2-e2e-20261008`. Five high-precision
+selectors remain deferred. Current inventory is 79 ready, 81 deferred, and 2
+blocked matrix targets; the host CLI reports 170 ready, 263 deferred, and 2
+blocked operation choices.
+
+### FFT-CBS CMUX3 output check (2026-10-08)
+
+The same final-output assertion passed for the exact CMUX3 selector in one
+bounded run (one iteration, zero warmups, CPU 0). Its report validated two
+records with zero invalid. All three CMUX selectors are now ready; seven
+HP-LHE selectors remain deferred. Artifact:
+`/tmp/hhe-fft-cbs-cmux3-e2e-20261008`. No further HHE scheme was run.
+Current inventory is 77 ready, 83 deferred, and 2 blocked matrix targets; the
+host CLI reports 168 ready, 265 deferred, and 2 blocked operation choices.
+
+### FFT-CBS HP-LHE e1 output check (2026-10-08)
+
+Added a decrypted final-output assertion to the ordinary and high-precision
+HP-LHE benchmark paths. The rebuilt image passed its 11-job contract check.
+The exact `IMPROVED_WOPBS_2_2/e1` selector passed in one bounded run (one
+iteration, zero warmups, CPU 0); its report validated eight records with zero
+invalid. Promoted only this selector. Artifact:
+`/tmp/hhe-fft-hplhe-improved-2-2-e1-e2e-20261008`. Six HP-LHE selectors
+remain deferred. Current inventory is 78 ready, 82 deferred, and 2 blocked
+matrix targets; the host CLI reports 169 ready, 264 deferred, and 2 blocked
+operation choices.
+
+### FFT-CBS HP-LHE high-precision 3_3/e1 output check (2026-10-08)
+
+The exact `HIGHPREC_IMPROVED_WOPBS_3_3/e1` selector passed the final-output
+assertion in one bounded run (one iteration, zero warmups, CPU 0). Its report
+validated 12 records with zero invalid. Promoted only this selector. Artifact:
+`/tmp/hhe-fft-hplhe-highprec-3-3-e1-e2e-20261008`. Four high-precision
+selectors remain deferred. Current inventory is 80 ready, 80 deferred, and 2
+blocked matrix targets; the host CLI reports 171 ready, 262 deferred, and 2
+blocked operation choices.
+
+### FFT-CBS HP-LHE high-precision 3_3/e2 output check (2026-10-08)
+
+The exact `HIGHPREC_IMPROVED_WOPBS_3_3/e2` selector passed the final-output
+assertion in one bounded run (one iteration, zero warmups, CPU 0). Its report
+validated six records with zero invalid. Promoted only this selector. Artifact:
+`/tmp/hhe-fft-hplhe-highprec-3-3-e2-e2e-20261008`. Three high-precision
+selectors remain deferred. Current inventory is 81 ready, 79 deferred, and 2
+blocked matrix targets; the host CLI reports 172 ready, 261 deferred, and 2
+blocked operation choices.
+
+### FFT-CBS HP-LHE high-precision 3_3/e3 output check (2026-10-08)
+
+The exact `HIGHPREC_IMPROVED_WOPBS_3_3/e3` selector passed the final-output
+assertion in one bounded run (one iteration, zero warmups, CPU 0). Its report
+validated four records with zero invalid. Promoted only this selector. Artifact:
+`/tmp/hhe-fft-hplhe-highprec-3-3-e3-e2e-20261008`. Two high-precision
+selectors remain deferred. Current inventory is 82 ready, 78 deferred, and 2
+blocked matrix targets; the host CLI reports 173 ready, 260 deferred, and 2
+blocked operation choices.
+
+### FFT-CBS HP-LHE high-precision 4_4/e1 output check (2026-10-08)
+
+The exact `HIGHPREC_IMPROVED_WOPBS_4_4/e1` selector passed the final-output
+assertion in one bounded run (one iteration, zero warmups, CPU 0). Its report
+validated 16 records with zero invalid. Promoted only this selector. Artifact:
+`/tmp/hhe-fft-hplhe-highprec-4-4-e1-e2e-20261008`. Only the `4_4/e2`
+high-precision selector remains deferred in the FFT-CBS subset. Current
+inventory is 83 ready, 77 deferred, and 2 blocked matrix targets; the host CLI
+reports 174 ready, 259 deferred, and 2 blocked operation choices.
+
+### FFT-CBS HP-LHE high-precision 4_4/e2 output check (2026-10-08)
+
+The exact `HIGHPREC_IMPROVED_WOPBS_4_4/e2` selector passed the final-output
+assertion in one bounded run (one iteration, zero warmups, CPU 0). Its report
+validated eight records with zero invalid. Promoted only this selector. Artifact:
+`/tmp/hhe-fft-hplhe-highprec-4-4-e2-e2e-20261008`. All ten deferred
+FFT-CBS pure-HE selectors now have output-level correctness evidence. Current
+inventory is 84 ready, 76 deferred, and 2 blocked matrix targets; the host CLI
+reports 175 ready, 258 deferred, and 2 blocked operation choices.
+
+### FRAST pure-HE profile output checks (2026-10-08)
+
+Fixed exact-operation routing for the FRAST Criterion groups by setting each
+manifest prefix to the actual group ID. Added key-switch and PBS plaintext
+assertions in `bench_gen_pbs.rs`, and added a decrypted-zero assertion to the
+online benchmark using its zero-input fixture. The FRAST image rebuilt and its
+13-job framework contract passed. Elisabeth and Kreyvium each passed their
+`KS`, `GenPBS`, and `online` exact selectors serially; each run produced one
+valid record and zero invalid. The FRAST profile had already passed its
+`KS` and `GenPBS` selectors. Promoted all three PBS profile targets. Run bundles:
+`/tmp/hhe-frast-pbs-ks-frast-20261008`,
+`/tmp/hhe-frast-pbs-gen-frast-20261008`, and
+`/tmp/hhe-frast-pbs-{ks,gen,online}-{elisabeth,kreyvium}-20261008`. The host
+still fails strict publication preflight, so these functional samples do not
+support performance claims. No additional SKE or HHE scheme was run. Current
+inventory is 87 ready, 73 deferred, and 2 blocked matrix targets; the host CLI
+reports 183 ready, 250 deferred, and 2 blocked operation choices.
+Final local checks passed: inventory validation (29 implementations, 103
+variants, 26 images), JSON Schema validation (32 documents), manifest JSON
+parsing, and `git diff --check`. No containers remain running. The 73 deferred
+targets comprise 68 HE-friendly HHE targets, 3 AES HHE targets, and 2 SKE
+targets. HHE execution stays at the user's Pasta2 stop boundary; the remaining
+SKE checks are beyond the requested current SKE evidence. There are no deferred
+pure-HE targets. The two blocked targets remain the documented dependency
+blockers.

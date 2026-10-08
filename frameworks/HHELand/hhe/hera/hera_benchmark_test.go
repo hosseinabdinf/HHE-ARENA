@@ -5,11 +5,27 @@ import (
 	"HHELand/sym/hera"
 	"HHELand/utils"
 	"fmt"
+	"os"
 	"sync"
 	"testing"
 )
 
 func BenchmarkHera(b *testing.B) {
+	variants := map[string]int{
+		"hheland-hera-128f":  4,
+		"hheland-hera-128s":  5,
+		"hheland-hera-128af": 6,
+		"hheland-hera-128as": 7,
+	}
+	selected := os.Getenv("HHE_BENCH_VARIANT")
+	if selected != "" {
+		index, ok := variants[selected]
+		if !ok || index >= len(hera.TestVector) {
+			b.Fatalf("unsupported HHE_BENCH_VARIANT %q for HHE Hera", selected)
+		}
+		benchHEHera(hera.TestVector[index], b)
+		return
+	}
 	for _, tc := range hera.TestVector {
 		if tc.Params.Rounds == 4 {
 			continue

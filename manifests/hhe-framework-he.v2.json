@@ -1,0 +1,1960 @@
+{
+  "$schema": "../schemas/benchmark-manifest.schema.json",
+  "version": 1,
+  "preflight": "/opt/hhe/bin/hhe-preflight",
+  "benchmarks": [
+    {
+      "id": "hhef-he-only-seal-he-encrypt",
+      "cipher": "HHEF-he_only",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/he_only_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-he-only-seal-he-evaluate",
+      "cipher": "HHEF-he_only",
+      "language": "cpp",
+      "operation": "he_evaluate",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/he_only_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-he-only-seal-final-decrypt",
+      "cipher": "HHEF-he_only",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/he_only_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-he-only-helib-he-encrypt",
+      "cipher": "HHEF-he_only",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/he_only_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-he-only-helib-he-evaluate",
+      "cipher": "HHEF-he_only",
+      "language": "cpp",
+      "operation": "he_evaluate",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/he_only_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-he-only-helib-final-decrypt",
+      "cipher": "HHEF-he_only",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/he_only_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-he-only-z2-tfhe-he-encrypt",
+      "cipher": "HHEF-he_only_z2",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "TFHE",
+      "executable": "/opt/hhe/frameworks/hhe-framework/he_only_z2_tfhe_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-he-only-z2-tfhe-he-evaluate",
+      "cipher": "HHEF-he_only_z2",
+      "language": "cpp",
+      "operation": "he_evaluate",
+      "backend": "TFHE",
+      "executable": "/opt/hhe/frameworks/hhe-framework/he_only_z2_tfhe_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-he-only-z2-tfhe-final-decrypt",
+      "cipher": "HHEF-he_only_z2",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "TFHE",
+      "executable": "/opt/hhe/frameworks/hhe-framework/he_only_z2_tfhe_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-agrasta-seal-he-encrypt",
+      "cipher": "HHEF-agrasta",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/agrasta_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-agrasta-seal-he-key-encrypt",
+      "cipher": "HHEF-agrasta",
+      "language": "cpp",
+      "operation": "he_key_encrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/agrasta_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-agrasta-seal-hhe-decrypt",
+      "cipher": "HHEF-agrasta",
+      "language": "cpp",
+      "operation": "hhe_decrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/agrasta_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-agrasta-seal-final-decrypt",
+      "cipher": "HHEF-agrasta",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/agrasta_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-agrasta-helib-he-encrypt",
+      "cipher": "HHEF-agrasta",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/agrasta_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-agrasta-helib-he-key-encrypt",
+      "cipher": "HHEF-agrasta",
+      "language": "cpp",
+      "operation": "he_key_encrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/agrasta_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-agrasta-helib-hhe-decrypt",
+      "cipher": "HHEF-agrasta",
+      "language": "cpp",
+      "operation": "hhe_decrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/agrasta_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-agrasta-helib-final-decrypt",
+      "cipher": "HHEF-agrasta",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/agrasta_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-agrasta-tfhe-he-encrypt",
+      "cipher": "HHEF-agrasta",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "TFHE",
+      "executable": "/opt/hhe/frameworks/hhe-framework/agrasta_tfhe_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-agrasta-tfhe-he-key-encrypt",
+      "cipher": "HHEF-agrasta",
+      "language": "cpp",
+      "operation": "he_key_encrypt",
+      "backend": "TFHE",
+      "executable": "/opt/hhe/frameworks/hhe-framework/agrasta_tfhe_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-agrasta-tfhe-hhe-decrypt",
+      "cipher": "HHEF-agrasta",
+      "language": "cpp",
+      "operation": "hhe_decrypt",
+      "backend": "TFHE",
+      "executable": "/opt/hhe/frameworks/hhe-framework/agrasta_tfhe_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-agrasta-tfhe-final-decrypt",
+      "cipher": "HHEF-agrasta",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "TFHE",
+      "executable": "/opt/hhe/frameworks/hhe-framework/agrasta_tfhe_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-agrasta-packed-helib-he-encrypt",
+      "cipher": "HHEF-agrasta_packed",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/agrasta_packed_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-agrasta-packed-helib-he-key-encrypt",
+      "cipher": "HHEF-agrasta_packed",
+      "language": "cpp",
+      "operation": "he_key_encrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/agrasta_packed_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-agrasta-packed-helib-hhe-decrypt",
+      "cipher": "HHEF-agrasta_packed",
+      "language": "cpp",
+      "operation": "hhe_decrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/agrasta_packed_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-agrasta-packed-helib-final-decrypt",
+      "cipher": "HHEF-agrasta_packed",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/agrasta_packed_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-rasta-5-seal-he-encrypt",
+      "cipher": "HHEF-rasta_5",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/rasta_5_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-rasta-5-seal-he-key-encrypt",
+      "cipher": "HHEF-rasta_5",
+      "language": "cpp",
+      "operation": "he_key_encrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/rasta_5_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-rasta-5-seal-hhe-decrypt",
+      "cipher": "HHEF-rasta_5",
+      "language": "cpp",
+      "operation": "hhe_decrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/rasta_5_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-rasta-5-seal-final-decrypt",
+      "cipher": "HHEF-rasta_5",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/rasta_5_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-rasta-5-helib-he-encrypt",
+      "cipher": "HHEF-rasta_5",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/rasta_5_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-rasta-5-helib-he-key-encrypt",
+      "cipher": "HHEF-rasta_5",
+      "language": "cpp",
+      "operation": "he_key_encrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/rasta_5_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-rasta-5-helib-hhe-decrypt",
+      "cipher": "HHEF-rasta_5",
+      "language": "cpp",
+      "operation": "hhe_decrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/rasta_5_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-rasta-5-helib-final-decrypt",
+      "cipher": "HHEF-rasta_5",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/rasta_5_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-rasta-5-tfhe-he-encrypt",
+      "cipher": "HHEF-rasta_5",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "TFHE",
+      "executable": "/opt/hhe/frameworks/hhe-framework/rasta_5_tfhe_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-rasta-5-tfhe-he-key-encrypt",
+      "cipher": "HHEF-rasta_5",
+      "language": "cpp",
+      "operation": "he_key_encrypt",
+      "backend": "TFHE",
+      "executable": "/opt/hhe/frameworks/hhe-framework/rasta_5_tfhe_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-rasta-5-tfhe-hhe-decrypt",
+      "cipher": "HHEF-rasta_5",
+      "language": "cpp",
+      "operation": "hhe_decrypt",
+      "backend": "TFHE",
+      "executable": "/opt/hhe/frameworks/hhe-framework/rasta_5_tfhe_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-rasta-5-tfhe-final-decrypt",
+      "cipher": "HHEF-rasta_5",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "TFHE",
+      "executable": "/opt/hhe/frameworks/hhe-framework/rasta_5_tfhe_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-rasta-5-packed-helib-he-encrypt",
+      "cipher": "HHEF-rasta_5_packed",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/rasta_5_packed_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-rasta-5-packed-helib-he-key-encrypt",
+      "cipher": "HHEF-rasta_5_packed",
+      "language": "cpp",
+      "operation": "he_key_encrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/rasta_5_packed_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-rasta-5-packed-helib-hhe-decrypt",
+      "cipher": "HHEF-rasta_5_packed",
+      "language": "cpp",
+      "operation": "hhe_decrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/rasta_5_packed_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-rasta-5-packed-helib-final-decrypt",
+      "cipher": "HHEF-rasta_5_packed",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/rasta_5_packed_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-rasta-6-seal-he-encrypt",
+      "cipher": "HHEF-rasta_6",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/rasta_6_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-rasta-6-seal-he-key-encrypt",
+      "cipher": "HHEF-rasta_6",
+      "language": "cpp",
+      "operation": "he_key_encrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/rasta_6_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-rasta-6-seal-hhe-decrypt",
+      "cipher": "HHEF-rasta_6",
+      "language": "cpp",
+      "operation": "hhe_decrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/rasta_6_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-rasta-6-seal-final-decrypt",
+      "cipher": "HHEF-rasta_6",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/rasta_6_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-rasta-6-helib-he-encrypt",
+      "cipher": "HHEF-rasta_6",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/rasta_6_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-rasta-6-helib-he-key-encrypt",
+      "cipher": "HHEF-rasta_6",
+      "language": "cpp",
+      "operation": "he_key_encrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/rasta_6_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-rasta-6-helib-hhe-decrypt",
+      "cipher": "HHEF-rasta_6",
+      "language": "cpp",
+      "operation": "hhe_decrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/rasta_6_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-rasta-6-helib-final-decrypt",
+      "cipher": "HHEF-rasta_6",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/rasta_6_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-rasta-6-tfhe-he-encrypt",
+      "cipher": "HHEF-rasta_6",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "TFHE",
+      "executable": "/opt/hhe/frameworks/hhe-framework/rasta_6_tfhe_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-rasta-6-tfhe-he-key-encrypt",
+      "cipher": "HHEF-rasta_6",
+      "language": "cpp",
+      "operation": "he_key_encrypt",
+      "backend": "TFHE",
+      "executable": "/opt/hhe/frameworks/hhe-framework/rasta_6_tfhe_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-rasta-6-tfhe-hhe-decrypt",
+      "cipher": "HHEF-rasta_6",
+      "language": "cpp",
+      "operation": "hhe_decrypt",
+      "backend": "TFHE",
+      "executable": "/opt/hhe/frameworks/hhe-framework/rasta_6_tfhe_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-rasta-6-tfhe-final-decrypt",
+      "cipher": "HHEF-rasta_6",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "TFHE",
+      "executable": "/opt/hhe/frameworks/hhe-framework/rasta_6_tfhe_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-rasta-6-packed-helib-he-encrypt",
+      "cipher": "HHEF-rasta_6_packed",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/rasta_6_packed_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-rasta-6-packed-helib-he-key-encrypt",
+      "cipher": "HHEF-rasta_6_packed",
+      "language": "cpp",
+      "operation": "he_key_encrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/rasta_6_packed_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-rasta-6-packed-helib-hhe-decrypt",
+      "cipher": "HHEF-rasta_6_packed",
+      "language": "cpp",
+      "operation": "hhe_decrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/rasta_6_packed_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-rasta-6-packed-helib-final-decrypt",
+      "cipher": "HHEF-rasta_6_packed",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/rasta_6_packed_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-dasta-5-seal-he-encrypt",
+      "cipher": "HHEF-dasta_5",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/dasta_5_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-dasta-5-seal-he-key-encrypt",
+      "cipher": "HHEF-dasta_5",
+      "language": "cpp",
+      "operation": "he_key_encrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/dasta_5_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-dasta-5-seal-hhe-decrypt",
+      "cipher": "HHEF-dasta_5",
+      "language": "cpp",
+      "operation": "hhe_decrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/dasta_5_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-dasta-5-seal-final-decrypt",
+      "cipher": "HHEF-dasta_5",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/dasta_5_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-dasta-5-helib-he-encrypt",
+      "cipher": "HHEF-dasta_5",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/dasta_5_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-dasta-5-helib-he-key-encrypt",
+      "cipher": "HHEF-dasta_5",
+      "language": "cpp",
+      "operation": "he_key_encrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/dasta_5_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-dasta-5-helib-hhe-decrypt",
+      "cipher": "HHEF-dasta_5",
+      "language": "cpp",
+      "operation": "hhe_decrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/dasta_5_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-dasta-5-helib-final-decrypt",
+      "cipher": "HHEF-dasta_5",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/dasta_5_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-dasta-5-tfhe-he-encrypt",
+      "cipher": "HHEF-dasta_5",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "TFHE",
+      "executable": "/opt/hhe/frameworks/hhe-framework/dasta_5_tfhe_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-dasta-5-tfhe-he-key-encrypt",
+      "cipher": "HHEF-dasta_5",
+      "language": "cpp",
+      "operation": "he_key_encrypt",
+      "backend": "TFHE",
+      "executable": "/opt/hhe/frameworks/hhe-framework/dasta_5_tfhe_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-dasta-5-tfhe-hhe-decrypt",
+      "cipher": "HHEF-dasta_5",
+      "language": "cpp",
+      "operation": "hhe_decrypt",
+      "backend": "TFHE",
+      "executable": "/opt/hhe/frameworks/hhe-framework/dasta_5_tfhe_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-dasta-5-tfhe-final-decrypt",
+      "cipher": "HHEF-dasta_5",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "TFHE",
+      "executable": "/opt/hhe/frameworks/hhe-framework/dasta_5_tfhe_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-dasta-5-packed-helib-he-encrypt",
+      "cipher": "HHEF-dasta_5_packed",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/dasta_5_packed_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-dasta-5-packed-helib-he-key-encrypt",
+      "cipher": "HHEF-dasta_5_packed",
+      "language": "cpp",
+      "operation": "he_key_encrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/dasta_5_packed_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-dasta-5-packed-helib-hhe-decrypt",
+      "cipher": "HHEF-dasta_5_packed",
+      "language": "cpp",
+      "operation": "hhe_decrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/dasta_5_packed_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-dasta-5-packed-helib-final-decrypt",
+      "cipher": "HHEF-dasta_5_packed",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/dasta_5_packed_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-dasta-6-seal-he-encrypt",
+      "cipher": "HHEF-dasta_6",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/dasta_6_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-dasta-6-seal-he-key-encrypt",
+      "cipher": "HHEF-dasta_6",
+      "language": "cpp",
+      "operation": "he_key_encrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/dasta_6_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-dasta-6-seal-hhe-decrypt",
+      "cipher": "HHEF-dasta_6",
+      "language": "cpp",
+      "operation": "hhe_decrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/dasta_6_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-dasta-6-seal-final-decrypt",
+      "cipher": "HHEF-dasta_6",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/dasta_6_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-dasta-6-helib-he-encrypt",
+      "cipher": "HHEF-dasta_6",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/dasta_6_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-dasta-6-helib-he-key-encrypt",
+      "cipher": "HHEF-dasta_6",
+      "language": "cpp",
+      "operation": "he_key_encrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/dasta_6_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-dasta-6-helib-hhe-decrypt",
+      "cipher": "HHEF-dasta_6",
+      "language": "cpp",
+      "operation": "hhe_decrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/dasta_6_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-dasta-6-helib-final-decrypt",
+      "cipher": "HHEF-dasta_6",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/dasta_6_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-dasta-6-tfhe-he-encrypt",
+      "cipher": "HHEF-dasta_6",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "TFHE",
+      "executable": "/opt/hhe/frameworks/hhe-framework/dasta_6_tfhe_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-dasta-6-tfhe-he-key-encrypt",
+      "cipher": "HHEF-dasta_6",
+      "language": "cpp",
+      "operation": "he_key_encrypt",
+      "backend": "TFHE",
+      "executable": "/opt/hhe/frameworks/hhe-framework/dasta_6_tfhe_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-dasta-6-tfhe-hhe-decrypt",
+      "cipher": "HHEF-dasta_6",
+      "language": "cpp",
+      "operation": "hhe_decrypt",
+      "backend": "TFHE",
+      "executable": "/opt/hhe/frameworks/hhe-framework/dasta_6_tfhe_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-dasta-6-tfhe-final-decrypt",
+      "cipher": "HHEF-dasta_6",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "TFHE",
+      "executable": "/opt/hhe/frameworks/hhe-framework/dasta_6_tfhe_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-dasta-6-packed-helib-he-encrypt",
+      "cipher": "HHEF-dasta_6_packed",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/dasta_6_packed_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-dasta-6-packed-helib-he-key-encrypt",
+      "cipher": "HHEF-dasta_6_packed",
+      "language": "cpp",
+      "operation": "he_key_encrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/dasta_6_packed_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-dasta-6-packed-helib-hhe-decrypt",
+      "cipher": "HHEF-dasta_6_packed",
+      "language": "cpp",
+      "operation": "hhe_decrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/dasta_6_packed_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-dasta-6-packed-helib-final-decrypt",
+      "cipher": "HHEF-dasta_6_packed",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/dasta_6_packed_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-lowmc-seal-he-encrypt",
+      "cipher": "HHEF-lowmc",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/lowmc_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-lowmc-seal-he-key-encrypt",
+      "cipher": "HHEF-lowmc",
+      "language": "cpp",
+      "operation": "he_key_encrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/lowmc_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-lowmc-seal-hhe-decrypt",
+      "cipher": "HHEF-lowmc",
+      "language": "cpp",
+      "operation": "hhe_decrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/lowmc_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-lowmc-seal-final-decrypt",
+      "cipher": "HHEF-lowmc",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/lowmc_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-lowmc-helib-he-encrypt",
+      "cipher": "HHEF-lowmc",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/lowmc_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-lowmc-helib-he-key-encrypt",
+      "cipher": "HHEF-lowmc",
+      "language": "cpp",
+      "operation": "he_key_encrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/lowmc_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-lowmc-helib-hhe-decrypt",
+      "cipher": "HHEF-lowmc",
+      "language": "cpp",
+      "operation": "hhe_decrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/lowmc_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-lowmc-helib-final-decrypt",
+      "cipher": "HHEF-lowmc",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/lowmc_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-lowmc-tfhe-he-encrypt",
+      "cipher": "HHEF-lowmc",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "TFHE",
+      "executable": "/opt/hhe/frameworks/hhe-framework/lowmc_tfhe_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-lowmc-tfhe-he-key-encrypt",
+      "cipher": "HHEF-lowmc",
+      "language": "cpp",
+      "operation": "he_key_encrypt",
+      "backend": "TFHE",
+      "executable": "/opt/hhe/frameworks/hhe-framework/lowmc_tfhe_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-lowmc-tfhe-hhe-decrypt",
+      "cipher": "HHEF-lowmc",
+      "language": "cpp",
+      "operation": "hhe_decrypt",
+      "backend": "TFHE",
+      "executable": "/opt/hhe/frameworks/hhe-framework/lowmc_tfhe_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-lowmc-tfhe-final-decrypt",
+      "cipher": "HHEF-lowmc",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "TFHE",
+      "executable": "/opt/hhe/frameworks/hhe-framework/lowmc_tfhe_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-filip-1216-seal-he-encrypt",
+      "cipher": "HHEF-filip_1216",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/filip_1216_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-filip-1216-seal-he-key-encrypt",
+      "cipher": "HHEF-filip_1216",
+      "language": "cpp",
+      "operation": "he_key_encrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/filip_1216_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-filip-1216-seal-hhe-decrypt",
+      "cipher": "HHEF-filip_1216",
+      "language": "cpp",
+      "operation": "hhe_decrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/filip_1216_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-filip-1216-seal-final-decrypt",
+      "cipher": "HHEF-filip_1216",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/filip_1216_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-filip-1216-helib-he-encrypt",
+      "cipher": "HHEF-filip_1216",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/filip_1216_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-filip-1216-helib-he-key-encrypt",
+      "cipher": "HHEF-filip_1216",
+      "language": "cpp",
+      "operation": "he_key_encrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/filip_1216_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-filip-1216-helib-hhe-decrypt",
+      "cipher": "HHEF-filip_1216",
+      "language": "cpp",
+      "operation": "hhe_decrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/filip_1216_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-filip-1216-helib-final-decrypt",
+      "cipher": "HHEF-filip_1216",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/filip_1216_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-filip-1216-tfhe-he-encrypt",
+      "cipher": "HHEF-filip_1216",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "TFHE",
+      "executable": "/opt/hhe/frameworks/hhe-framework/filip_1216_tfhe_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-filip-1216-tfhe-he-key-encrypt",
+      "cipher": "HHEF-filip_1216",
+      "language": "cpp",
+      "operation": "he_key_encrypt",
+      "backend": "TFHE",
+      "executable": "/opt/hhe/frameworks/hhe-framework/filip_1216_tfhe_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-filip-1216-tfhe-hhe-decrypt",
+      "cipher": "HHEF-filip_1216",
+      "language": "cpp",
+      "operation": "hhe_decrypt",
+      "backend": "TFHE",
+      "executable": "/opt/hhe/frameworks/hhe-framework/filip_1216_tfhe_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-filip-1216-tfhe-final-decrypt",
+      "cipher": "HHEF-filip_1216",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "TFHE",
+      "executable": "/opt/hhe/frameworks/hhe-framework/filip_1216_tfhe_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-filip-1280-seal-he-encrypt",
+      "cipher": "HHEF-filip_1280",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/filip_1280_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-filip-1280-seal-he-key-encrypt",
+      "cipher": "HHEF-filip_1280",
+      "language": "cpp",
+      "operation": "he_key_encrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/filip_1280_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-filip-1280-seal-hhe-decrypt",
+      "cipher": "HHEF-filip_1280",
+      "language": "cpp",
+      "operation": "hhe_decrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/filip_1280_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-filip-1280-seal-final-decrypt",
+      "cipher": "HHEF-filip_1280",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/filip_1280_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-filip-1280-helib-he-encrypt",
+      "cipher": "HHEF-filip_1280",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/filip_1280_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-filip-1280-helib-he-key-encrypt",
+      "cipher": "HHEF-filip_1280",
+      "language": "cpp",
+      "operation": "he_key_encrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/filip_1280_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-filip-1280-helib-hhe-decrypt",
+      "cipher": "HHEF-filip_1280",
+      "language": "cpp",
+      "operation": "hhe_decrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/filip_1280_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-filip-1280-helib-final-decrypt",
+      "cipher": "HHEF-filip_1280",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/filip_1280_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-filip-1280-tfhe-he-encrypt",
+      "cipher": "HHEF-filip_1280",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "TFHE",
+      "executable": "/opt/hhe/frameworks/hhe-framework/filip_1280_tfhe_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-filip-1280-tfhe-he-key-encrypt",
+      "cipher": "HHEF-filip_1280",
+      "language": "cpp",
+      "operation": "he_key_encrypt",
+      "backend": "TFHE",
+      "executable": "/opt/hhe/frameworks/hhe-framework/filip_1280_tfhe_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-filip-1280-tfhe-hhe-decrypt",
+      "cipher": "HHEF-filip_1280",
+      "language": "cpp",
+      "operation": "hhe_decrypt",
+      "backend": "TFHE",
+      "executable": "/opt/hhe/frameworks/hhe-framework/filip_1280_tfhe_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-filip-1280-tfhe-final-decrypt",
+      "cipher": "HHEF-filip_1280",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "TFHE",
+      "executable": "/opt/hhe/frameworks/hhe-framework/filip_1280_tfhe_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-kreyvium-seal-he-encrypt",
+      "cipher": "HHEF-kreyvium",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/kreyvium_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-kreyvium-seal-he-key-encrypt",
+      "cipher": "HHEF-kreyvium",
+      "language": "cpp",
+      "operation": "he_key_encrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/kreyvium_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-kreyvium-seal-hhe-decrypt",
+      "cipher": "HHEF-kreyvium",
+      "language": "cpp",
+      "operation": "hhe_decrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/kreyvium_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-kreyvium-seal-final-decrypt",
+      "cipher": "HHEF-kreyvium",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/kreyvium_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-kreyvium-helib-he-encrypt",
+      "cipher": "HHEF-kreyvium",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/kreyvium_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-kreyvium-helib-he-key-encrypt",
+      "cipher": "HHEF-kreyvium",
+      "language": "cpp",
+      "operation": "he_key_encrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/kreyvium_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-kreyvium-helib-hhe-decrypt",
+      "cipher": "HHEF-kreyvium",
+      "language": "cpp",
+      "operation": "hhe_decrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/kreyvium_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-kreyvium-helib-final-decrypt",
+      "cipher": "HHEF-kreyvium",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/kreyvium_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-kreyvium-tfhe-he-encrypt",
+      "cipher": "HHEF-kreyvium",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "TFHE",
+      "executable": "/opt/hhe/frameworks/hhe-framework/kreyvium_tfhe_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-kreyvium-tfhe-he-key-encrypt",
+      "cipher": "HHEF-kreyvium",
+      "language": "cpp",
+      "operation": "he_key_encrypt",
+      "backend": "TFHE",
+      "executable": "/opt/hhe/frameworks/hhe-framework/kreyvium_tfhe_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-kreyvium-tfhe-hhe-decrypt",
+      "cipher": "HHEF-kreyvium",
+      "language": "cpp",
+      "operation": "hhe_decrypt",
+      "backend": "TFHE",
+      "executable": "/opt/hhe/frameworks/hhe-framework/kreyvium_tfhe_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-kreyvium-tfhe-final-decrypt",
+      "cipher": "HHEF-kreyvium",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "TFHE",
+      "executable": "/opt/hhe/frameworks/hhe-framework/kreyvium_tfhe_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-kreyvium-12-seal-he-encrypt",
+      "cipher": "HHEF-kreyvium_12",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/kreyvium_12_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-kreyvium-12-seal-he-key-encrypt",
+      "cipher": "HHEF-kreyvium_12",
+      "language": "cpp",
+      "operation": "he_key_encrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/kreyvium_12_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-kreyvium-12-seal-hhe-decrypt",
+      "cipher": "HHEF-kreyvium_12",
+      "language": "cpp",
+      "operation": "hhe_decrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/kreyvium_12_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-kreyvium-12-seal-final-decrypt",
+      "cipher": "HHEF-kreyvium_12",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/kreyvium_12_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-kreyvium-12-helib-he-encrypt",
+      "cipher": "HHEF-kreyvium_12",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/kreyvium_12_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-kreyvium-12-helib-he-key-encrypt",
+      "cipher": "HHEF-kreyvium_12",
+      "language": "cpp",
+      "operation": "he_key_encrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/kreyvium_12_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-kreyvium-12-helib-hhe-decrypt",
+      "cipher": "HHEF-kreyvium_12",
+      "language": "cpp",
+      "operation": "hhe_decrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/kreyvium_12_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-kreyvium-12-helib-final-decrypt",
+      "cipher": "HHEF-kreyvium_12",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/kreyvium_12_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-kreyvium-12-tfhe-he-encrypt",
+      "cipher": "HHEF-kreyvium_12",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "TFHE",
+      "executable": "/opt/hhe/frameworks/hhe-framework/kreyvium_12_tfhe_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-kreyvium-12-tfhe-he-key-encrypt",
+      "cipher": "HHEF-kreyvium_12",
+      "language": "cpp",
+      "operation": "he_key_encrypt",
+      "backend": "TFHE",
+      "executable": "/opt/hhe/frameworks/hhe-framework/kreyvium_12_tfhe_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-kreyvium-12-tfhe-hhe-decrypt",
+      "cipher": "HHEF-kreyvium_12",
+      "language": "cpp",
+      "operation": "hhe_decrypt",
+      "backend": "TFHE",
+      "executable": "/opt/hhe/frameworks/hhe-framework/kreyvium_12_tfhe_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-kreyvium-12-tfhe-final-decrypt",
+      "cipher": "HHEF-kreyvium_12",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "TFHE",
+      "executable": "/opt/hhe/frameworks/hhe-framework/kreyvium_12_tfhe_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-kreyvium-13-seal-he-encrypt",
+      "cipher": "HHEF-kreyvium_13",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/kreyvium_13_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-kreyvium-13-seal-he-key-encrypt",
+      "cipher": "HHEF-kreyvium_13",
+      "language": "cpp",
+      "operation": "he_key_encrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/kreyvium_13_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-kreyvium-13-seal-hhe-decrypt",
+      "cipher": "HHEF-kreyvium_13",
+      "language": "cpp",
+      "operation": "hhe_decrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/kreyvium_13_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-kreyvium-13-seal-final-decrypt",
+      "cipher": "HHEF-kreyvium_13",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/kreyvium_13_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-kreyvium-13-helib-he-encrypt",
+      "cipher": "HHEF-kreyvium_13",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/kreyvium_13_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-kreyvium-13-helib-he-key-encrypt",
+      "cipher": "HHEF-kreyvium_13",
+      "language": "cpp",
+      "operation": "he_key_encrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/kreyvium_13_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-kreyvium-13-helib-hhe-decrypt",
+      "cipher": "HHEF-kreyvium_13",
+      "language": "cpp",
+      "operation": "hhe_decrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/kreyvium_13_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-kreyvium-13-helib-final-decrypt",
+      "cipher": "HHEF-kreyvium_13",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/kreyvium_13_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-kreyvium-13-tfhe-he-encrypt",
+      "cipher": "HHEF-kreyvium_13",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "TFHE",
+      "executable": "/opt/hhe/frameworks/hhe-framework/kreyvium_13_tfhe_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-kreyvium-13-tfhe-he-key-encrypt",
+      "cipher": "HHEF-kreyvium_13",
+      "language": "cpp",
+      "operation": "he_key_encrypt",
+      "backend": "TFHE",
+      "executable": "/opt/hhe/frameworks/hhe-framework/kreyvium_13_tfhe_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-kreyvium-13-tfhe-hhe-decrypt",
+      "cipher": "HHEF-kreyvium_13",
+      "language": "cpp",
+      "operation": "hhe_decrypt",
+      "backend": "TFHE",
+      "executable": "/opt/hhe/frameworks/hhe-framework/kreyvium_13_tfhe_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-kreyvium-13-tfhe-final-decrypt",
+      "cipher": "HHEF-kreyvium_13",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "TFHE",
+      "executable": "/opt/hhe/frameworks/hhe-framework/kreyvium_13_tfhe_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-pasta-3-seal-he-encrypt",
+      "cipher": "HHEF-pasta_3",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/pasta_3_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-pasta-3-seal-he-key-encrypt",
+      "cipher": "HHEF-pasta_3",
+      "language": "cpp",
+      "operation": "he_key_encrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/pasta_3_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-pasta-3-seal-hhe-decrypt",
+      "cipher": "HHEF-pasta_3",
+      "language": "cpp",
+      "operation": "hhe_decrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/pasta_3_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-pasta-3-seal-final-decrypt",
+      "cipher": "HHEF-pasta_3",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/pasta_3_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-pasta-3-helib-he-encrypt",
+      "cipher": "HHEF-pasta_3",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/pasta_3_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-pasta-3-helib-he-key-encrypt",
+      "cipher": "HHEF-pasta_3",
+      "language": "cpp",
+      "operation": "he_key_encrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/pasta_3_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-pasta-3-helib-hhe-decrypt",
+      "cipher": "HHEF-pasta_3",
+      "language": "cpp",
+      "operation": "hhe_decrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/pasta_3_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-pasta-3-helib-final-decrypt",
+      "cipher": "HHEF-pasta_3",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/pasta_3_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-pasta-4-seal-he-encrypt",
+      "cipher": "HHEF-pasta_4",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/pasta_4_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-pasta-4-seal-he-key-encrypt",
+      "cipher": "HHEF-pasta_4",
+      "language": "cpp",
+      "operation": "he_key_encrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/pasta_4_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-pasta-4-seal-hhe-decrypt",
+      "cipher": "HHEF-pasta_4",
+      "language": "cpp",
+      "operation": "hhe_decrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/pasta_4_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-pasta-4-seal-final-decrypt",
+      "cipher": "HHEF-pasta_4",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/pasta_4_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-pasta-4-helib-he-encrypt",
+      "cipher": "HHEF-pasta_4",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/pasta_4_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-pasta-4-helib-he-key-encrypt",
+      "cipher": "HHEF-pasta_4",
+      "language": "cpp",
+      "operation": "he_key_encrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/pasta_4_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-pasta-4-helib-hhe-decrypt",
+      "cipher": "HHEF-pasta_4",
+      "language": "cpp",
+      "operation": "hhe_decrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/pasta_4_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-pasta-4-helib-final-decrypt",
+      "cipher": "HHEF-pasta_4",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/pasta_4_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-pasta2-3-seal-he-encrypt",
+      "cipher": "HHEF-pasta2_3",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/pasta2_3_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-pasta2-3-seal-he-key-encrypt",
+      "cipher": "HHEF-pasta2_3",
+      "language": "cpp",
+      "operation": "he_key_encrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/pasta2_3_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-pasta2-3-seal-hhe-decrypt",
+      "cipher": "HHEF-pasta2_3",
+      "language": "cpp",
+      "operation": "hhe_decrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/pasta2_3_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-pasta2-3-seal-final-decrypt",
+      "cipher": "HHEF-pasta2_3",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/pasta2_3_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-pasta2-3-helib-he-encrypt",
+      "cipher": "HHEF-pasta2_3",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/pasta2_3_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-pasta2-3-helib-he-key-encrypt",
+      "cipher": "HHEF-pasta2_3",
+      "language": "cpp",
+      "operation": "he_key_encrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/pasta2_3_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-pasta2-3-helib-hhe-decrypt",
+      "cipher": "HHEF-pasta2_3",
+      "language": "cpp",
+      "operation": "hhe_decrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/pasta2_3_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-pasta2-3-helib-final-decrypt",
+      "cipher": "HHEF-pasta2_3",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/pasta2_3_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-pasta2-4-seal-he-encrypt",
+      "cipher": "HHEF-pasta2_4",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/pasta2_4_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-pasta2-4-seal-he-key-encrypt",
+      "cipher": "HHEF-pasta2_4",
+      "language": "cpp",
+      "operation": "he_key_encrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/pasta2_4_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-pasta2-4-seal-hhe-decrypt",
+      "cipher": "HHEF-pasta2_4",
+      "language": "cpp",
+      "operation": "hhe_decrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/pasta2_4_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-pasta2-4-seal-final-decrypt",
+      "cipher": "HHEF-pasta2_4",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/pasta2_4_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-pasta2-4-helib-he-encrypt",
+      "cipher": "HHEF-pasta2_4",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/pasta2_4_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-pasta2-4-helib-he-key-encrypt",
+      "cipher": "HHEF-pasta2_4",
+      "language": "cpp",
+      "operation": "he_key_encrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/pasta2_4_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-pasta2-4-helib-hhe-decrypt",
+      "cipher": "HHEF-pasta2_4",
+      "language": "cpp",
+      "operation": "hhe_decrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/pasta2_4_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-pasta2-4-helib-final-decrypt",
+      "cipher": "HHEF-pasta2_4",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/pasta2_4_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-masta-4-seal-he-encrypt",
+      "cipher": "HHEF-masta_4",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/masta_4_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-masta-4-seal-he-key-encrypt",
+      "cipher": "HHEF-masta_4",
+      "language": "cpp",
+      "operation": "he_key_encrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/masta_4_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-masta-4-seal-hhe-decrypt",
+      "cipher": "HHEF-masta_4",
+      "language": "cpp",
+      "operation": "hhe_decrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/masta_4_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-masta-4-seal-final-decrypt",
+      "cipher": "HHEF-masta_4",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/masta_4_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-masta-4-helib-he-encrypt",
+      "cipher": "HHEF-masta_4",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/masta_4_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-masta-4-helib-he-key-encrypt",
+      "cipher": "HHEF-masta_4",
+      "language": "cpp",
+      "operation": "he_key_encrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/masta_4_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-masta-4-helib-hhe-decrypt",
+      "cipher": "HHEF-masta_4",
+      "language": "cpp",
+      "operation": "hhe_decrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/masta_4_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-masta-4-helib-final-decrypt",
+      "cipher": "HHEF-masta_4",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/masta_4_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-masta-5-seal-he-encrypt",
+      "cipher": "HHEF-masta_5",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/masta_5_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-masta-5-seal-he-key-encrypt",
+      "cipher": "HHEF-masta_5",
+      "language": "cpp",
+      "operation": "he_key_encrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/masta_5_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-masta-5-seal-hhe-decrypt",
+      "cipher": "HHEF-masta_5",
+      "language": "cpp",
+      "operation": "hhe_decrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/masta_5_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-masta-5-seal-final-decrypt",
+      "cipher": "HHEF-masta_5",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/masta_5_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-masta-5-helib-he-encrypt",
+      "cipher": "HHEF-masta_5",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/masta_5_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-masta-5-helib-he-key-encrypt",
+      "cipher": "HHEF-masta_5",
+      "language": "cpp",
+      "operation": "he_key_encrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/masta_5_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-masta-5-helib-hhe-decrypt",
+      "cipher": "HHEF-masta_5",
+      "language": "cpp",
+      "operation": "hhe_decrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/masta_5_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-masta-5-helib-final-decrypt",
+      "cipher": "HHEF-masta_5",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/masta_5_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-hera-5-seal-he-encrypt",
+      "cipher": "HHEF-hera_5",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/hera_5_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-hera-5-seal-he-key-encrypt",
+      "cipher": "HHEF-hera_5",
+      "language": "cpp",
+      "operation": "he_key_encrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/hera_5_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-hera-5-seal-hhe-decrypt",
+      "cipher": "HHEF-hera_5",
+      "language": "cpp",
+      "operation": "hhe_decrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/hera_5_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-hera-5-seal-final-decrypt",
+      "cipher": "HHEF-hera_5",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "SEAL",
+      "executable": "/opt/hhe/frameworks/hhe-framework/hera_5_seal_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-hera-5-helib-he-encrypt",
+      "cipher": "HHEF-hera_5",
+      "language": "cpp",
+      "operation": "he_encrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/hera_5_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-hera-5-helib-he-key-encrypt",
+      "cipher": "HHEF-hera_5",
+      "language": "cpp",
+      "operation": "he_key_encrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/hera_5_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-hera-5-helib-hhe-decrypt",
+      "cipher": "HHEF-hera_5",
+      "language": "cpp",
+      "operation": "hhe_decrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/hera_5_helib_test",
+      "workdir": "/work"
+    },
+    {
+      "id": "hhef-hera-5-helib-final-decrypt",
+      "cipher": "HHEF-hera_5",
+      "language": "cpp",
+      "operation": "final_decrypt",
+      "backend": "HElib",
+      "executable": "/opt/hhe/frameworks/hhe-framework/hera_5_helib_test",
+      "workdir": "/work"
+    }
+  ]
+}

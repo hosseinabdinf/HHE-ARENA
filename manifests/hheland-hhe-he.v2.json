@@ -1,57 +1,222 @@
 {
-  "$schema": "../schemas/benchmark-manifest.schema.json",
-  "version": 1,
-  "preflight": "/opt/hhe/bin/hhe-preflight",
-  "benchmarks": [
-    {
-      "id": "hheland-hera-hhe",
-      "cipher": "Hera",
-      "language": "go",
-      "operation": "HHE.Decomp()",
-      "backend": "Lattigo BGV/CKKS",
-      "executable": "/opt/hhe/frameworks/hheland-hhe/hheland-hera-hhe.test",
-      "args": ["-test.run=^$", "-test.bench=^BenchmarkHera$", "-test.benchtime=1x", "-test.v"],
-      "workdir": "/work"
-    },
-    {
-      "id": "hheland-pasta-hhe",
-      "cipher": "Pasta3/Pasta4",
-      "language": "go",
-      "operation": "HHE.Decomp()",
-      "backend": "Lattigo BGV/CKKS",
-      "executable": "/opt/hhe/frameworks/hheland-hhe/hheland-pasta-hhe.test",
-      "args": ["-test.run=^$", "-test.bench=^BenchmarkPasta", "-test.benchtime=1x", "-test.v"],
-      "workdir": "/work"
-    },
-    {
-      "id": "hheland-rubato-hhe",
-      "cipher": "Rubato",
-      "language": "go",
-      "operation": "HHE.Decomp()",
-      "backend": "Lattigo BGV/CKKS",
-      "executable": "/opt/hhe/frameworks/hheland-hhe/hheland-rubato-hhe.test",
-      "args": ["-test.run=^$", "-test.bench=^BenchmarkRubato$", "-test.benchtime=1x", "-test.v"],
-      "workdir": "/work"
-    },
-    {
-      "id": "hheland-rtf-hhe",
-      "cipher": "RtF Hera/Rubato",
-      "language": "go",
-      "operation": "RtF.Hera/Rubato",
-      "backend": "Lattigo BGV/CKKS",
-      "executable": "/opt/hhe/frameworks/hheland-hhe/hheland-rtf-hhe.test",
-      "args": ["-test.run=^$", "-test.bench=^BenchmarkRtF", "-test.benchtime=1x", "-test.v"],
-      "workdir": "/work"
-    },
-    {
-      "id": "hheland-pure-he",
-      "cipher": "BGV/CKKS",
-      "language": "go",
-      "operation": "HE.Encrypt/HE.Evaluate",
-      "backend": "Lattigo BGV/CKKS",
-      "executable": "/opt/hhe/frameworks/hheland-hhe/hheland-pure-he.test",
-      "args": ["-test.run=^TestPure(Bgv|CKKS)$", "-test.v"],
-      "workdir": "/work"
-    }
-  ]
+    "$schema":  "../schemas/benchmark-manifest.schema.json",
+    "version":  1,
+    "preflight":  "/opt/hhe/bin/hhe-preflight",
+    "benchmarks":  [
+                       {
+                           "id":  "hheland-hera-hhe",
+                           "cipher":  "Hera",
+                           "language":  "go",
+                           "operation":  "HHE.Decomp()",
+                           "backend":  "Lattigo CKKS",
+                           "executable":  "/opt/hhe/frameworks/hheland-hhe/hheland-hera-hhe.test",
+                           "args":  [
+                                        "-test.run=^$",
+                                        "-test.bench=^BenchmarkHera$",
+                                        "-test.benchtime=1x",
+                                        "-test.v"
+                                    ],
+                           "workdir":  "/work"
+                       },
+                       {
+                           "id":  "hheland-pasta3-hhe",
+                           "cipher":  "Pasta3",
+                           "language":  "go",
+                           "operation":  "HHE.Decomp()",
+                           "backend":  "Lattigo BGV",
+                           "executable":  "/opt/hhe/frameworks/hheland-hhe/hheland-pasta-hhe.test",
+                           "args":  [
+                                        "-test.run=^$",
+                                        "-test.bench=^BenchmarkPasta3$",
+                                        "-test.benchtime=1x",
+                                        "-test.v"
+                                    ],
+                           "workdir":  "/work"
+                       },
+                       {
+                           "id":  "hheland-pasta4-hhe",
+                           "cipher":  "Pasta4",
+                           "language":  "go",
+                           "operation":  "HHE.Decomp()",
+                           "backend":  "Lattigo BGV",
+                           "executable":  "/opt/hhe/frameworks/hheland-hhe/hheland-pasta-hhe.test",
+                           "args":  [
+                                        "-test.run=^$",
+                                        "-test.bench=^BenchmarkPasta4$",
+                                        "-test.benchtime=1x",
+                                        "-test.v"
+                                    ],
+                           "workdir":  "/work"
+                       },
+                       {
+                           "id":  "hheland-rubato-hhe",
+                           "cipher":  "Rubato",
+                           "language":  "go",
+                           "operation":  "HHE.Decomp()",
+                           "backend":  "Lattigo CKKS",
+                           "executable":  "/opt/hhe/frameworks/hheland-hhe/hheland-rubato-hhe.test",
+                           "args":  [
+                                        "-test.run=^$",
+                                        "-test.bench=^BenchmarkRubato$",
+                                        "-test.benchtime=1x",
+                                        "-test.v"
+                                    ],
+                           "workdir":  "/work"
+                       },
+                       {
+                           "id":  "hheland-pure-bgv-encrypt",
+                           "cipher":  "BGV",
+                           "language":  "go",
+                           "operation":  "HE.Enc()",
+                           "backend":  "Lattigo BGV",
+                           "executable":  "/opt/hhe/frameworks/hheland-hhe/hheland-pure-he.test",
+                           "args":  [
+                                        "-test.run=^TestPureBgv$",
+                                        "-test.v"
+                                    ],
+                           "workdir":  "/work"
+                       },
+                       {
+                           "id":  "hheland-pure-bgv-evaluate",
+                           "cipher":  "BGV",
+                           "language":  "go",
+                           "operation":  "HE.Eval() = ax+b",
+                           "backend":  "Lattigo BGV",
+                           "executable":  "/opt/hhe/frameworks/hheland-hhe/hheland-pure-he.test",
+                           "args":  [
+                                        "-test.run=^TestPureBgv$",
+                                        "-test.v"
+                                    ],
+                           "workdir":  "/work"
+                       },
+                       {
+                           "id":  "hheland-pure-ckks-encrypt",
+                           "cipher":  "CKKS",
+                           "language":  "go",
+                           "operation":  "HE.Enc()",
+                           "backend":  "Lattigo CKKS",
+                           "executable":  "/opt/hhe/frameworks/hheland-hhe/hheland-pure-he.test",
+                           "args":  [
+                                        "-test.run=^TestPureCKKS$",
+                                        "-test.v"
+                                    ],
+                           "workdir":  "/work"
+                       },
+                       {
+                           "id":  "hheland-pure-ckks-evaluate",
+                           "cipher":  "CKKS",
+                           "language":  "go",
+                           "operation":  "HE.Eval() = ax+b",
+                           "backend":  "Lattigo CKKS",
+                           "executable":  "/opt/hhe/frameworks/hheland-hhe/hheland-pure-he.test",
+                           "args":  [
+                                        "-test.run=^TestPureCKKS$",
+                                        "-test.v"
+                                    ],
+                           "workdir":  "/work"
+                       },
+                       {
+                           "id":  "hheland-chebyshev-ckks-evaluate",
+                           "cipher":  "CKKS",
+                           "language":  "go",
+                           "operation":  "Chebyshev HHE.Eval()",
+                           "backend":  "Lattigo CKKS",
+                           "executable":  "/opt/hhe/frameworks/hheland-hhe/hheland-pure-he.test",
+                           "args":  [
+                                        "-test.run=^TestChebyshevCKKS$",
+                                        "-test.v"
+                                    ],
+                           "workdir":  "/work"
+                       },
+                       {
+                           "id":  "hheland-rtf-hera-rtf-hera-offline-latency",
+                           "cipher":  "Hera",
+                           "language":  "go",
+                           "operation":  "RtF HERA Offline Latency",
+                           "backend":  "RtF CKKS",
+                           "executable":  "/opt/hhe/frameworks/hheland-hhe/hheland-rtf-hhe.test",
+                           "args":  [
+                                        "-test.run=^$",
+                                        "-test.bench=^BenchmarkRtF",
+                                        "-test.benchtime=1x",
+                                        "-test.v"
+                                    ],
+                           "workdir":  "/work"
+                       },
+                       {
+                           "id":  "hheland-rtf-hera-rtf-hera-offline-throughput",
+                           "cipher":  "Hera",
+                           "language":  "go",
+                           "operation":  "RtF HERA Offline Throughput",
+                           "backend":  "RtF CKKS",
+                           "executable":  "/opt/hhe/frameworks/hheland-hhe/hheland-rtf-hhe.test",
+                           "args":  [
+                                        "-test.run=^$",
+                                        "-test.bench=^BenchmarkRtF",
+                                        "-test.benchtime=1x",
+                                        "-test.v"
+                                    ],
+                           "workdir":  "/work"
+                       },
+                       {
+                           "id":  "hheland-rtf-hera-rtf-hera-online-lat-x1",
+                           "cipher":  "Hera",
+                           "language":  "go",
+                           "operation":  "RtF HERA Online Lat x1",
+                           "backend":  "RtF CKKS",
+                           "executable":  "/opt/hhe/frameworks/hheland-hhe/hheland-rtf-hhe.test",
+                           "args":  [
+                                        "-test.run=^$",
+                                        "-test.bench=^BenchmarkRtF",
+                                        "-test.benchtime=1x",
+                                        "-test.v"
+                                    ],
+                           "workdir":  "/work"
+                       },
+                       {
+                           "id":  "hheland-rtf-rubato-rtf-rubato-offline-latency",
+                           "cipher":  "Rubato",
+                           "language":  "go",
+                           "operation":  "RtF Rubato Offline Latency",
+                           "backend":  "RtF CKKS",
+                           "executable":  "/opt/hhe/frameworks/hheland-hhe/hheland-rtf-hhe.test",
+                           "args":  [
+                                        "-test.run=^$",
+                                        "-test.bench=^BenchmarkRtF",
+                                        "-test.benchtime=1x",
+                                        "-test.v"
+                                    ],
+                           "workdir":  "/work"
+                       },
+                       {
+                           "id":  "hheland-rtf-rubato-rtf-rubato-offline-throughput",
+                           "cipher":  "Rubato",
+                           "language":  "go",
+                           "operation":  "RtF Rubato Offline Throughput",
+                           "backend":  "RtF CKKS",
+                           "executable":  "/opt/hhe/frameworks/hheland-hhe/hheland-rtf-hhe.test",
+                           "args":  [
+                                        "-test.run=^$",
+                                        "-test.bench=^BenchmarkRtF",
+                                        "-test.benchtime=1x",
+                                        "-test.v"
+                                    ],
+                           "workdir":  "/work"
+                       },
+                       {
+                           "id":  "hheland-rtf-rubato-rtf-rubato-online-lat-x1",
+                           "cipher":  "Rubato",
+                           "language":  "go",
+                           "operation":  "RtF Rubato Online Lat x1",
+                           "backend":  "RtF CKKS",
+                           "executable":  "/opt/hhe/frameworks/hheland-hhe/hheland-rtf-hhe.test",
+                           "args":  [
+                                        "-test.run=^$",
+                                        "-test.bench=^BenchmarkRtF",
+                                        "-test.benchtime=1x",
+                                        "-test.v"
+                                    ],
+                           "workdir":  "/work"
+                       }
+                   ]
 }

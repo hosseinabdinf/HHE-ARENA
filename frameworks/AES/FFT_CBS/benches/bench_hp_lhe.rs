@@ -4,6 +4,7 @@ use tfhe::core_crypto::prelude::*;
 use tfhe::core_crypto::fft_impl::fft64::c64;
 use tfhe::core_crypto::fft_impl::fft64::crypto::wop_pbs::{extract_bits_scratch, extract_bits, circuit_bootstrap_boolean_scratch};
 use auto_base_conv::{allocate_and_generate_new_glwe_keyswitch_key, blind_rotate_for_msb, convert_standard_glwe_keyswitch_key_to_fourier, convert_to_ggsw_after_blind_rotate, convert_to_ggsw_after_blind_rotate_high_prec, gen_all_auto_keys, generate_scheme_switching_key, get_max_err_ggsw_bit, glwe_ciphertext_clone_from, glwe_ciphertext_monic_monomial_div, keygen_pbs, lwe_msb_bit_to_lev, wopbs_instance::*, FourierGlweKeyswitchKey};
+use auto_base_conv::utils::get_val_and_abs_err;
 
 
 criterion_group!(
@@ -236,11 +237,16 @@ fn criterion_benchmark_improved_wopbs(c: &mut Criterion) {
         // (*BITWISE_CBS_CMUX1, 1, "CMUX1"),
         // (*BITWISE_CBS_CMUX2, 1, "CMUX2"),
         // (*BITWISE_CBS_CMUX3, 1, "CMUX3"),
-        (*IMPROVED_WOPBS_2_2, 1, "improved_wopbs_2_2 extract 1-bit"),
-        (*IMPROVED_WOPBS_2_2, 2, "improved_wopbs_2_2 extract 2-bit"),
+        (*IMPROVED_WOPBS_2_2, 1, "improved_wopbs_2_2 extract 1-bit", "fft-hplhe-improved-2-2-e1"),
+        (*IMPROVED_WOPBS_2_2, 2, "improved_wopbs_2_2 extract 2-bit", "fft-hplhe-improved-2-2-e2"),
     ];
 
-    for (param, extract_size, id) in param_list.iter() {
+    for (param, extract_size, id, variant_id) in param_list.iter() {
+        if let Ok(selected) = std::env::var("HHE_BENCH_VARIANT") {
+            if selected != *variant_id {
+                continue;
+            }
+        }
         let lwe_dimension = param.lwe_dimension();
         let lwe_modular_std_dev = param.lwe_modular_std_dev();
         let glwe_dimension = param.glwe_dimension();
@@ -458,6 +464,14 @@ fn criterion_benchmark_improved_wopbs(c: &mut Criterion) {
             println!("[{bit_idx}] {:.3} bits", (err as f64).log2());
         }
 
+        let delta = 1u64 << (u64::BITS as usize - message_size);
+        let (decoded, output_error) = get_val_and_abs_err(&lwe_sk, &buf, 0u64, delta);
+        assert_eq!(
+            decoded,
+            0,
+            "HP-LHE output subtraction should encrypt zero; decoded={decoded}, error={output_error}",
+        );
+
     }
 }
 
@@ -466,14 +480,19 @@ fn criterion_benchmark_high_prec_improved_wopbs(c: &mut Criterion) {
     let mut group = c.benchmark_group("wopbs");
 
     let param_list = [
-        (*HIGHPREC_IMPROVED_WOPBS_3_3, 1, "high_prec_improved_wopbs_3_3 extract 1-bit"),
-        (*HIGHPREC_IMPROVED_WOPBS_3_3, 2, "high_prec_improved_wopbs_3_3 extract 2-bit"),
-        (*HIGHPREC_IMPROVED_WOPBS_3_3, 3, "high_prec_improved_wopbs_3_3 extract 3-bit"),
-        (*HIGHPREC_IMPROVED_WOPBS_4_4, 1, "high_prec_improved_wopbs_4_4 extract 1-bit"),
-        (*HIGHPREC_IMPROVED_WOPBS_4_4, 2, "high_prec_improved_wopbs_4_4 extract 2-bit"),
+        (*HIGHPREC_IMPROVED_WOPBS_3_3, 1, "high_prec_improved_wopbs_3_3 extract 1-bit", "fft-hplhe-highprec-3-3-e1"),
+        (*HIGHPREC_IMPROVED_WOPBS_3_3, 2, "high_prec_improved_wopbs_3_3 extract 2-bit", "fft-hplhe-highprec-3-3-e2"),
+        (*HIGHPREC_IMPROVED_WOPBS_3_3, 3, "high_prec_improved_wopbs_3_3 extract 3-bit", "fft-hplhe-highprec-3-3-e3"),
+        (*HIGHPREC_IMPROVED_WOPBS_4_4, 1, "high_prec_improved_wopbs_4_4 extract 1-bit", "fft-hplhe-highprec-4-4-e1"),
+        (*HIGHPREC_IMPROVED_WOPBS_4_4, 2, "high_prec_improved_wopbs_4_4 extract 2-bit", "fft-hplhe-highprec-4-4-e2"),
     ];
 
-    for (param, extract_size, id) in param_list.iter() {
+    for (param, extract_size, id, variant_id) in param_list.iter() {
+        if let Ok(selected) = std::env::var("HHE_BENCH_VARIANT") {
+            if selected != *variant_id {
+                continue;
+            }
+        }
         let lwe_dimension = param.lwe_dimension();
         let lwe_modular_std_dev = param.lwe_modular_std_dev();
         let polynomial_size = param.polynomial_size();
@@ -745,6 +764,14 @@ l_auto: {}, B_auto: 2^{}, fft_auto: {:?}, l_ss: {}, B_ss: 2^{}, l_cbs: {}, B_cbs
             let err = get_max_err_ggsw_bit(&glwe_sk, ggsw, correct_val);
             println!("[{bit_idx}] {:.3} bits", (err as f64).log2());
         }
+
+        let delta = 1u64 << (u64::BITS as usize - message_size);
+        let (decoded, output_error) = get_val_and_abs_err(&lwe_sk, &buf, 0u64, delta);
+        assert_eq!(
+            decoded,
+            0,
+            "high-precision HP-LHE output subtraction should encrypt zero; decoded={decoded}, error={output_error}",
+        );
 
     }
 }

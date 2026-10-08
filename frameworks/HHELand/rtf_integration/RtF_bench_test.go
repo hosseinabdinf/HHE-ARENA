@@ -4,6 +4,7 @@ import (
 	"crypto/rand"
 	"fmt"
 	"math"
+	"os"
 	"sync"
 	"testing"
 
@@ -20,72 +21,86 @@ func runArenaBenchmark(b *testing.B, operation string, target func()) {
 
 // Benchmark RtF framework with HERA for 80-bit security full-slots parameter
 func BenchmarkRtFHera80f(b *testing.B) {
+	selectRtFVariant(b, "hheland-hera-80f")
 	benchmarkRtFHera(b, "80f", 4, 0, 2, true)
 }
 
 // Benchmark RtF framework with HERA for 80-bit security 4-slots parameter
 func BenchmarkRtFHera80s(b *testing.B) {
+	selectRtFVariant(b, "hheland-hera-80s")
 	benchmarkRtFHera(b, "80s", 4, 1, 0, false)
 }
 
 // Benchmark RtF framework with HERA for 80-bit security full-slots parameter with arcsine evaluation
 func BenchmarkRtFHera80af(b *testing.B) {
+	selectRtFVariant(b, "hheland-hera-80af")
 	benchmarkRtFHera(b, "80af", 4, 2, 2, true)
 }
 
 // Benchmark RtF framework with HERA for 80-bit security 4-slots parameter with arcsine evaluation
 func BenchmarkRtFHera80as(b *testing.B) {
+	selectRtFVariant(b, "hheland-hera-80as")
 	benchmarkRtFHera(b, "80as", 4, 3, 0, false)
 }
 
 // Benchmark RtF framework with HERA for 128-bit security full-slots parameter
 func BenchmarkRtFHera128f(b *testing.B) {
+	selectRtFVariant(b, "hheland-hera-128f")
 	benchmarkRtFHera(b, "128f", 5, 0, 2, true)
 }
 
 // Benchmark RtF framework with HERA for 128-bit security 4-slots parameter
 func BenchmarkRtFHera128s(b *testing.B) {
+	selectRtFVariant(b, "hheland-hera-128s")
 	benchmarkRtFHera(b, "128s", 5, 1, 0, false)
 }
 
 // Benchmark RtF framework with HERA for 128-bit security full-slots parameter with arcsine evaluation
 func BenchmarkRtFHera128af(b *testing.B) {
+	selectRtFVariant(b, "hheland-hera-128af")
 	benchmarkRtFHera(b, "128af", 5, 2, 2, true)
 }
 
 // Benchmark RtF framework with HERA for 128-bit security 4-slots parameter with arcsine evaluation
 func BenchmarkRtFHera128as(b *testing.B) {
+	selectRtFVariant(b, "hheland-hera-128as")
 	benchmarkRtFHera(b, "128as", 5, 3, 2, false)
 }
 
 // Benchmark RtF framework with Rubato80S
 func BenchmarkRtFRubato80S(b *testing.B) {
-	benchmarkRtFRubato(b, RUBATO80S)
+	benchmarkRtFRubato(b, "hheland-rubato-80s", RUBATO80S)
 }
 
 // Benchmark RtF framework with Rubato80M
 func BenchmarkRtFRubato80M(b *testing.B) {
-	benchmarkRtFRubato(b, RUBATO80M)
+	benchmarkRtFRubato(b, "hheland-rubato-80m", RUBATO80M)
 }
 
 // Benchmark RtF framework with Rubato80L
 func BenchmarkRtFRubato80L(b *testing.B) {
-	benchmarkRtFRubato(b, RUBATO80L)
+	benchmarkRtFRubato(b, "hheland-rubato-80l", RUBATO80L)
 }
 
 // Benchmark RtF framework with Rubato128S
 func BenchmarkRtFRubato128S(b *testing.B) {
-	benchmarkRtFRubato(b, RUBATO128S)
+	benchmarkRtFRubato(b, "hheland-rubato-128s", RUBATO128S)
 }
 
 // Benchmark RtF framework with Rubato128M
 func BenchmarkRtFRubato128M(b *testing.B) {
-	benchmarkRtFRubato(b, RUBATO128M)
+	benchmarkRtFRubato(b, "hheland-rubato-128m", RUBATO128M)
 }
 
 // Benchmark RtF framework with Rubato128L
 func BenchmarkRtFRubato128L(b *testing.B) {
-	benchmarkRtFRubato(b, RUBATO128L)
+	benchmarkRtFRubato(b, "hheland-rubato-128l", RUBATO128L)
+}
+
+func selectRtFVariant(b *testing.B, variantID string) {
+	if selected := os.Getenv("HHE_BENCH_VARIANT"); selected != "" && selected != variantID {
+		b.Skip("different RtF matrix variant selected")
+	}
 }
 
 func benchmarkRtFHera(b *testing.B, name string, numRound int, paramIndex int, radix int, fullCoeffs bool) {
@@ -315,7 +330,8 @@ func benchmarkRtFHera(b *testing.B, name string, numRound int, paramIndex int, r
 	printDebug(params, ctBoot, valuesWant, ckksDecryptor, ckksEncoder)
 }
 
-func benchmarkRtFRubato(b *testing.B, rubatoParam int) {
+func benchmarkRtFRubato(b *testing.B, variantID string, rubatoParam int) {
+	selectRtFVariant(b, variantID)
 	var err error
 
 	var hbtp *HalfBootstrapper

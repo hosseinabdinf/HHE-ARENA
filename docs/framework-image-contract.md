@@ -84,6 +84,11 @@ boundary and permissions, and working directories. The image build must also
 record its pinned base digest and perform a CLI `list` check. Benchmark
 execution is a later smoke step and is not part of image construction.
 
+CI additionally runs `hhe-validate-framework-image --require-benchmarks
+--check-links`. This checks every ELF executable named by the manifest with
+`ldd` and fails on missing or incompatible shared libraries, without starting
+the benchmark. Static executables and script launchers are accepted.
+
 When a framework recipe uses the repository root as its Docker build context,
 provide a Dockerfile-specific `Dockerfile.dockerignore` allowlist. The root
 ignore deliberately excludes `frameworks/`; widening it would send unrelated

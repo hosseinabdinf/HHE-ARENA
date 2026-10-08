@@ -1,0 +1,43 @@
+name: heavy-image-build
+
+on:
+  workflow_dispatch:
+    inputs:
+      image_id:
+        description: Catalog image ID to build without a benchmark run
+        required: true
+        type: choice
+        options:
+          - full-lut-aes-tfhe-cpp
+          - fregata-cbs-aes-tfhepp-cpp
+          - fregata-gbs-aes-tfhepp-cpp
+          - fft-cbs-aes-rust
+          - transistor-homomorphic-rust
+          - hippogryph-aes-rust
+          - frast-rust
+          - p-encoding-aes-rust
+          - trkr-tfhe-rust
+          - filip-independent-ptx-cpp
+          - filip-sorting-hat-cpp
+          - margrethe-hhe-c
+          - elisabeth-hhe-rust
+          - fasta-rasta-c-cpp
+          - hheland-hhe-he-go
+          - hhe-framework-cpp
+
+jobs:
+  build-only:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build heavy image and validate its embedded contract
+        env:
+          IMAGE_ID: ${{ inputs.image_id }}
+        run: python tools/ci_framework_image.py "$IMAGE_ID" --heavy-only --output-dir "ci-results/$IMAGE_ID"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: heavy-${{ inputs.image_id }}
+          path: ci-results/${{ inputs.image_id }}/
+          if-no-files-found: ignore

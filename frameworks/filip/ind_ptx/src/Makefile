@@ -72,3 +72,6 @@ homomorphic_filip_mod_p.o: homomorphic_filip_mod_p.h homomorphic_filip_mod_p.cpp
 
 test_homomorphic_filip_mod_p: homomorphic_filip_mod_p.o test_homomorphic_filip_mod_p.cpp filip.o utils.o bench_utils.o bench_printer.o csprng.o | $(DIR)
 	$(CCX) $(CCXFLAGS) -o $(DIR)/test_homomorphic_filip_mod_p test_homomorphic_filip_mod_p.cpp $(DIR)/homomorphic_filip_mod_p.o $(DIR)/filip.o $(DIR)/utils.o $(DIR)/bench_utils.o $(DIR)/bench_printer.o $(DIR)/csprng.o $(AES_BUILD_DIR)/aes.o $(DIR)/libfinal.a $(DEPS)
+
+test_homomorphic_filip_mod_p_ske: homomorphic_filip_mod_p.o test_homomorphic_filip_mod_p.cpp filip.o utils.o bench_utils.o bench_printer.o csprng.o | $(DIR)
+	$(CCX) $(CCXFLAGS) -DSKE_BENCH_ONLY -o $(DIR)/test_homomorphic_filip_mod_p_ske test_homomorphic_filip_mod_p.cpp $(DIR)/homomorphic_filip_mod_p.o $(DIR)/filip.o $(DIR)/utils.o $(DIR)/bench_utils.o $(DIR)/bench_printer.o $(DIR)/csprng.o $(AES_BUILD_DIR)/aes.o $(DIR)/libfinal.a $(DEPS)

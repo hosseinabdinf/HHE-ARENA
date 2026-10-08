@@ -1,0 +1,8 @@
+**
+!frameworks/
+frameworks/*
+!frameworks/fasta/
+!frameworks/fasta/**
+!manifests/
+manifests/*
+!manifests/fasta-rasta.v2.json

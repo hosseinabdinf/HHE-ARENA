@@ -31,12 +31,13 @@ LABEL org.opencontainers.image.title="HHE-ARENA P-encoding AES/Rust benchmarks" 
       io.hhe-arena.tooling.digest="${TOOLING_DIGEST}"
 USER root
 COPY --from=builder /out/bin/run-aes /opt/hhe/frameworks/p-encoding/run-aes
+COPY frameworks/AES/P_encoding/crypto_primitives/src/aes/data/ /opt/hhe/frameworks/p-encoding/src/aes/data/
 COPY manifests/p-encoding-aes.v2.json /opt/hhe/benchmarks/manifest.json
 RUN mkdir -p /work/results \
  && chown -R 65532:65532 /work \
  && hhe-validate-framework-image --require-benchmarks \
  && hhe list >/dev/null
 USER 65532:65532
-WORKDIR /work
+WORKDIR /opt/hhe/frameworks/p-encoding
 ENTRYPOINT ["hhe-tooling"]
 CMD ["--help"]

@@ -201,6 +201,19 @@ pub fn benchmark_with_implementation<F>(name: &str, iterations: usize, implement
 where
     F: FnMut(),
 {
+    // A single process can contain several benchmark calls. When the runner
+    // selects one operation, only that call may execute or emit records.
+    // Running the other closures unmeasured still performs the expensive work
+    // and can make a supposedly bounded HHE operation run for hours.
+    if let Ok(selected_operation) = std::env::var("HHE_BENCH_OPERATION") {
+        let selected_prefix = std::env::var("HHE_BENCH_OPERATION_PREFIX").unwrap_or_default();
+        if selected_operation != name
+            && (selected_prefix.is_empty() || !name.starts_with(&selected_prefix))
+        {
+            return;
+        }
+    }
+
     let iterations = std::env::var("HHE_BENCH_ITERATIONS")
         .ok()
         .and_then(|value| value.parse().ok())

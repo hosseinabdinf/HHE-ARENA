@@ -114,7 +114,7 @@ type options struct {
 	operation, backend, gc, policy, output                         string
 	hostID                                                         string
 	iterations, warmups, core                                      int
-	preflight, appendMode, dryRun                                  bool
+	preflight, appendMode, dryRun, validateDeferred                bool
 }
 type resultBundle struct {
 	Root, Raw, Report string
@@ -219,6 +219,7 @@ func flags(name string, errw io.Writer) (*flag.FlagSet, *options) {
 	f.BoolVar(&o.preflight, "preflight", false, "preflight")
 	f.BoolVar(&o.appendMode, "append", false, "append")
 	f.BoolVar(&o.dryRun, "dry-run", false, "dry run")
+	f.BoolVar(&o.validateDeferred, "validate-deferred", false, "run one explicitly selected deferred matrix-v2 target for bounded functional validation")
 	return f, o
 }
 func valid(o *options) error {
@@ -325,15 +326,15 @@ func loadImageCatalog(p string) (ImageCatalog, error) {
 			if target.VariantID == "" || target.Cipher == "" || target.Backend == "" || len(target.Operations) == 0 {
 				return c, fmt.Errorf("image %s has an incomplete matrix target", x.ID)
 			}
-			targetKey := target.VariantID + "\x00" + strings.ToLower(target.Backend)
-			if targets[targetKey] {
-				return c, fmt.Errorf("image %s has duplicate matrix target %q for backend %q", x.ID, target.VariantID, target.Backend)
-			}
-			targets[targetKey] = true
 			for _, op := range target.Operations {
 				if op == "" {
 					return c, fmt.Errorf("image %s matrix target %s has an empty operation", x.ID, target.VariantID)
 				}
+				targetKey := target.VariantID + "\x00" + strings.ToLower(target.Backend) + "\x00" + op
+				if targets[targetKey] {
+					return c, fmt.Errorf("image %s has duplicate matrix target %q for backend %q and operation %q", x.ID, target.VariantID, target.Backend, op)
+				}
+				targets[targetKey] = true
 			}
 		}
 	}
@@ -471,7 +472,7 @@ func runnableMatrixTargets(choices []matrixChoice) []imageTarget {
 			continue
 		}
 		for _, operation := range choice.Image.Operations {
-			if operation != choice.Operation {
+			if operation != choice.Operation || !strings.EqualFold(choice.Image.Backend, choice.Backend) {
 				continue
 			}
 			key := choice.Variant.ID + "\x00" + operation
@@ -526,6 +527,10 @@ func bench(a []string, all bool, r runner, out, errw io.Writer) int {
 		fmt.Fprintln(errw, e)
 		return 64
 	}
+	if o.validateDeferred && (all || o.catalog == "") {
+		fmt.Fprintln(errw, "--validate-deferred requires bench with a matrix-v2 image catalog")
+		return 64
+	}
 	if o.catalog != "" {
 		return containerBench(all, o, r, out, errw)
 	}
@@ -576,6 +581,12 @@ func jsonlPath(path string) string {
 }
 
 func containerBench(all bool, o *options, r runner, out, errw io.Writer) int {
+	if o.validateDeferred {
+		if e := validateDeferredOptions(all, o); e != nil {
+			fmt.Fprintln(errw, e)
+			return 64
+		}
+	}
 	c, e := loadImageCatalog(o.catalog)
 	if e != nil {
 		fmt.Fprintln(errw, e)
@@ -593,7 +604,15 @@ func containerBench(all bool, o *options, r runner, out, errw io.Writer) int {
 			fmt.Fprintf(errw, "no matrix-v2 benchmark matches family=%q path=%q cipher=%q variant=%q framework=%q backend=%q language=%q operation=%q\n", o.family, o.path, o.cipher, o.variant, o.framework, o.backend, o.language, o.operation)
 			return 65
 		}
-		z = runnableMatrixTargets(choices)
+		if o.validateDeferred {
+			z, e = deferredValidationTargets(choices)
+			if e != nil {
+				fmt.Fprintln(errw, e)
+				return 65
+			}
+		} else {
+			z = runnableMatrixTargets(choices)
+		}
 		if len(z) == 0 {
 			fmt.Fprintf(errw, "matched %d matrix-v2 choice(s), but none are runnable; use list --catalog %s with the same selectors to inspect deferred, blocked, or uncataloged targets\n", len(choices), o.catalog)
 			return 65
@@ -656,6 +675,38 @@ func containerBench(all bool, o *options, r runner, out, errw io.Writer) int {
 	return 0
 }
 
+func validateDeferredOptions(all bool, o *options) error {
+	if all {
+		return errors.New("--validate-deferred is limited to one target; use bench with exact selectors")
+	}
+	if o.catalog == "" || o.operation == "" || o.family == "" || o.path == "" || o.cipher == "" || o.variant == "" || o.framework == "" || o.backend == "" || o.language == "" {
+		return errors.New("--validate-deferred requires a catalog and exact family, path, cipher, variant, framework, backend, language, and operation selectors")
+	}
+	if o.iterations != 1 || o.warmups != 0 || o.core < 0 || o.policy != "warn" || o.imagePolicy != "local" || o.preflight || o.appendMode {
+		return errors.New("--validate-deferred requires --iterations 1 --warmup 0 --core N --policy warn --image-policy local; preflight and append are not supported")
+	}
+	return nil
+}
+
+func deferredValidationTargets(choices []matrixChoice) ([]imageTarget, error) {
+	if len(choices) != 1 {
+		return nil, fmt.Errorf("--validate-deferred matched %d choices; exactly one deferred operation is required", len(choices))
+	}
+	choice := choices[0]
+	if choice.Status != "deferred" {
+		return nil, fmt.Errorf("--validate-deferred accepts only a deferred target; selected target status is %q", choice.Status)
+	}
+	if choice.Image == nil {
+		return nil, errors.New("--validate-deferred cannot run an uncataloged target")
+	}
+	choice.Status = "ready"
+	targets := runnableMatrixTargets([]matrixChoice{choice})
+	if len(targets) != 1 {
+		return nil, errors.New("deferred target does not map to exactly one catalog operation")
+	}
+	return targets, nil
+}
+
 func newResultBundle(root string) (resultBundle, error) {
 	absolute, e := filepath.Abs(root)
 	if e != nil {
@@ -675,7 +726,8 @@ func runContainerReport(image string, bundle resultBundle, rawOutputs []string, 
 			return e
 		}
 	}
-	a := []string{"run", "--rm", "--mount", "type=bind,source=" + bundle.Root + ",target=/work/results", image, "report"}
+	a := append([]string{"run", "--rm"}, hostUserArgs()...)
+	a = append(a, "--mount", "type=bind,source="+bundle.Root+",target=/work/results", image, "report")
 	for _, raw := range rawOutputs {
 		relative, e := filepath.Rel(bundle.Root, raw)
 		if e != nil || strings.HasPrefix(relative, "..") {
@@ -781,9 +833,16 @@ func runContainer(t imageTarget, o *options, hostOutput string, r runner, out, e
 		}
 	}
 	a := []string{"run", "--rm", "--env", "HHE_BENCH_HOSTNAME=" + o.hostID}
+	if t.VariantID != "" {
+		a = append(a, "--env", "HHE_BENCH_VARIANT="+t.VariantID)
+	}
+	if t.Operation != "" {
+		a = append(a, "--env", "HHE_BENCH_OPERATION="+t.Operation)
+	}
 	if o.core >= 0 {
 		a = append(a, "--cpuset-cpus", strconv.Itoa(o.core))
 	}
+	a = append(a, hostUserArgs()...)
 	cipher, language, backend := t.Image.Cipher, t.Image.Language, t.Image.Backend
 	if t.DispatchCipher != "" {
 		cipher = t.DispatchCipher
@@ -810,6 +869,13 @@ func runContainer(t imageTarget, o *options, hostOutput string, r runner, out, e
 		a = append(a, "--append")
 	}
 	return dockerCommand(o, "", a, r, out, errw)
+}
+func hostUserArgs() []string {
+	uid, gid := os.Getuid(), os.Getgid()
+	if uid < 0 || gid < 0 {
+		return nil
+	}
+	return []string{"--user", fmt.Sprintf("%d:%d", uid, gid)}
 }
 func values(x Benchmark, o *options, p string) map[string]string {
 	w, c := "", ""

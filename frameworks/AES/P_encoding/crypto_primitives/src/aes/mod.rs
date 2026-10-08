@@ -273,9 +273,18 @@ pub fn demo_aes() {
 
     let mut state = AESState { bits: Vec::new() };
 
-    benchmark("TFHE Encryption of the plaintext", 100, || {
+    let selected_operation = std::env::var("HHE_BENCH_OPERATION").ok();
+    let transciphering_selected = selected_operation.as_deref() == Some("Transciphering");
+    if transciphering_selected {
+        // Transciphering depends on the encrypted input. Prepare it outside
+        // the selected operation's measurement so the runner executes only
+        // one measured benchmark call per process.
         state = AESState::tfhe_encryption_bits(&plaintext_bits, &client_key);
-    });
+    } else {
+        benchmark("TFHE Encryption of the plaintext", 100, || {
+            state = AESState::tfhe_encryption_bits(&plaintext_bits, &client_key);
+        });
+    }
 
     let mut result = AESState { bits: Vec::new() };
 
@@ -288,12 +297,14 @@ pub fn demo_aes() {
     // let stop = start.elapsed();
     // println!("Time elapsed : {:?}", stop);
 
-    let result_clear = result.tfhe_decryption_bits(&client_key);
-    (0..16).for_each(|i| {
-        print!(
-            "{:02x} ",
-            vec_bool_to_u8(&result_clear[i * 8..(i + 1) * 8].to_vec())
-        )
-    });
-    println!();
+    if selected_operation.is_none() || selected_operation.as_deref() == Some("Transciphering") {
+        let result_clear = result.tfhe_decryption_bits(&client_key);
+        (0..16).for_each(|i| {
+            print!(
+                "{:02x} ",
+                vec_bool_to_u8(&result_clear[i * 8..(i + 1) * 8].to_vec())
+            )
+        });
+        println!();
+    }
 }

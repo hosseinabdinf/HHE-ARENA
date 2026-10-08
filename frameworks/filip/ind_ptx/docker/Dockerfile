@@ -13,7 +13,13 @@ COPY frameworks/filip/ind_ptx/ frameworks/filip/ind_ptx/
 WORKDIR /src/frameworks/filip/ind_ptx/src
 RUN make libfinal.a \
  && make test_homomorphic_filip_mod_p \
- && install -D -m 0555 run/test_homomorphic_filip_mod_p /out/test_homomorphic_filip_mod_p
+ && make test_homomorphic_filip_mod_p_ske \
+ && install -D -m 0555 run/test_homomorphic_filip_mod_p /out/test_homomorphic_filip_mod_p \
+ && install -D -m 0555 run/test_homomorphic_filip_mod_p_ske /out/test_homomorphic_filip_mod_p_ske \
+ && install -D -m 0555 "$(gcc -print-file-name=libstdc++.so.6)" /out/lib/libstdc++.so.6 \
+ && install -D -m 0555 /usr/lib/x86_64-linux-gnu/libntl.so.44 /out/lib/libntl.so.44 \
+ && install -D -m 0555 /usr/lib/x86_64-linux-gnu/libgf2x.so.3 /out/lib/libgf2x.so.3 \
+ && install -D -m 0555 /usr/lib/x86_64-linux-gnu/libfftw3.so.3 /out/lib/libfftw3.so.3
 
 FROM ${TOOLING_IMAGE} AS runtime
 ARG IMAGE_REVISION=unknown
@@ -32,7 +38,10 @@ LABEL org.opencontainers.image.title="HHE-ARENA FiLIP independent-PTX benchmarks
       io.hhe-arena.tooling.digest="${TOOLING_DIGEST}"
 USER root
 COPY --from=builder /out/test_homomorphic_filip_mod_p /opt/hhe/frameworks/filip-independent-ptx/test_homomorphic_filip_mod_p
+COPY --from=builder /out/test_homomorphic_filip_mod_p_ske /opt/hhe/frameworks/filip-independent-ptx/test_homomorphic_filip_mod_p_ske
+COPY --from=builder /out/lib/ /opt/hhe/lib/
 COPY manifests/filip-independent-ptx.v2.json /opt/hhe/benchmarks/manifest.json
+ENV LD_LIBRARY_PATH=/opt/hhe/lib
 RUN mkdir -p /work/results \
  && chown -R 65532:65532 /work \
  && hhe-validate-framework-image --require-benchmarks \
